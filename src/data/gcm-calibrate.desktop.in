@@ -1,6 +1,7 @@
 [Desktop Entry]
-_Name=Color
-_Comment=Color Calibration
+Name=Color
+Comment=Color Calibration
+# Translators: Do NOT translate or transliterate this text (this is an icon file name)!
 Icon=gnome-color-manager
 Exec=gcm-calibrate
 Terminal=false

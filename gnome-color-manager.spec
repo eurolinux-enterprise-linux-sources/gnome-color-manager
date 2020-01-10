@@ -1,26 +1,26 @@
 Name:      gnome-color-manager
-Version:   3.22.2
-Release:   2%{?dist}
+Version:   3.28.0
+Release:   1%{?dist}
 Summary:   Color management tools for GNOME
 
 License:   GPLv2+
 URL:       http://mail.gnome.org/mailman/listinfo/gnome-color-manager-list
-Source0:   http://download.gnome.org/sources/gnome-color-manager/3.22/%{name}-%{version}.tar.xz
+Source0:   http://download.gnome.org/sources/gnome-color-manager/3.28/%{name}-%{version}.tar.xz
 
 BuildRequires: gtk3-devel >= 3.0.0
 BuildRequires: desktop-file-utils
 BuildRequires: gettext
-BuildRequires: intltool
 BuildRequires: lcms2-devel
 BuildRequires: libtiff-devel
 BuildRequires: libexif-devel
-BuildRequires: exiv2-devel >= 0.26
+BuildRequires: exiv2-devel
 BuildRequires: libcanberra-devel
 BuildRequires: glib2-devel >= 2.25.9-2
 BuildRequires: docbook-utils
 BuildRequires: colord-devel >= 0.1.12
 BuildRequires: colord-gtk-devel >= 0.1.22
 BuildRequires: itstool
+BuildRequires: meson
 BuildRequires: vte291-devel
 
 Requires: shared-mime-info
@@ -43,11 +43,11 @@ and generate color profiles in the GNOME desktop.
 %setup -q
 
 %build
-%configure
-make %{?_smp_mflags}
+%meson
+%meson_build
 
 %install
-%make_install
+%meson_install
 
 %find_lang %name --with-gnome
 
@@ -69,10 +69,9 @@ glib-compile-schemas %{_datadir}/glib-2.0/schemas &> /dev/null || :
 
 %files -f %{name}.lang
 %license COPYING
-%doc AUTHORS NEWS README
+%doc AUTHORS README
 %{_bindir}/gcm-*
 %{_libexecdir}/gcm-*
-%{_datadir}/appdata/org.gnome.ColorProfileViewer.appdata.xml
 %{_datadir}/applications/gcm-*.desktop
 %{_datadir}/applications/org.gnome.ColorProfileViewer.desktop
 %dir %{_datadir}/gnome-color-manager
@@ -84,11 +83,16 @@ glib-compile-schemas %{_datadir}/glib-2.0/schemas &> /dev/null || :
 %{_datadir}/gnome-color-manager/icons/*
 %{_datadir}/gnome-color-manager/figures/*
 %{_datadir}/gnome-color-manager/ti1/*
-%{_datadir}/man/man1/*.1.gz
 %{_datadir}/icons/hicolor/*/*/*.png
 %{_datadir}/icons/hicolor/scalable/*/*.svg*
+%{_datadir}/metainfo/org.gnome.ColorProfileViewer.appdata.xml
+%{_mandir}/man1/*.1*
 
 %changelog
+* Mon Mar 12 2018 Kalev Lember <klember@redhat.com> - 3.28.0-1
+- Update to 3.28.0
+- Resolves: #1567477
+
 * Tue Oct 24 2017 Debarshi Ray <rishi@fedoraproject.org> - 3.22.2-2
 - Rebuild against the rebased exiv2
 - Resolves: #1487203

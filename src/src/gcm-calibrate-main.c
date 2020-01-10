@@ -139,12 +139,12 @@ gcm_calib_confirm_quit (GcmCalibratePriv *priv)
 	gtk_message_dialog_format_secondary_text (GTK_MESSAGE_DIALOG (dialog),
 						  "%s",
 						  _("Are you sure you want to cancel the calibration?"));
-	/* TRANSLATORS: button text */
 	gtk_dialog_add_button (GTK_DIALOG (dialog),
+			       /* TRANSLATORS: button text */
 			       _("Continue calibration"),
 			       GTK_RESPONSE_CANCEL);
-	/* TRANSLATORS: button text */
 	gtk_dialog_add_button (GTK_DIALOG (dialog),
+			       /* TRANSLATORS: button text */
 			       _("Cancel and close"),
 			       GTK_RESPONSE_CLOSE);
 	g_signal_connect (dialog, "response",
@@ -926,7 +926,7 @@ gcm_calib_setup_page_display_configure_wait (GcmCalibratePriv *priv)
 	gcm_calib_add_page_para (content, _("Before calibrating the display, it is recommended to configure your display with the following settings to get optimal results."));
 
 	/* TRANSLATORS: dialog message, preface */
-if(0)	gcm_calib_add_page_para (content, _("You may want to consult the owner's manual for your display on how to achieve these settings."));
+if(0)	gcm_calib_add_page_para (content, _("You may want to consult the owner’s manual for your display on how to achieve these settings."));
 
 	/* TRANSLATORS: dialog message, bullet item */
 if(0)	gcm_calib_add_page_bullet (content, _("Reset your display to the factory defaults."));
@@ -995,11 +995,11 @@ gcm_calib_setup_page_install_argyllcms (GcmCalibratePriv *priv)
 
 	string = g_string_new ("");
 
-	/* TRANSLATORS: dialog message saying the argyllcms is not installed */
 	g_string_append_printf (string, "%s\n",
+				/* TRANSLATORS: dialog message saying the argyllcms is not installed */
 				_("Calibration and profiling software is not installed."));
-	/* TRANSLATORS: dialog message saying the color targets are not installed */
 	g_string_append_printf (string, "%s",
+				/* TRANSLATORS: dialog message saying the color targets are not installed */
 				_("These tools are required to build color profiles for devices."));
 
 	/* TRANSLATORS: this is the page title */
@@ -1196,7 +1196,7 @@ gcm_calib_reference_kind_combobox_cb (GtkComboBox *combo_box,
 	if (filename == NULL)
 		filename = "unknown.png";
 
-	path = g_build_filename (GCM_DATA, "targets", filename, NULL);
+	path = g_build_filename (PKGDATADIR, "targets", filename, NULL);
 	gtk_image_set_from_file (GTK_IMAGE (priv->reference_preview), path);
 }
 
@@ -1628,8 +1628,8 @@ gcm_calib_setup_page_precision (GcmCalibratePriv *priv)
 	case CD_DEVICE_KIND_PRINTER:
 		for (i = 0; i < 3; i++) {
 			g_string_append (labels[i], " ");
-			/* TRANSLATORS: radio options for calibration precision */
 			g_string_append_printf (labels[i], ngettext (
+						/* TRANSLATORS: radio options for calibration precision */
 						"(about %u sheet of paper)",
 						"(about %u sheets of paper)",
 						values_printer[i]),
@@ -1639,8 +1639,8 @@ gcm_calib_setup_page_precision (GcmCalibratePriv *priv)
 	case CD_DEVICE_KIND_DISPLAY:
 		for (i = 0; i < 3; i++) {
 			g_string_append (labels[i], " ");
-			/* TRANSLATORS: radio options for calibration precision */
 			g_string_append_printf (labels[i], ngettext (
+						/* TRANSLATORS: radio options for calibration precision */
 						"(about %u minute)",
 						"(about %u minutes)",
 						values_display[i]),
@@ -1958,7 +1958,7 @@ gcm_calib_startup_cb (GApplication *application, GcmCalibratePriv *priv)
 
 	/* add application specific icons to search path */
 	gtk_icon_theme_append_search_path (gtk_icon_theme_get_default (),
-					   GCM_DATA G_DIR_SEPARATOR_S "icons");
+					   PKGDATADIR G_DIR_SEPARATOR_S "icons");
 
 	/* connect to colord */
 	priv->client = cd_client_new ();

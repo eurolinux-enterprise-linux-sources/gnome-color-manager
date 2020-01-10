@@ -329,8 +329,8 @@ gcm_picker_sensor_client_setup_ui (GcmPickerPrivate *priv)
 		goto out;
 	}
 	if (sensors->len == 0) {
-		/* TRANSLATORS: this is displayed the user has not got suitable hardware */
 		gtk_label_set_label (GTK_LABEL (priv->info_bar_hardware_label),
+				    /* TRANSLATORS: this is displayed the user has not got suitable hardware */
 				    _("No colorimeter is attached."));
 		goto out;
 	}
@@ -345,8 +345,8 @@ gcm_picker_sensor_client_setup_ui (GcmPickerPrivate *priv)
 	}
 
 	if (!cd_sensor_get_native (priv->sensor)) {
-		 /* TRANSLATORS: this is displayed if VTE support is not enabled */
 		gtk_label_set_label (GTK_LABEL (priv->info_bar_hardware_label),
+				     /* TRANSLATORS: this is displayed if VTE support is not enabled */
 				     _("The sensor has no native driver."));
 		goto out;
 	}
@@ -626,7 +626,7 @@ gcm_picker_startup_cb (GApplication *application, GcmPickerPrivate *priv)
 
 	/* add application specific icons to search path */
 	gtk_icon_theme_append_search_path (gtk_icon_theme_get_default (),
-	                                   GCM_DATA G_DIR_SEPARATOR_S "icons");
+	                                   PKGDATADIR G_DIR_SEPARATOR_S "icons");
 
 	/* create a last sample */
 	//cd_color_xyz_clear (&last_sample);

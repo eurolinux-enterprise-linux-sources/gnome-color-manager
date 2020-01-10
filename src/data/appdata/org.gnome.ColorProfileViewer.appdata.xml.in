@@ -4,18 +4,18 @@
   <id>org.gnome.ColorProfileViewer.desktop</id>
   <metadata_license>CC0-1.0</metadata_license>
   <project_license>GPL-2.0+</project_license>
-  <_name>GNOME Color Manager</_name>
-  <_summary>Inspect and compare installed color profiles</_summary>
+  <name>GNOME Color Manager</name>
+  <summary>Inspect and compare installed color profiles</summary>
   <description>
-    <_p>
+    <p>
       GNOME Color Profile Viewer shows installed color profiles on your system
       and allows you to calibrate displays, printers and cameras using a
       wizard.
-    </_p>
-    <_p>
+    </p>
+    <p>
       This functionality is typically used by GNOME Control Center from the color
       panel although can be used on its own.
-    </_p>
+    </p>
   </description>
   <screenshots>
     <screenshot type="default">
@@ -36,6 +36,40 @@
    Validate with `appstream-util validate *.appdata.xml`
   -->
   <releases>
+    <release date="2018-03-12" version="3.28.0">
+      <description>
+        <p>
+          This is the first stable release for GNOME 3.28 and updates several
+          translations and fixes the build system to be more standard conformant.
+        </p>
+      </description>
+    </release>
+    <release date="2017-09-11" version="3.26.0">
+      <description>
+        <p>
+          This is the first stable release for GNOME 3.26 and updates several
+          translations.
+        </p>
+      </description>
+    </release>
+    <release date="2017-08-07" version="3.25.90">
+      <description>
+        <p>
+          This unstable release switches to the meson build-system and updates
+          several translations.
+        </p>
+      </description>
+    </release>
+    <release date="2017-03-20" version="3.24.0">
+      <description>
+        <p>This is the first stable release for GNOME 3.24.</p>
+      </description>
+    </release>
+    <release date="2017-03-11" version="3.23.92">
+      <description>
+        <p>This unstable release updates several translations.</p>
+      </description>
+    </release>
     <release date="2016-11-07" version="3.22.2">
       <description>
         <p>
@@ -140,6 +174,9 @@
     <kudo>ModernToolkit</kudo>
     <kudo>UserDocs</kudo>
   </kudos>
+  <provides>
+    <id>gcm-viewer.desktop</id>
+  </provides>
   <url type="homepage">https://projects.gnome.org/gnome-color-manager/</url>
   <url type="bugtracker">https://bugzilla.gnome.org/enter_bug.cgi?product=gnome-color-manager</url>
   <url type="donation">http://www.gnome.org/friends/</url>
