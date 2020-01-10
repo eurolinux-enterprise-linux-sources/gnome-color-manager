@@ -24,8 +24,9 @@
 #include <glib/gi18n.h>
 #include <stdlib.h>
 #include <math.h>
-#include <colord.h>
 
+#include "gcm-clut.h"
+#include "gcm-profile.h"
 #include "gcm-trc-widget.h"
 
 G_DEFINE_TYPE (GcmTrcWidget, gcm_trc_widget, GTK_TYPE_DRAWING_AREA);
@@ -35,7 +36,7 @@ G_DEFINE_TYPE (GcmTrcWidget, gcm_trc_widget, GTK_TYPE_DRAWING_AREA);
 struct GcmTrcWidgetPrivate
 {
 	gboolean		 use_grid;
-	GPtrArray		*data;
+	GcmClut			*clut;
 	guint			 chart_width;
 	guint			 chart_height;
 	PangoLayout		*layout;
@@ -50,12 +51,15 @@ enum
 {
 	PROP_0,
 	PROP_USE_GRID,
-	PROP_DATA,
+	PROP_CLUT,
 	PROP_LAST
 };
 
+/**
+ * dkp_trc_get_property:
+ **/
 static void
-gcm_trc_widget_get_property (GObject *object, guint prop_id, GValue *value, GParamSpec *pspec)
+dkp_trc_get_property (GObject *object, guint prop_id, GValue *value, GParamSpec *pspec)
 {
 	GcmTrcWidget *trc = GCM_TRC_WIDGET (object);
 	switch (prop_id) {
@@ -68,8 +72,11 @@ gcm_trc_widget_get_property (GObject *object, guint prop_id, GValue *value, GPar
 	}
 }
 
+/**
+ * dkp_trc_set_property:
+ **/
 static void
-gcm_trc_widget_set_property (GObject *object, guint prop_id, const GValue *value, GParamSpec *pspec)
+dkp_trc_set_property (GObject *object, guint prop_id, const GValue *value, GParamSpec *pspec)
 {
 	GcmTrcWidget *trc = GCM_TRC_WIDGET (object);
 
@@ -77,10 +84,10 @@ gcm_trc_widget_set_property (GObject *object, guint prop_id, const GValue *value
 	case PROP_USE_GRID:
 		trc->priv->use_grid = g_value_get_boolean (value);
 		break;
-	case PROP_DATA:
-		if (trc->priv->data != NULL)
-			g_ptr_array_unref (trc->priv->data);
-		trc->priv->data = g_ptr_array_ref (g_value_get_boxed (value));
+	case PROP_CLUT:
+		if (trc->priv->clut != NULL)
+			g_object_unref (trc->priv->clut);
+		trc->priv->clut = g_value_dup_object (value);
 		break;
 	default:
 		G_OBJECT_WARN_INVALID_PROPERTY_ID (object, prop_id, pspec);
@@ -92,6 +99,9 @@ gcm_trc_widget_set_property (GObject *object, guint prop_id, const GValue *value
 	gtk_widget_show (GTK_WIDGET (trc));
 }
 
+/**
+ * gcm_trc_widget_class_init:
+ **/
 static void
 gcm_trc_widget_class_init (GcmTrcWidgetClass *class)
 {
@@ -99,8 +109,8 @@ gcm_trc_widget_class_init (GcmTrcWidgetClass *class)
 	GObjectClass *object_class = G_OBJECT_CLASS (class);
 
 	widget_class->draw = gcm_trc_widget_draw;
-	object_class->get_property = gcm_trc_widget_get_property;
-	object_class->set_property = gcm_trc_widget_set_property;
+	object_class->get_property = dkp_trc_get_property;
+	object_class->set_property = dkp_trc_set_property;
 	object_class->finalize = gcm_trc_widget_finalize;
 
 	g_type_class_add_private (class, sizeof (GcmTrcWidgetPrivate));
@@ -112,12 +122,15 @@ gcm_trc_widget_class_init (GcmTrcWidgetClass *class)
 							       TRUE,
 							       G_PARAM_READWRITE));
 	g_object_class_install_property (object_class,
-					 PROP_DATA,
-					 g_param_spec_boxed ("data", NULL, NULL,
-							     G_TYPE_PTR_ARRAY,
-							     G_PARAM_WRITABLE));
+					 PROP_CLUT,
+					 g_param_spec_object ("clut", NULL, NULL,
+							      GCM_TYPE_CLUT,
+							      G_PARAM_WRITABLE));
 }
 
+/**
+ * gcm_trc_widget_init:
+ **/
 static void
 gcm_trc_widget_init (GcmTrcWidget *trc)
 {
@@ -126,7 +139,7 @@ gcm_trc_widget_init (GcmTrcWidget *trc)
 
 	trc->priv = GCM_TRC_WIDGET_GET_PRIVATE (trc);
 	trc->priv->use_grid = TRUE;
-	trc->priv->data = NULL;
+	trc->priv->clut = NULL;
 
 	/* do pango stuff */
 	context = gtk_widget_get_pango_context (GTK_WIDGET (trc));
@@ -138,17 +151,25 @@ gcm_trc_widget_init (GcmTrcWidget *trc)
 	pango_font_description_free (desc);
 }
 
+/**
+ * gcm_trc_widget_finalize:
+ **/
 static void
 gcm_trc_widget_finalize (GObject *object)
 {
 	GcmTrcWidget *trc = (GcmTrcWidget*) object;
 
 	g_object_unref (trc->priv->layout);
-	if (trc->priv->data != NULL)
-		g_ptr_array_unref (trc->priv->data);
+	if (trc->priv->clut != NULL)
+		g_object_unref (trc->priv->clut);
 	G_OBJECT_CLASS (gcm_trc_widget_parent_class)->finalize (object);
 }
 
+/**
+ * gcm_trc_widget_draw_grid:
+ *
+ * Draw the 10x10 dotted grid onto the trc.
+ **/
 static void
 gcm_trc_widget_draw_grid (GcmTrcWidget *trc, cairo_t *cr)
 {
@@ -182,6 +203,9 @@ gcm_trc_widget_draw_grid (GcmTrcWidget *trc, cairo_t *cr)
 	cairo_restore (cr);
 }
 
+/**
+ * gcm_trc_widget_map_to_display:
+ **/
 static void
 gcm_trc_widget_map_to_display (GcmTrcWidget *trc, gdouble x, gdouble y, gdouble *x_retval, gdouble *y_retval)
 {
@@ -191,33 +215,40 @@ gcm_trc_widget_map_to_display (GcmTrcWidget *trc, gdouble x, gdouble y, gdouble 
 	*y_retval = ((priv->chart_height - 1) - y * (priv->chart_height - 1)) - priv->y_offset;
 }
 
+/**
+ * gcm_trc_widget_draw_line:
+ **/
 static void
 gcm_trc_widget_draw_line (GcmTrcWidget *trc, cairo_t *cr)
 {
 	gdouble wx, wy;
 	GcmTrcWidgetPrivate *priv = trc->priv;
-	CdColorRGB *tmp;
+	GPtrArray *array;
+	GcmClutData *tmp;
 	gfloat i;
 	gfloat value;
 	gfloat size;
 	gfloat linewidth;
 
 	/* nothing set yet */
-	if (priv->data == NULL)
+	if (priv->clut == NULL)
 		return;
 
 	/* set according to widget width */
 	linewidth = priv->chart_width / 250.0f;
-	size = priv->data->len;
+
+	/* get data */
+	array = gcm_clut_get_array (priv->clut);
+	size = array->len;
 
 	cairo_save (cr);
 
 	/* do red */
 	cairo_set_line_width (cr, linewidth + 1.0f);
 	cairo_set_source_rgb (cr, 0.5f, 0.0f, 0.0f);
-	for (i = 0; i < size; i++) {
-		tmp = g_ptr_array_index (priv->data, (guint) i);
-		value = tmp->R;
+	for (i=0; i<size; i++) {
+		tmp = g_ptr_array_index (array, (guint) i);
+		value = tmp->red/65536.0f;
 		gcm_trc_widget_map_to_display (trc, i/(size-1), value, &wx, &wy);
 		if (i == 0)
 			cairo_move_to (cr, wx, wy+1);
@@ -232,9 +263,9 @@ gcm_trc_widget_draw_line (GcmTrcWidget *trc, cairo_t *cr)
 	/* do green */
 	cairo_set_line_width (cr, linewidth + 1.0f);
 	cairo_set_source_rgb (cr, 0.0f, 0.5f, 0.0f);
-	for (i = 0; i < size; i++) {
-		tmp = g_ptr_array_index (priv->data, (guint) i);
-		value = tmp->G;
+	for (i=0; i<size; i++) {
+		tmp = g_ptr_array_index (array, (guint) i);
+		value = tmp->green/65536.0f;
 		gcm_trc_widget_map_to_display (trc, i/(size-1), value, &wx, &wy);
 		if (i == 0)
 			cairo_move_to (cr, wx, wy-1);
@@ -249,9 +280,9 @@ gcm_trc_widget_draw_line (GcmTrcWidget *trc, cairo_t *cr)
 	/* do blue */
 	cairo_set_line_width (cr, linewidth + 1.0f);
 	cairo_set_source_rgb (cr, 0.0f, 0.0f, 0.5f);
-	for (i = 0; i < size; i++) {
-		tmp = g_ptr_array_index (priv->data, (guint) i);
-		value = tmp->B;
+	for (i=0; i<size; i++) {
+		tmp = g_ptr_array_index (array, (guint) i);
+		value = tmp->blue/65536.0f;
 		gcm_trc_widget_map_to_display (trc, i/(size-1), value, &wx, &wy);
 		if (i == 0)
 			cairo_move_to (cr, wx, wy);
@@ -263,9 +294,14 @@ gcm_trc_widget_draw_line (GcmTrcWidget *trc, cairo_t *cr)
 	cairo_set_source_rgb (cr, 0.0f, 0.0f, 1.0f);
 	cairo_stroke (cr);
 
+	g_ptr_array_unref (array);
+
 	cairo_restore (cr);
 }
 
+/**
+ * gcm_trc_widget_draw_bounding_box:
+ **/
 static void
 gcm_trc_widget_draw_bounding_box (cairo_t *cr, gint x, gint y, gint width, gint height)
 {
@@ -281,6 +317,11 @@ gcm_trc_widget_draw_bounding_box (cairo_t *cr, gint x, gint y, gint width, gint 
 	cairo_stroke (cr);
 }
 
+/**
+ * gcm_trc_widget_draw_trc:
+ *
+ * Draw the complete trc, with the box, the grid, the horseshoe and the shading.
+ **/
 static void
 gcm_trc_widget_draw_trc (GtkWidget *trc_widget, cairo_t *cr)
 {
@@ -309,6 +350,11 @@ gcm_trc_widget_draw_trc (GtkWidget *trc_widget, cairo_t *cr)
 	cairo_restore (cr);
 }
 
+/**
+ * gcm_trc_widget_draw:
+ *
+ * Just repaint the entire trc widget on expose.
+ **/
 static gboolean
 gcm_trc_widget_draw (GtkWidget *trc, cairo_t *cr)
 {
@@ -316,6 +362,10 @@ gcm_trc_widget_draw (GtkWidget *trc, cairo_t *cr)
 	return FALSE;
 }
 
+/**
+ * gcm_trc_widget_new:
+ * Return value: A new GcmTrcWidget object.
+ **/
 GtkWidget *
 gcm_trc_widget_new (void)
 {

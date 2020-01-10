@@ -28,11 +28,13 @@
 
 static void     gcm_brightness_finalize	(GObject     *object);
 
-typedef struct
+#define GCM_BRIGHTNESS_GET_PRIVATE(o) (G_TYPE_INSTANCE_GET_PRIVATE ((o), GCM_TYPE_BRIGHTNESS, GcmBrightnessPrivate))
+
+struct _GcmBrightnessPrivate
 {
 	guint				 percentage;
 	GDBusConnection			*connection;
-} GcmBrightnessPrivate;
+};
 
 enum {
 	PROP_0,
@@ -40,8 +42,7 @@ enum {
 	PROP_LAST
 };
 
-G_DEFINE_TYPE_WITH_PRIVATE (GcmBrightness, gcm_brightness, G_TYPE_OBJECT)
-#define GET_PRIVATE(o) (gcm_brightness_get_instance_private (o))
+G_DEFINE_TYPE (GcmBrightness, gcm_brightness, G_TYPE_OBJECT)
 
 #define	GPM_DBUS_SERVICE		"org.gnome.SettingsDaemon"
 #define	GPM_DBUS_INTERFACE_BACKLIGHT	"org.gnome.SettingsDaemon.Power.Screen"
@@ -50,7 +51,7 @@ G_DEFINE_TYPE_WITH_PRIVATE (GcmBrightness, gcm_brightness, G_TYPE_OBJECT)
 gboolean
 gcm_brightness_set_percentage (GcmBrightness *brightness, guint percentage, GError **error)
 {
-	GcmBrightnessPrivate *priv = GET_PRIVATE (brightness);
+	GcmBrightnessPrivate *priv = brightness->priv;
 	gboolean ret = FALSE;
 	GVariant *response = NULL;
 
@@ -88,7 +89,7 @@ out:
 gboolean
 gcm_brightness_get_percentage (GcmBrightness *brightness, guint *percentage, GError **error)
 {
-	GcmBrightnessPrivate *priv = GET_PRIVATE (brightness);
+	GcmBrightnessPrivate *priv = brightness->priv;
 	gboolean ret = FALSE;
 	GVariant *response = NULL;
 
@@ -133,7 +134,7 @@ static void
 gcm_brightness_get_property (GObject *object, guint prop_id, GValue *value, GParamSpec *pspec)
 {
 	GcmBrightness *brightness = GCM_BRIGHTNESS (object);
-	GcmBrightnessPrivate *priv = GET_PRIVATE (brightness);
+	GcmBrightnessPrivate *priv = brightness->priv;
 
 	switch (prop_id) {
 	case PROP_PERCENTAGE:
@@ -171,20 +172,22 @@ gcm_brightness_class_init (GcmBrightnessClass *klass)
 				   0, 100, 0,
 				   G_PARAM_READABLE);
 	g_object_class_install_property (object_class, PROP_PERCENTAGE, pspec);
+
+	g_type_class_add_private (klass, sizeof (GcmBrightnessPrivate));
 }
 
 static void
 gcm_brightness_init (GcmBrightness *brightness)
 {
-	GcmBrightnessPrivate *priv = GET_PRIVATE (brightness);
-	priv->percentage = 0;
+	brightness->priv = GCM_BRIGHTNESS_GET_PRIVATE (brightness);
+	brightness->priv->percentage = 0;
 }
 
 static void
 gcm_brightness_finalize (GObject *object)
 {
 	GcmBrightness *brightness = GCM_BRIGHTNESS (object);
-	GcmBrightnessPrivate *priv = GET_PRIVATE (brightness);
+	GcmBrightnessPrivate *priv = brightness->priv;
 
 	if (priv->connection != NULL)
 		g_object_unref (priv->connection);

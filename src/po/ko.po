@@ -3,736 +3,656 @@
 #
 # Homin Lee <ff4500@gmail.com>, 2010.
 # sangu <sangu.gnome@gmail.com>, 2011.
-# Seong-ho Cho <shcho@gnome.org>, 2011, 2012, 2014, 2016-2017.
-# Changwoo Ryu <cwryu@debian.org>, 2010, 2013-2015.
+# Seong-ho Cho <darkcircle.0426@gmail.com>, 2011, 2012.
+# Changwoo Ryu <cwryu@debian.org>, 2010, 2013.
 #
 msgid ""
 msgstr ""
 "Project-Id-Version: gnome-color-manager\n"
-"Report-Msgid-Bugs-To: https://bugzilla.gnome.org/enter_bug.cgi?product=gnome-"
-"color-manager&keywords=I18N+L10N&component=general\n"
-"POT-Creation-Date: 2017-02-23 16:47+0000\n"
-"PO-Revision-Date: 2017-03-18 00:00+0900\n"
-"Last-Translator: Seong-ho Cho <shcho@gnome.org>\n"
+"Report-Msgid-Bugs-To: http://bugzilla.gnome.org/enter_bug.cgi?product=gnome-color-manager&keywords=I18N+L10N\n"
+"POT-Creation-Date: 2013-03-14 07:45+0000\n"
+"PO-Revision-Date: 2013-03-18 01:20+0900\n"
+"Last-Translator: Changwoo Ryu <cwryu@debian.org>\n"
 "Language-Team: GNOME Korea <gnome-kr@googlegroups.com>\n"
-"Language: ko\n"
+"Language: Korean\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=1; plural=0;\n"
-"X-Generator: Poedit 1.8.7\n"
 
-#. TRANSLATORS: this is the application name for libcanberra
-#: data/appdata/org.gnome.ColorProfileViewer.appdata.xml.in:7
-#: src/gcm-calibrate-argyll.c:1914 src/gcm-calibrate-argyll.c:2001
-#: src/gcm-calibrate-argyll.c:2038 src/gcm-calibrate-argyll.c:2064
-#: src/gcm-calibrate.c:380 src/gcm-calibrate.c:416 src/gcm-calibrate.c:455
-#: src/gcm-calibrate-main.c:182
-msgid "GNOME Color Manager"
-msgstr "그놈 색 관리자"
-
-#: data/appdata/org.gnome.ColorProfileViewer.appdata.xml.in:8
-#: data/org.gnome.ColorProfileViewer.desktop.in:4
-msgid "Inspect and compare installed color profiles"
-msgstr "설치한 시스템 색 프로파일 점검 및 비교"
-
-#: data/appdata/org.gnome.ColorProfileViewer.appdata.xml.in:10
-msgid ""
-"GNOME Color Profile Viewer shows installed color profiles on your system and "
-"allows you to calibrate displays, printers and cameras using a wizard."
-msgstr ""
-"그놈 색 프로파일 보기에서는 시스템에 설치한 컬러 프로파일을 표시하고, 디스플"
-"레이/프린터/카메라의 색을 보정할 수 있습니다."
-
-#: data/appdata/org.gnome.ColorProfileViewer.appdata.xml.in:15
-msgid ""
-"This functionality is typically used by GNOME Control Center from the color "
-"panel although can be used on its own."
-msgstr ""
-"이 기능은 주로 그놈 제어 센터의 \"색\" 부분에서 사용하지만, 단독으로도 사용"
-"할 수 있습니다."
-
-#: data/gcm-calibrate.desktop.in:3
+#: ../data/gcm-calibrate.desktop.in.h:1
 msgid "Color"
 msgstr "색"
 
-#: data/gcm-calibrate.desktop.in:4
+#: ../data/gcm-calibrate.desktop.in.h:2
 msgid "Color Calibration"
 msgstr "색 보정"
 
-#. Translators: Do NOT translate or transliterate this text (this is an icon file name)!
-#: data/gcm-calibrate.desktop.in:6 data/gcm-picker.desktop.in:6
-#: data/org.gnome.ColorProfileViewer.desktop.in:6
-msgid "gnome-color-manager"
-msgstr "gnome-color-manager"
-
-#: data/gcm-import.desktop.in:3
+#: ../data/gcm-import.desktop.in.h:1
 msgid "ICC Profile Installer"
 msgstr "ICC 프로파일 설치"
 
-#: data/gcm-import.desktop.in:4
+#: ../data/gcm-import.desktop.in.h:2
 msgid "Install ICC profiles"
 msgstr "ICC 프로파일 설치"
 
-#. Translators: Do NOT translate or transliterate this text (this is an icon file name)!
-#: data/gcm-import.desktop.in:10
-msgid "application-vnd.iccprofile"
-msgstr "application-vnd.iccprofile"
-
 #. Window title, where the user can pick spot colors using a measuring device
-#: data/gcm-picker.desktop.in:3 data/gcm-picker.ui:27
+#: ../data/gcm-picker.desktop.in.h:1 ../data/gcm-picker.ui.h:2
 msgid "Color Picker"
 msgstr "색 선택"
 
-#: data/gcm-picker.desktop.in:4
+#: ../data/gcm-picker.desktop.in.h:2
 msgid "Use the color sensor to sample spot colors"
-msgstr "색 센서를 사용하여 한 지점의 색을 가져옵니다"
-
-#. the color representation
-#. TRANSLATORS: this the ICC colorspace type
-#: data/gcm-picker.ui:93 src/gcm-viewer.c:587
-msgid "XYZ"
-msgstr "XYZ"
-
-#. Lab is the color representation and D50 is the white point
-#: data/gcm-picker.ui:108
-msgid "Lab (D50)"
-msgstr "Lab(D50)"
-
-#. This refers to the amount of ambient light on the sensor
-#: data/gcm-picker.ui:123
-msgid "Media whitepoint"
-msgstr "미디어 화이트 포인트"
-
-#. This refers to the amount of ambient light on the sensor
-#: data/gcm-picker.ui:138
-msgid "Color Temperature"
-msgstr "색 온도"
-
-#. This refers to the amount of ambient light on the sensor
-#: data/gcm-picker.ui:153
-msgid "Ambient"
-msgstr "주변광"
-
-#. This is the title to a combobox that switches the RGB conversion between different colorspaces such as Adobe RGB and sRGB
-#. The profile colorspace, e.g. RGB
-#: data/gcm-picker.ui:168 data/gcm-viewer.ui:122
-msgid "Colorspace"
-msgstr "색 영역"
-
-#. These are the values of the chosen color in Red, Green, Blue encoding
-#. TRANSLATORS: this is the colorspace, e.g. red, green, blue
-#. TRANSLATORS: this the ICC colorspace type
-#: data/gcm-picker.ui:183 src/gcm-utils.c:285 src/gcm-viewer.c:607
-msgid "RGB"
-msgstr "RGB"
-
-#. This shows the error in the conversion to RGB.
-#: data/gcm-picker.ui:198
-msgid "Error"
-msgstr "오류"
-
-#. Expander title, the results from the color picker
-#: data/gcm-picker.ui:297
-msgid "Results"
-msgstr "결과"
+msgstr "점의 색을 가져오려면 색 센서를 사용합니다"
 
 #. Button text, to get a single sample of color
-#: data/gcm-picker.ui:328
+#: ../data/gcm-picker.ui.h:4
 msgid "_Measure"
 msgstr "측정(_M)"
 
-#: data/gcm-viewer.ui:52
+#. the color representation
+#: ../data/gcm-picker.ui.h:6
+msgid "XYZ:"
+msgstr "XYZ:"
+
+#. Lab is the color representation and D50 is the white point
+#: ../data/gcm-picker.ui.h:8
+msgid "Lab (D50):"
+msgstr "Lab (D50):"
+
+#. This refers to the amount of ambient light on the sensor
+#: ../data/gcm-picker.ui.h:10
+msgid "Media whitepoint:"
+msgstr "미디어 화이트포인트:"
+
+#. This refers to the amount of ambient light on the sensor
+#: ../data/gcm-picker.ui.h:12
+msgid "Color Temperature:"
+msgstr "색 온도:"
+
+#. This refers to the amount of ambient light on the sensor
+#: ../data/gcm-picker.ui.h:14
+msgid "Ambient:"
+msgstr "주변광:"
+
+#. This is the title to a combobox that switches the RGB conversion between different colorspaces such as Adobe RGB and sRGB
+#: ../data/gcm-picker.ui.h:16
+msgid "Colorspace:"
+msgstr "색 영역:"
+
+#. These are the values of the chosen color in Red, Green, Blue encoding
+#: ../data/gcm-picker.ui.h:18
+msgid "RGB:"
+msgstr "RGB:"
+
+#. This shows the error in the conversion to RGB.
+#: ../data/gcm-picker.ui.h:20
+msgid "Error:"
+msgstr "오류:"
+
+#. Expander title, the results from the color picker
+#: ../data/gcm-picker.ui.h:22
+msgid "Results"
+msgstr "기본값"
+
+#: ../data/gcm-viewer.desktop.in.h:1 ../data/gcm-viewer.ui.h:1
+msgid "Color Profile Viewer"
+msgstr "색 프로파일 보기"
+
+#: ../data/gcm-viewer.desktop.in.h:2
+msgid "Inspect and compare installed color profiles"
+msgstr "설치한 시스템 색 프로파일 점검 및 비교하기"
+
+#: ../data/gcm-viewer.ui.h:2
 msgid "Add a profile for the device"
 msgstr "장치에 프로파일 추가"
 
-#: data/gcm-viewer.ui:67
+#: ../data/gcm-viewer.ui.h:3
 msgid "Remove a profile from the device"
-msgstr "장치에서 프로파일 제거"
+msgstr "장치로부터 프로파일 제거"
 
 #. The type of profile, e.g. display, scanner, etc.
-#: data/gcm-viewer.ui:106
+#: ../data/gcm-viewer.ui.h:5
 msgid "Profile type"
-msgstr "프로파일 형식"
+msgstr "프로파일 유형"
+
+#. The profile colorspace, e.g. RGB
+#: ../data/gcm-viewer.ui.h:7
+msgid "Colorspace"
+msgstr "색 영역"
 
 #. When the profile was created
-#: data/gcm-viewer.ui:138
+#: ../data/gcm-viewer.ui.h:9
 msgid "Created"
 msgstr "만든 날짜"
 
 #. The version of the profile
-#: data/gcm-viewer.ui:155
+#: ../data/gcm-viewer.ui.h:11
 msgid "Version"
 msgstr "버전"
 
 #. The manufacturer of the profile
-#: data/gcm-viewer.ui:172
-msgid "Manufacturer"
-msgstr "제조사"
+#: ../data/gcm-viewer.ui.h:13
+msgid "Device manufacturer"
+msgstr "장치 제조사"
 
 #. The manufacturer of the profile
-#: data/gcm-viewer.ui:189
-msgid "Model"
-msgstr "모델"
+#: ../data/gcm-viewer.ui.h:15
+msgid "Device model"
+msgstr "장치 모델"
 
 #. If the profile contains a display correction table
-#: data/gcm-viewer.ui:205
+#: ../data/gcm-viewer.ui.h:17
 msgid "Display correction"
 msgstr "디스플레이 보정"
 
 #. The basename (the last section of the filename) of the profile
-#: data/gcm-viewer.ui:221
+#: ../data/gcm-viewer.ui.h:19
 msgid "White point"
 msgstr "화이트 포인트"
 
 #. The licence of the profile, normally non-free
-#: data/gcm-viewer.ui:238
-msgid "Copyright"
-msgstr "저작권"
+#: ../data/gcm-viewer.ui.h:21
+msgid "License"
+msgstr "라이선스"
 
 #. The file size in bytes of the profile
-#: data/gcm-viewer.ui:254
+#: ../data/gcm-viewer.ui.h:23
 msgid "File size"
 msgstr "파일 크기"
 
 #. The basename (the last section of the filename) of the profile
-#: data/gcm-viewer.ui:271
+#: ../data/gcm-viewer.ui.h:25
 msgid "Filename"
 msgstr "파일 이름"
 
 #. warnings for the profile
-#: data/gcm-viewer.ui:288
+#: ../data/gcm-viewer.ui.h:27
 msgid "Warnings"
 msgstr "경고"
 
-#: data/gcm-viewer.ui:474
+#: ../data/gcm-viewer.ui.h:28
 msgid "Information"
 msgstr "정보"
 
-#: data/gcm-viewer.ui:502
+#: ../data/gcm-viewer.ui.h:29
 msgid "y"
 msgstr "Y"
 
-#: data/gcm-viewer.ui:521
+#: ../data/gcm-viewer.ui.h:30
 msgid "x"
 msgstr "X"
 
-#: data/gcm-viewer.ui:552
+#: ../data/gcm-viewer.ui.h:31
 msgid "A CIE 1931 diagram shows a 2D representation of the profile gamut"
-msgstr "CIE 1931 다이어그램은 프로파일 색 영역의 평면 표현을 나타냅니다."
+msgstr "CIE 1931 다이어그램은 프로파일 영역의 2D 표현상태를 보여줍니다"
 
-#: data/gcm-viewer.ui:569
+#: ../data/gcm-viewer.ui.h:32
 msgid "CIE 1931"
 msgstr "CIE 1931"
 
-#: data/gcm-viewer.ui:591
+#: ../data/gcm-viewer.ui.h:33
+msgid "This 3D hull is what the profile looks like in Lab space"
+msgstr "이 3D 면체는 Lab 영역에서 프로파일이 어떻게 보이는지를 나타냅니다."
+
+#: ../data/gcm-viewer.ui.h:34
+msgid "3D Gamut"
+msgstr "3D 영역"
+
+#: ../data/gcm-viewer.ui.h:35
 msgid "Response out"
 msgstr "응답 출력"
 
-#: data/gcm-viewer.ui:611 data/gcm-viewer.ui:699
+#: ../data/gcm-viewer.ui.h:36
 msgid "Response in"
 msgstr "응답 입력"
 
-#: data/gcm-viewer.ui:640
+#: ../data/gcm-viewer.ui.h:37
 msgid ""
 "A tone reproduction curve is the mapping of scene luminance to display "
 "luminance"
-msgstr ""
-"계조 재현 곡선(TRC, tone reproduction curve)은 장면의 밝기를 화면의 밝기로 매"
-"핑하는 곡선입니다"
+msgstr "톤 재생산 곡선은 장면의 밝기를 화면의 밝기로 매핑합니다"
 
-#: data/gcm-viewer.ui:657
+#: ../data/gcm-viewer.ui.h:38
 msgid "TRC"
 msgstr "TRC"
 
-#: data/gcm-viewer.ui:679
+#: ../data/gcm-viewer.ui.h:39
 msgid "Video card out"
 msgstr "비디오 카드 출력"
 
-#: data/gcm-viewer.ui:728
+#: ../data/gcm-viewer.ui.h:40
 msgid "A video card gamma table shows the curves loaded into the display"
-msgstr ""
-"비디오 카드 감마 테이블(VCGT, video card gamma table)은 디스플레이에 불러온 "
-"감마 곡선을 표시합니다"
+msgstr "비디오 카드 감마 테이블은 디스플레이에 불러온 감마 곡선을 보여줍니다"
 
-#: data/gcm-viewer.ui:745
+#: ../data/gcm-viewer.ui.h:41
 msgid "VCGT"
 msgstr "VCGT"
 
-#: data/gcm-viewer.ui:780 data/gcm-viewer.ui:902
+#: ../data/gcm-viewer.ui.h:42
 msgid "Previous Image"
 msgstr "이전 사진"
 
 #. This is an example image that is saved in sRGB gamut
-#: data/gcm-viewer.ui:798 data/gcm-viewer.ui:920
+#: ../data/gcm-viewer.ui.h:44
 msgid "sRGB example"
 msgstr "sRGB 예제"
 
-#: data/gcm-viewer.ui:829 data/gcm-viewer.ui:951
+#: ../data/gcm-viewer.ui.h:45
 msgid "Next Image"
 msgstr "다음 사진"
 
-#: data/gcm-viewer.ui:850
+#: ../data/gcm-viewer.ui.h:46
 msgid "This shows what an image would look like if saved with the profile"
-msgstr "이 프로파일로 저장했을 때 사진이 어떻게 나타나는지 표시합니다"
+msgstr "프로파일을 저장했을 때 이 이미지가 어떻게 보이는지를 보여줍니다"
 
-#: data/gcm-viewer.ui:867
+#: ../data/gcm-viewer.ui.h:47
 msgid "From sRGB"
-msgstr "sRGB에서"
+msgstr "sRGB로 부터"
 
-#: data/gcm-viewer.ui:972
+#: ../data/gcm-viewer.ui.h:48
 msgid "This shows what an image would look like if opened with the profile"
-msgstr "이 프로파일로 열었을 때 사진이 어떻게 나타나는지 표시합니다"
+msgstr "프로파일을 열었을 경우 이 이미지가 어떻게 보이는지를 보여줍니다"
 
-#: data/gcm-viewer.ui:989
+#: ../data/gcm-viewer.ui.h:49
 msgid "To sRGB"
 msgstr "sRGB로"
 
-#: data/gcm-viewer.ui:1040
+#: ../data/gcm-viewer.ui.h:50
 msgid "Named colors are specific colors that are defined in the profile"
-msgstr "이름 붙은 색은 프로파일에 정의한 개별 색입니다"
+msgstr "이름이 붙은 색은 프로파일에 정의된 특정한 색입니다"
 
-#: data/gcm-viewer.ui:1057
+#: ../data/gcm-viewer.ui.h:51
 msgid "Named Colors"
-msgstr "이름 붙은 색"
+msgstr "이름이 붙은 색"
 
-#: data/gcm-viewer.ui:1096
+#: ../data/gcm-viewer.ui.h:52
 msgid ""
 "Metadata is additional information stored in the profile for programs to use."
-msgstr ""
-"메타데이터는 사용하려는 프로그램이 이 프로파일에 저장한 추가 정보입니다."
+msgstr "메타데이터는 프로그램을 사용하려고 이 프로파일에 저장된 추가 정보입니다."
 
-#: data/gcm-viewer.ui:1113
+#: ../data/gcm-viewer.ui.h:53
 msgid "Metadata"
 msgstr "메타데이터"
 
-#: data/gcm-viewer.ui:1133 data/org.gnome.ColorProfileViewer.desktop.in:3
-msgid "Color Profile Viewer"
-msgstr "색 프로파일 보기"
-
-#. Translators: Search terms to find this application. Do NOT translate or localize the semicolons! The list MUST also end with a semicolon!
-#: data/org.gnome.ColorProfileViewer.desktop.in:13
-msgid "Color;ICC;"
-msgstr "Color;ICC;색;"
-
-#. TRANSLATORS: title, default paramters needed to calibrate_argyll
-#: src/gcm-calibrate-argyll.c:362
+#: ../src/gcm-calibrate-argyll.c:349
 msgid "Getting default parameters"
-msgstr "기본 매개변수 값 가져오는 중"
+msgstr "기본 파라미터 설정"
 
-#. TRANSLATORS: dialog message
-#: src/gcm-calibrate-argyll.c:367
+#: ../src/gcm-calibrate-argyll.c:354
 msgid ""
 "This pre-calibrates the screen by sending colored and gray patches to your "
 "screen and measuring them with the hardware device."
-msgstr ""
-"화면에 대한 색 보정 및 회색 보정 패치를 보내어 화면을 미리 보정하고, 하드웨"
-"어 장치로 측정합니다."
+msgstr "색 전송과 화면에 대한 회색 보정 그리고 하드웨어 장치에 대한 측정으로 화면을 미리 보정합니다."
 
-#. TRANSLATORS: title, patches are specific colours used in calibration
-#: src/gcm-calibrate-argyll.c:445
+#: ../src/gcm-calibrate-argyll.c:446
 msgid "Reading the patches"
 msgstr "패치 읽는 중"
 
-#. TRANSLATORS: dialog message
-#: src/gcm-calibrate-argyll.c:450
+#: ../src/gcm-calibrate-argyll.c:451
 msgid "Reading the patches using the color measuring instrument."
-msgstr "색 측정 장비로 패치를 읽는 중입니다."
+msgstr "색 측정 장비로 패치를 읽는 중 입니다."
 
-#. TRANSLATORS: title, drawing means painting to the screen
-#: src/gcm-calibrate-argyll.c:538
+#: ../src/gcm-calibrate-argyll.c:555
 msgid "Drawing the patches"
 msgstr "패치 그리는 중"
 
-#. TRANSLATORS: dialog message
-#: src/gcm-calibrate-argyll.c:543
+#: ../src/gcm-calibrate-argyll.c:560
 msgid ""
 "Drawing the generated patches to the screen, which will then be measured by "
 "the hardware device."
-msgstr "하드웨어 장치로 측정할 생성 패치를 화면에 그립니다."
+msgstr ""
+"생성된 패치를 화면에 그리는 중, 패치는 하드웨어 장치를 사용해 측정하게 됩니"
+"다."
 
-#. TRANSLATORS: title, a profile is a ICC file
-#: src/gcm-calibrate-argyll.c:628 src/gcm-calibrate-argyll.c:919
+#: ../src/gcm-calibrate-argyll.c:659 ../src/gcm-calibrate-argyll.c:1020
 msgid "Generating the profile"
 msgstr "프로파일 만드는 중"
 
-#. TRANSLATORS: dialog message
-#: src/gcm-calibrate-argyll.c:633
+#: ../src/gcm-calibrate-argyll.c:664
 msgid "Generating the ICC color profile that can be used with this screen."
-msgstr "이 화면에서 사용할 수 있는 ICC 색 프로파일을 만드는 중입니다."
+msgstr "이 화면에서 사용할 수 있는 ICC 색 프로파일을 만드 중 입니다."
 
-#. TRANSLATORS: title, a profile is a ICC file
-#: src/gcm-calibrate-argyll.c:773
+#: ../src/gcm-calibrate-argyll.c:834
 msgid "Copying files"
 msgstr "파일 복사 중"
 
-#. TRANSLATORS: dialog message
-#: src/gcm-calibrate-argyll.c:778
+#: ../src/gcm-calibrate-argyll.c:839
 msgid "Copying source image, chart data and CIE reference values."
-msgstr "원본 이미지, 표 데이터, CIE 참조 값을 복사하는 중입니다."
+msgstr "이미지 원본, 표 데이터, CIE 참조 값을 복사하는 중 입니다."
 
-#. TRANSLATORS: title, drawing means painting to the screen
-#: src/gcm-calibrate-argyll.c:826
+#: ../src/gcm-calibrate-argyll.c:910
 msgid "Measuring the patches"
-msgstr "패치 측정 중"
+msgstr "패치를 측정하는 중"
 
-#. TRANSLATORS: dialog message
-#: src/gcm-calibrate-argyll.c:831
+#: ../src/gcm-calibrate-argyll.c:915
 msgid "Detecting the reference patches and measuring them."
-msgstr "참조 패치를 찾아서 측정하는 중입니다."
+msgstr "참조 패치를 찾아서 측정하는 중 입니다."
 
-#. TRANSLATORS: dialog message
-#: src/gcm-calibrate-argyll.c:924
+#: ../src/gcm-calibrate-argyll.c:1025
 msgid "Generating the ICC color profile that can be used with this device."
-msgstr "이 장치에 사용할 ICC 색 프로파일을 생성 중입니다."
+msgstr "이 장치에 사용할 ICC 색 프로파일을 생성 중 입니다."
 
-#. TRANSLATORS: title, patches are specific colors used in calibration
-#: src/gcm-calibrate-argyll.c:1236
+#: ../src/gcm-calibrate-argyll.c:1390
 msgid "Printing patches"
 msgstr "패치 인쇄 중"
 
-#. TRANSLATORS: dialog message
-#: src/gcm-calibrate-argyll.c:1241
+#: ../src/gcm-calibrate-argyll.c:1395
 msgid "Rendering the patches for the selected paper and ink."
-msgstr "선택한 종이와 잉크에 맞는 패치를 랜더링하는 중입니다."
+msgstr "선택한 종이와 잉크에 맞는 패치를 랜더링 하는 중 입니다."
 
-#. TRANSLATORS: title, patches are specific colours used in calibration
-#: src/gcm-calibrate-argyll.c:1565
+#: ../src/gcm-calibrate-argyll.c:1769
 msgid "Wait for the ink to dry"
-msgstr "잉크가 마를 동안 기다리십시오"
+msgstr "잉크가 마를 동안 기다리세요"
 
-#. TRANSLATORS: dialog message
-#: src/gcm-calibrate-argyll.c:1570
+#: ../src/gcm-calibrate-argyll.c:1774
 msgid ""
 "Please wait a few minutes for the ink to dry. Profiling damp ink will "
 "produce a poor profile and may damage your color measuring instrument."
 msgstr ""
-"잉크가 마를 때 까지 몇 분동안 기다리십시오. 잉크에 젖은 채로 프로파일을 만들"
-"면 나쁜 결과물이 나올 뿐 아니라 색 측정 장치가 손상될 수도 있습니다."
+"잉크가 마를 때 까지 몇 분간 기다려 주세요. 잉크가 축축한 채로 프로파일을 하"
+"면 나쁜 결과물이 나올 뿐 아니라 색 측정 장치에 손상을 줄 수도 있습니다."
 
-#. TRANSLATORS: title, instrument refers to a calibration device
-#: src/gcm-calibrate-argyll.c:1714
+#: ../src/gcm-calibrate-argyll.c:1951
 msgid "Set up instrument"
 msgstr "장비 설정"
 
-#. TRANSLATORS: dialog message
-#: src/gcm-calibrate-argyll.c:1719
+#: ../src/gcm-calibrate-argyll.c:1956
 msgid "Setting up the instrument for use…"
 msgstr "사용할 장비 설정 중…"
 
-#. TRANSLATORS: title, the calibration failed
-#: src/gcm-calibrate-argyll.c:1896 src/gcm-calibrate-argyll.c:1961
+#: ../src/gcm-calibrate-argyll.c:2168 ../src/gcm-calibrate-argyll.c:2234
 msgid "Calibration error"
 msgstr "보정 오류"
 
-#. TRANSLATORS: message, the sample was not read correctly
-#: src/gcm-calibrate-argyll.c:1901
+#: ../src/gcm-calibrate-argyll.c:2173
 msgid "The sample could not be read at this time."
 msgstr "지금은 샘플을 읽을 수 없습니다."
 
-#: src/gcm-calibrate-argyll.c:1908 src/gcm-calibrate-argyll.c:2032
-#: src/gcm-calibrate-argyll.c:2058 src/gcm-calibrate-argyll.c:2095
-#: src/gcm-calibrate-argyll.c:2122
+#: ../src/gcm-calibrate-argyll.c:2180 ../src/gcm-calibrate-argyll.c:2305
+#: ../src/gcm-calibrate-argyll.c:2331 ../src/gcm-calibrate-argyll.c:2368
+#: ../src/gcm-calibrate-argyll.c:2395
 msgid "Retry"
 msgstr "재시도"
 
-#. TRANSLATORS: message, no firmware is available
-#: src/gcm-calibrate-argyll.c:1967
-msgid "No firmware is installed for this instrument."
-msgstr "이 장비에 맞는 펌웨어를 설치하지 않았습니다."
+#. TRANSLATORS: this is the application name for libcanberra
+#: ../src/gcm-calibrate-argyll.c:2186 ../src/gcm-calibrate-argyll.c:2274
+#: ../src/gcm-calibrate-argyll.c:2311 ../src/gcm-calibrate-argyll.c:2337
+#: ../src/gcm-calibrate.c:440 ../src/gcm-calibrate.c:480
+#: ../src/gcm-calibrate.c:521 ../src/gcm-calibrate-main.c:203
+msgid "GNOME Color Manager"
+msgstr "그놈 색 관리자"
 
-#. TRANSLATORS: message, the image wasn't good enough
-#: src/gcm-calibrate-argyll.c:1972
+#: ../src/gcm-calibrate-argyll.c:2240
+msgid "No firmware is installed for this instrument."
+msgstr "이 장비에 맞는 펌웨어가 설치되지 않았습니다."
+
+#: ../src/gcm-calibrate-argyll.c:2245
 msgid ""
-"The pattern match wasn’t good enough. Ensure you have the correct type of "
+"The pattern match wasn't good enough. Ensure you have the correct type of "
 "target selected."
 msgstr ""
-"패턴 일치 여부가 충분하지 않았습니다. 올바른 대상 형식을 설정했는지 확인하십"
-"시오."
+"패턴 매칭이 제대로 되지 않았습니다. 타겟 종류를 맞게 설정했는지 확인하세요."
 
-#. TRANSLATORS: message, the sensor got no readings
-#: src/gcm-calibrate-argyll.c:1978
+#: ../src/gcm-calibrate-argyll.c:2251
 msgid ""
 "The measuring instrument got no valid readings. Please ensure the aperture "
 "is fully open."
 msgstr ""
-"측정 장비에서 읽은 내용이 없습니다. 조리개가 완전히 열려 있는지 확인해보십시"
-"오."
+"측정 장비가 아무것도 읽지 못했습니다. 조리개가 완전히 열려 있는지 확인해 보세"
+"요."
 
-#. TRANSLATORS: message, the colorimeter has got confused
-#: src/gcm-calibrate-argyll.c:1983
+#: ../src/gcm-calibrate-argyll.c:2256
 msgid ""
 "The measuring instrument is busy and is not starting up. Please remove the "
 "USB plug and re-insert before trying to use this device."
 msgstr ""
-"측정 장비가 사용 중이어서 시작하지 못했습니다. 장치를 사용하기 전에 USB 플러"
-"그를 뽑았다가 다시 연결하십시오."
+"측정 장비가 바쁘기 때문에 시작되지 않았습니다. 장치를 사용하기 전에 USB 플러"
+"그를 뽑았다가 다시 연결해 보세요."
 
-#. TRANSLATORS: dialog title
-#: src/gcm-calibrate-argyll.c:2021
+#: ../src/gcm-calibrate-argyll.c:2294
 msgid "Reading target"
-msgstr "대상 읽는 중"
+msgstr "타겟 읽는 중"
 
-#. TRANSLATORS: message, no firmware is available
-#: src/gcm-calibrate-argyll.c:2026
+#: ../src/gcm-calibrate-argyll.c:2299
 msgid "Failed to read the strip correctly."
 msgstr "스트립을 제대로 읽지 못했습니다."
 
-#. TRANSLATORS: dialog title
-#: src/gcm-calibrate-argyll.c:2047
+#: ../src/gcm-calibrate-argyll.c:2320
 msgid "Reading sample"
 msgstr "표본 읽는 중"
 
-#. TRANSLATORS: message, the sample read failed due to misread
-#: src/gcm-calibrate-argyll.c:2052
+#: ../src/gcm-calibrate-argyll.c:2325
 msgid "Failed to read the color sample correctly."
 msgstr "색 표본을 올바르게 읽는데 실패했습니다."
 
 #. TRANSLATORS: dialog title, where %s is a letter like 'A'
-#: src/gcm-calibrate-argyll.c:2077
+#: ../src/gcm-calibrate-argyll.c:2350
 #, c-format
 msgid "Read strip %s rather than %s!"
-msgstr "%2$s 스트립 대신 %1$s 스트립을 읽습니다!"
+msgstr "스트림 %s(을)를 읽습니다. %s 대신!"
 
 #. TRANSLATORS: dialog message, just follow the hardware instructions
-#: src/gcm-calibrate-argyll.c:2082
-msgid "It looks like you’ve measured the wrong strip."
+#: ../src/gcm-calibrate-argyll.c:2355
+msgid "It looks like you've measured the wrong strip."
 msgstr "잘못된 스트립을 측정한 것 같습니다."
 
 #. TRANSLATORS: dialog message, just follow the hardware instructions
-#: src/gcm-calibrate-argyll.c:2086
+#: ../src/gcm-calibrate-argyll.c:2359
 msgid ""
-"If you’ve really measured the right one, it’s okay, it could just be unusual "
+"If you've really measured the right one, it's okay, it could just be unusual "
 "paper."
 msgstr ""
-"정말로 제대로 측정했다면 상관 없지만, 일반적인 종이가 아닐 수 있습니다."
+"정말 맞는 것을 측정한 것이라면, 단지 일반적이지 않은 종이인 것이 이유일 수 있"
+"으며, 괜찮습니다."
 
-#. TRANSLATORS: title, the calibration failed
-#: src/gcm-calibrate-argyll.c:2111
+#: ../src/gcm-calibrate-argyll.c:2384
 msgid "Device Error"
 msgstr "장치 오류"
 
-#. TRANSLATORS: message, the sample was not read correctly
-#: src/gcm-calibrate-argyll.c:2116
+#: ../src/gcm-calibrate-argyll.c:2389
 msgid "The device could not measure the color spot correctly."
-msgstr "장치가 한 지점의 색을 올바르게 측정할 수 없습니다."
+msgstr "장치가 color spot을 올바르게 측정할 수 없습니다."
 
 #. TRANSLATORS: dialog title, where %s is a letter like 'A'
-#: src/gcm-calibrate-argyll.c:2130
+#: ../src/gcm-calibrate-argyll.c:2403
 #, c-format
 msgid "Ready to read strip %s"
-msgstr "%s 스트립 읽을 준비"
+msgstr "스트립 %s(을)를 읽을 준비"
 
 #. TRANSLATORS: dialog message, just follow the hardware instructions
-#: src/gcm-calibrate-argyll.c:2135
+#: ../src/gcm-calibrate-argyll.c:2408
 msgid ""
 "Place the colorimeter on the area of white next to the letter and click and "
 "hold the measure switch."
 msgstr ""
-"colorimeter를 문자 옆 흰색 바탕에 두고 측정 버튼을 누른 뒤 떼지 말고 있으십시"
-"오."
+"colorimeter를 편지 옆의 하얀 색 공간에 두고 측정 버튼을 누른 뒤 떼지 말고 있"
+"으세요."
 
 #. TRANSLATORS: dialog message, just follow the hardware instructions
-#: src/gcm-calibrate-argyll.c:2139
+#: ../src/gcm-calibrate-argyll.c:2412
 msgid ""
 "Slowly scan the target line from left to right and release the switch when "
 "you get to the end of the page."
 msgstr ""
-"대상 라인을 왼쪽에서 오른쪽으로 천천히 스캔하고 종이의 끝에 도달하면 스위치"
-"를 놓으십시오."
+"타겟 라인을 왼쪽에서 오른쪽으로 천천히 스캔하고 종이의 끝에 도달하면 스위치"
+"를 놓아 줍니다."
 
 #. TRANSLATORS: dialog message, the sensor has to be above the line
-#: src/gcm-calibrate-argyll.c:2143
+#: ../src/gcm-calibrate-argyll.c:2416
 msgid ""
 "Ensure the center of the device is properly aligned with the row you are "
 "trying to measure."
-msgstr "장치의 한가운데를 측정하려는 줄에 맞게 정렬했는지 확인하십시오."
+msgstr "장치의 중앙이 측정하려는 줄과 맞게 정렬되어 있는 확인하세요."
 
 #. TRANSLATORS: dialog message, just follow the hardware instructions
-#: src/gcm-calibrate-argyll.c:2147
+#: ../src/gcm-calibrate-argyll.c:2420
 msgid ""
-"If you make a mistake, just release the switch, and you’ll get a chance to "
+"If you make a mistake, just release the switch, and you'll get a chance to "
 "try again."
-msgstr "실수했을 경우 스위치를 떼면 다시 진행할 수 있습니다."
+msgstr "잘못 한 경우 스위치를 떼면 다시 할 수 있습니다."
 
-#. TRANSLATORS: title, printing reference files to media
-#: src/gcm-calibrate-argyll.c:2241
+#: ../src/gcm-calibrate-argyll.c:2534
 msgid "Printing"
 msgstr "인쇄 중"
 
-#. TRANSLATORS: dialog message
-#: src/gcm-calibrate-argyll.c:2250
+#: ../src/gcm-calibrate-argyll.c:2543
 msgid "Preparing the data for the printer."
-msgstr "프린터에 필요한 데이터를 준비 중입니다."
+msgstr "프린터에 필요한 데이터를 준비 중 입니다."
 
-#. TRANSLATORS: dialog message
-#: src/gcm-calibrate-argyll.c:2258
+#: ../src/gcm-calibrate-argyll.c:2551
 msgid "Sending the targets to the printer."
-msgstr "대상을 프린터에 보내는 중입니다."
+msgstr "타겟을 프린터에 보내는 중 입니다."
 
-#. TRANSLATORS: dialog message
-#: src/gcm-calibrate-argyll.c:2264
+#: ../src/gcm-calibrate-argyll.c:2557
 msgid "Printing the targets…"
-msgstr "대상 출력 중…"
+msgstr "타겟 출력 중…"
 
-#. TRANSLATORS: dialog message
-#: src/gcm-calibrate-argyll.c:2270
+#: ../src/gcm-calibrate-argyll.c:2563
 msgid "The printing has finished."
-msgstr "인쇄를 완료했습니다."
+msgstr "인쇄가 완료되었습니다."
 
-#. TRANSLATORS: dialog message
-#: src/gcm-calibrate-argyll.c:2276
+#: ../src/gcm-calibrate-argyll.c:2569
 msgid "The print was aborted."
-msgstr "인쇄를 중단했습니다."
+msgstr "인쇄가 중단되었습니다."
 
-#. TRANSLATORS: title, instrument is a hardware color calibration sensor
-#: src/gcm-calibrate.c:348
+#: ../src/gcm-calibrate.c:408
 msgid "Please attach instrument"
-msgstr "장비를 연결하십시오"
+msgstr "장비를 연결하세요"
 
 #. TRANSLATORS: dialog message, ask user to attach device, and there's an example image
-#: src/gcm-calibrate.c:357
+#: ../src/gcm-calibrate.c:417
 msgid ""
 "Please attach the measuring instrument to the center of the screen on the "
 "gray square like the image below."
-msgstr "아래 그림처럼, 측정 장비를 화면 중앙의 회색 사각형에 부착하십시오."
+msgstr "아래 그림처럼, 측정 장비를 화면 중앙의 회색 사각형에 부착해 주세요."
 
 #. TRANSLATORS: dialog message, ask user to attach device
-#: src/gcm-calibrate.c:360
+#: ../src/gcm-calibrate.c:420
 msgid ""
 "Please attach the measuring instrument to the center of the screen on the "
 "gray square."
-msgstr "측정 장비를 화면 중앙의 회색 사각형에 대십시오."
+msgstr "측정 장비를 화면 중앙의 회색 사각형에 부착해 주세요."
 
 #. TRANSLATORS: dialog message, ask user to attach device
-#: src/gcm-calibrate.c:367
+#: ../src/gcm-calibrate.c:427
 msgid ""
 "You will need to hold the device on the screen for the duration of the "
 "calibration."
 msgstr "보정 주기에 대해 화면에서 장치를 유지해야 합니다."
 
-#: src/gcm-calibrate.c:374 src/gcm-calibrate.c:399 src/gcm-calibrate.c:438
+#: ../src/gcm-calibrate.c:434 ../src/gcm-calibrate.c:463
+#: ../src/gcm-calibrate.c:504
 msgid "Continue"
 msgstr "계속"
 
-#. TRANSLATORS: title, instrument is a hardware color calibration sensor
-#: src/gcm-calibrate.c:392 src/gcm-calibrate.c:428
+#: ../src/gcm-calibrate.c:456 ../src/gcm-calibrate.c:494
 msgid "Please configure instrument"
-msgstr "장비를 설정하십시오"
+msgstr "장비를 설정하세요"
 
-#. TRANSLATORS: this is when the user has to change a setting on the sensor, and we're showing a picture
-#: src/gcm-calibrate.c:403
+#: ../src/gcm-calibrate.c:467
 msgid ""
 "Please set the measuring instrument to screen mode like the image below."
-msgstr "아래 그림처럼 측정 장치를 화면 모드로 설정하십시오."
+msgstr "아래 그림처럼, 측정 장치를 화면 모드로 설정해 주세요."
 
-#. TRANSLATORS: this is when the user has to change a setting on the sensor
-#: src/gcm-calibrate.c:408
+#: ../src/gcm-calibrate.c:472
 msgid "Please set the measuring instrument to screen mode."
-msgstr "측정 장비를 화면 모드로 설정하십시오."
+msgstr "측정 장비를 화면 모드로 설정해 주세요."
 
-#. TRANSLATORS: this is when the user has to change a setting on the sensor, and we're showing a picture
-#: src/gcm-calibrate.c:442
+#: ../src/gcm-calibrate.c:508
 msgid ""
 "Please set the measuring instrument to calibration mode like the image below."
-msgstr "아래 그림처럼 측정 장치를 보정 모드로 설정하십시오."
+msgstr "아래 그림처럼, 측정 장치를 보정 모드로 설정해 주세요."
 
-#. TRANSLATORS: this is when the user has to change a setting on the sensor
-#: src/gcm-calibrate.c:447
+#: ../src/gcm-calibrate.c:513
 msgid "Please set the measuring instrument to calibration mode."
-msgstr "측정 장비를 보정 모드로 설정하십시오."
+msgstr "측정 장비를 보정 모드로 설정해 주세요."
 
 #. TRANSLATORS: dialog for file->open dialog. A calibration target image is the
 #. * aquired image of the calibration target, e.g. an image file that looks
 #. * a bit like this: http://www.colorreference.de/targets/target.jpg
-#: src/gcm-calibrate.c:596
+#: ../src/gcm-calibrate.c:681
 msgid "Select calibration target image"
-msgstr "보정 대상 이미지를 선택하십시오"
-
-#: src/gcm-calibrate.c:598 src/gcm-calibrate.c:640 src/gcm-calibrate.c:723
-#: src/gcm-viewer.c:373
-msgid "_Cancel"
-msgstr "취소(_C)"
-
-#: src/gcm-calibrate.c:599 src/gcm-calibrate.c:641 src/gcm-calibrate.c:724
-msgid "_Open"
-msgstr "열기(_O)"
+msgstr "보정 타겟 이미지 선택"
 
 #. TRANSLATORS: filter name on the file->open dialog
-#: src/gcm-calibrate.c:609
+#: ../src/gcm-calibrate.c:694
 msgid "Supported images files"
 msgstr "지원하는 이미지 파일"
 
 #. TRANSLATORS: filter name on the file->open dialog
-#: src/gcm-calibrate.c:616 src/gcm-calibrate.c:667 src/gcm-viewer.c:399
+#: ../src/gcm-calibrate.c:701 ../src/gcm-calibrate.c:755
+#: ../src/gcm-viewer.c:476
 msgid "All files"
 msgstr "모든 파일"
 
 #. TRANSLATORS: dialog for file->open dialog
-#: src/gcm-calibrate.c:638
+#: ../src/gcm-calibrate.c:726
 msgid "Select CIE reference values file"
-msgstr "CIE 참조 값 파일을 선택하십시오"
+msgstr "CIE 참조 값 파일 선택"
 
 #. TRANSLATORS: filter name on the file->open dialog
-#: src/gcm-calibrate.c:660
+#: ../src/gcm-calibrate.c:748
 msgid "CIE values"
 msgstr "CIE 값"
 
 #. TRANSLATORS: dialog for file->open dialog
-#: src/gcm-calibrate.c:721 src/gcm-viewer.c:371
+#: ../src/gcm-calibrate.c:821 ../src/gcm-viewer.c:448
 msgid "Select ICC Profile File"
-msgstr "ICC 프로파일 파일을 선택하십시오"
+msgstr "ICC 프로파일 파일 선택"
 
-#: src/gcm-calibrate-main.c:138
+#: ../src/gcm-calibrate.c:824
+msgid "Open"
+msgstr "열기"
+
+#: ../src/gcm-calibrate-main.c:147
 msgid "Calibration is not complete"
-msgstr "보정이 끝나지 않았습니다."
+msgstr "보정이 완료되지 않았습니다."
 
-#: src/gcm-calibrate-main.c:141
+#: ../src/gcm-calibrate-main.c:150
 msgid "Are you sure you want to cancel the calibration?"
 msgstr "보정을 정말로 취소하시겠습니까?"
 
-#. TRANSLATORS: button text
-#: src/gcm-calibrate-main.c:144
+#: ../src/gcm-calibrate-main.c:153
 msgid "Continue calibration"
 msgstr "보정 계속"
 
-#. TRANSLATORS: button text
-#: src/gcm-calibrate-main.c:148
+#: ../src/gcm-calibrate-main.c:157
 msgid "Cancel and close"
 msgstr "취소하고 닫기"
 
 #. TRANSLATORS: this is the sound description
-#: src/gcm-calibrate-main.c:184
+#: ../src/gcm-calibrate-main.c:205
 msgid "Profiling completed"
-msgstr "프로파일링 완료"
+msgstr "프로파일 완료"
 
 #. TRANSLATORS: this is the page title
-#: src/gcm-calibrate-main.c:415 src/gcm-calibrate-main.c:1796
+#: ../src/gcm-calibrate-main.c:456 ../src/gcm-calibrate-main.c:1885
 msgid "Failed to calibrate"
 msgstr "보정 실패"
 
 #. TRANSLATORS: this is the page title
-#: src/gcm-calibrate-main.c:661
+#: ../src/gcm-calibrate-main.c:719
 msgid "Calibrate your camera"
 msgstr "카메라 보정"
 
 #. TRANSLATORS: this is the page title
-#: src/gcm-calibrate-main.c:665
+#: ../src/gcm-calibrate-main.c:723
 msgid "Calibrate your display"
 msgstr "디스플레이 보정"
 
 #. TRANSLATORS: this is the page title
-#: src/gcm-calibrate-main.c:669
+#: ../src/gcm-calibrate-main.c:727
 msgid "Calibrate your printer"
 msgstr "프린터 보정"
 
 #. TRANSLATORS: this is the page title
-#: src/gcm-calibrate-main.c:673
+#: ../src/gcm-calibrate-main.c:731
 msgid "Calibrate your device"
 msgstr "장치 보정"
 
 #. TRANSLATORS: this is the final intro page text
-#: src/gcm-calibrate-main.c:685
+#: ../src/gcm-calibrate-main.c:743
 msgid ""
 "Any existing screen correction will be temporarily turned off and the "
 "brightness set to maximum."
@@ -741,140 +661,139 @@ msgstr ""
 "다."
 
 #. TRANSLATORS: this is the final intro page text
-#: src/gcm-calibrate-main.c:692
+#: ../src/gcm-calibrate-main.c:750
 msgid "You can cancel this process at any stage by pressing the cancel button."
 msgstr "취소 단추를 눌러 어떤 단계에서든지 이 과정을 취소할 수 있습니다."
 
 #. TRANSLATORS: this is the calibration wizard page title
-#: src/gcm-calibrate-main.c:698
+#: ../src/gcm-calibrate-main.c:756
 msgid "Introduction"
 msgstr "개요"
 
-#: src/gcm-calibrate-main.c:774
+#: ../src/gcm-calibrate-main.c:840
 msgid "Show File"
-msgstr "파일 표시"
+msgstr "파일 보이기"
 
-#: src/gcm-calibrate-main.c:777
+#: ../src/gcm-calibrate-main.c:843
 msgid "Click here to show the profile"
 msgstr "프로파일을 보려면 여기를 누르십시오"
 
 #. TRANSLATORS: this is the page title
-#: src/gcm-calibrate-main.c:797
+#: ../src/gcm-calibrate-main.c:866
 msgid "All done!"
 msgstr "모두 완료!"
 
 #. TRANSLATORS: this is the final summary
-#: src/gcm-calibrate-main.c:807
+#: ../src/gcm-calibrate-main.c:876
 msgid "The camera has been calibrated successfully."
-msgstr "카메라를 성공적으로 보정했습니다."
+msgstr "카메라가 성공적으로 보정되었습니다."
 
 #. TRANSLATORS: this is the final summary
-#: src/gcm-calibrate-main.c:811
+#: ../src/gcm-calibrate-main.c:880
 msgid "The display has been calibrated successfully."
-msgstr "디스플레이를 성공적으로 보정했습니다."
+msgstr "디스플레이가 성공적으로 보정되었습니다."
 
 #. TRANSLATORS: this is the final summary
-#: src/gcm-calibrate-main.c:815
+#: ../src/gcm-calibrate-main.c:884
 msgid "The printer has been calibrated successfully."
-msgstr "프린터를 성공적으로 보정했습니다."
+msgstr "프린터가 성공적으로 보정되었습니다."
 
 #. TRANSLATORS: this is the final summary
-#: src/gcm-calibrate-main.c:819
+#: ../src/gcm-calibrate-main.c:888
 msgid "The device has been calibrated successfully."
-msgstr "장치를 성공적으로 보정했습니다."
+msgstr "장치가 성공적으로 보정되었습니다."
 
 #. TRANSLATORS: this is the final summary
-#: src/gcm-calibrate-main.c:826
+#: ../src/gcm-calibrate-main.c:895
 msgid ""
 "To view details about the new profile or to undo the calibration visit the "
 "<a href=\"control-center://color\">control center</a>."
 msgstr ""
 "새 프로파일의 자세한 내용을 보거나 보정을 되돌리려면 <a href=\"control-"
-"center://color\">제어 센터</a>로 가십시오."
+"center://color\">제어 센터</a>로 갑니다."
 
-#: src/gcm-calibrate-main.c:835
+#: ../src/gcm-calibrate-main.c:904
 msgid ""
 "You can use the profile with <a href=\"import-linux\">Linux</a>, <a href="
 "\"import-osx\">Apple OS X</a> and <a href=\"import-windows\">Microsoft "
 "Windows</a> systems."
 msgstr ""
 "<a href=\"import-linux\">리눅스</a>, <a href=\"import-osx\">애플 OS X</a> "
-"and <a href=\"import-windows\">마이크로소프트 윈도우</a>의 프로파일을 사용할 "
-"수 있습니다."
+"and <a href=\"import-windows\">마이크로소프트 윈도웆,</a>에서 프로파일을 사용"
+"할 수 있습니다."
 
 #. TRANSLATORS: this is the calibration wizard page title
-#: src/gcm-calibrate-main.c:847 src/gcm-calibrate-main.c:1809
+#: ../src/gcm-calibrate-main.c:916 ../src/gcm-calibrate-main.c:1898
 msgid "Summary"
 msgstr "요약"
 
 #. TRANSLATORS: this is the page title
-#: src/gcm-calibrate-main.c:868
+#: ../src/gcm-calibrate-main.c:940
 msgid "Performing calibration"
-msgstr "보정 수행 중"
+msgstr "보정 수행중"
 
-#: src/gcm-calibrate-main.c:881
+#: ../src/gcm-calibrate-main.c:953
 msgid "Calibration is about to start"
-msgstr "보정 시작 중"
+msgstr "보정이 시작되고 있습니다"
 
 #. TRANSLATORS: this is the calibration wizard page title
-#: src/gcm-calibrate-main.c:899
+#: ../src/gcm-calibrate-main.c:971
 msgid "Action"
 msgstr "동작"
 
 #. TRANSLATORS: dialog message, preface
-#: src/gcm-calibrate-main.c:919
+#: ../src/gcm-calibrate-main.c:994
 msgid "Calibration checklist"
-msgstr "보정 검사 목록"
+msgstr "보정 검사리스트"
 
 #. TRANSLATORS: this is intro page text
-#: src/gcm-calibrate-main.c:926
+#: ../src/gcm-calibrate-main.c:1001
 msgid ""
 "Before calibrating the display, it is recommended to configure your display "
 "with the following settings to get optimal results."
-msgstr ""
-"디스플레이를 보정하기 전에, 최적의 결과를 얻으려면 디스플레이를 다음 설정으"
-"로 맞추는게 좋습니다."
+msgstr "디스플레이를 보정 하기 전에, 최적의 결과를 얻으려면 디스플레이를 다음의 설정으로 맞추는게 좋습니다."
 
 #. TRANSLATORS: dialog message, preface
-#: src/gcm-calibrate-main.c:929
+#: ../src/gcm-calibrate-main.c:1004
 msgid ""
-"You may want to consult the owner’s manual for your display on how to "
+"You may want to consult the owner's manual for your display on how to "
 "achieve these settings."
 msgstr ""
-"이 설정을 적용하려면 디스플레이 사용자 설명서를 살펴봐야 할 수 있습니다."
+"이 설정 들을 적용하려면 디스플레이의 사용자 설명서를 살펴봐야 할 수도 있습니"
+"다."
 
 #. TRANSLATORS: dialog message, bullet item
-#: src/gcm-calibrate-main.c:932
+#: ../src/gcm-calibrate-main.c:1007
 msgid "Reset your display to the factory defaults."
-msgstr "디스플레이를 공장 출하 기본값으로 초기화하십시오."
+msgstr "디스플레이를 공장 초기화 함."
 
 #. TRANSLATORS: dialog message, bullet item
-#: src/gcm-calibrate-main.c:935
+#: ../src/gcm-calibrate-main.c:1010
 msgid "Disable dynamic contrast if your display has this feature."
-msgstr "디스플레이가 동적 대비를 지원하면 사용하지 마십시오."
+msgstr "디스플레이가 동적 대비를 지원하면 이를 사용하지 않음."
 
 #. TRANSLATORS: dialog message, bullet item
-#: src/gcm-calibrate-main.c:938
+#: ../src/gcm-calibrate-main.c:1013
 msgid ""
 "Configure your display with custom color settings and ensure the RGB "
 "channels are set to the same values."
 msgstr ""
-"디스플레이를 사용자 색 설정으로 맞추고 RGB 채널을 같은 값으로 설정했는지 확인"
-"하십시오."
+"디스플레이를 사용자 색 설정으로 맞추고 RGB 채널이 같은 값으로 설정되었는지 확"
+"인 합니다."
 
 #. TRANSLATORS: dialog message, addition to bullet item
-#: src/gcm-calibrate-main.c:941
+#: ../src/gcm-calibrate-main.c:1016
 msgid "If custom color is not available then use a 6500K color temperature."
-msgstr "사용자 색을 사용할 수 없다면 색 온도를 6500K로 설정하십시오."
+msgstr "사용자 색을 사용할 수 없다면 색 온도를 6500K로 설정합니다."
 
 #. TRANSLATORS: dialog message, bullet item
-#: src/gcm-calibrate-main.c:944
+#: ../src/gcm-calibrate-main.c:1019
 msgid ""
 "Adjust the display brightness to a comfortable level for prolonged viewing."
-msgstr "멀리서 볼 때 편안한 정도로 디스플레이의 밝기를 조정하십시오."
+msgstr "멀리서 볼 때 편안한 정도로 디스플레이의 밝기를 조정합니다."
 
 #. TRANSLATORS: dialog message, suffix
-#: src/gcm-calibrate-main.c:949
+#: ../src/gcm-calibrate-main.c:1024
 msgid ""
 "For best results, the display should have been powered for at least 15 "
 "minutes before starting the calibration."
@@ -883,139 +802,137 @@ msgstr ""
 "켜 두어야 합니다."
 
 #. TRANSLATORS: this is the calibration wizard page title
-#: src/gcm-calibrate-main.c:955
+#: ../src/gcm-calibrate-main.c:1030
 msgid "Check Settings"
 msgstr "설정 검사"
 
-#. TRANSLATORS: dialog message saying the argyllcms is not installed
-#: src/gcm-calibrate-main.c:1000
+#: ../src/gcm-calibrate-main.c:1081
 msgid "Calibration and profiling software is not installed."
-msgstr "보정과 프로파일 소프트웨어를 설치하지 않았습니다."
+msgstr "보정과 프로파일 소프트웨어을 설치하지 않았습니다."
 
-#. TRANSLATORS: dialog message saying the color targets are not installed
-#: src/gcm-calibrate-main.c:1003
+#: ../src/gcm-calibrate-main.c:1084
 msgid "These tools are required to build color profiles for devices."
-msgstr "장치의 색 프로파일을 만들려면 도구가 필요합니다."
+msgstr "장치의 색 프로파일을 만드려면 이들 도구가 필요합니다."
 
 #. TRANSLATORS: this is the page title
-#: src/gcm-calibrate-main.c:1006
+#: ../src/gcm-calibrate-main.c:1087
 msgid "More software is required!"
 msgstr "더 많은 소프트웨어가 필요합니다!"
 
-#: src/gcm-calibrate-main.c:1015
+#: ../src/gcm-calibrate-main.c:1096
 msgid "Install required software"
 msgstr "필요한 소프트웨어 설치"
 
 #. TRANSLATORS: this is the calibration wizard page title
-#: src/gcm-calibrate-main.c:1025
+#: ../src/gcm-calibrate-main.c:1106
 msgid "Install Tools"
 msgstr "도구 설치"
 
 #. TRANSLATORS: dialog message saying the color targets are not installed
-#: src/gcm-calibrate-main.c:1068
+#: ../src/gcm-calibrate-main.c:1156
 msgid "Common color target files are not installed on this computer."
-msgstr "이 컴퓨터에는 일반 색 대상 파일을 설치하지 않습니다."
+msgstr "이 컴퓨터에는 일반적인 색 타겟 파일이 설치되어 있지 않습니다."
 
 #. TRANSLATORS: dialog message saying the color targets are not installed
-#: src/gcm-calibrate-main.c:1070
+#: ../src/gcm-calibrate-main.c:1158
 msgid "Color target files are needed to convert the image to a color profile."
-msgstr "이미지를 색 프로파일로 변환하려면 색 대상 파일이 필요합니다."
+msgstr "이미지를 색 프로파일로 변환하려면 색 타겟 파일이 필요합니다."
 
 #. TRANSLATORS: dialog message, asking if it's okay to install them
-#: src/gcm-calibrate-main.c:1072
+#: ../src/gcm-calibrate-main.c:1160
 msgid "Do you want them to be installed?"
 msgstr "설치하시겠습니까?"
 
 #. TRANSLATORS: dialog message, if the user has the target file on a CDROM then there's no need for this package
-#: src/gcm-calibrate-main.c:1074
+#: ../src/gcm-calibrate-main.c:1162
 msgid "If you already have the correct file, you can skip this step."
-msgstr "이미 올바른 파일이 있다면, 이 단계를 생략할 수 있습니다."
+msgstr "이미 정확한 파일을 가지고 있따면, 이 단계를 생략할 수 있습니다."
 
 #. TRANSLATORS: this is the page title
-#: src/gcm-calibrate-main.c:1077
+#: ../src/gcm-calibrate-main.c:1165
 msgid "Optional data files available"
 msgstr "추가 데이터 파일이 있습니다"
 
-#: src/gcm-calibrate-main.c:1086
+#: ../src/gcm-calibrate-main.c:1174
 msgid "Install Now"
 msgstr "지금 설치"
 
 #. TRANSLATORS: this is the calibration wizard page title
-#: src/gcm-calibrate-main.c:1097
+#: ../src/gcm-calibrate-main.c:1185
 msgid "Install Targets"
 msgstr "대상 설치"
 
 #. TRANSLATORS: this is probably a brand name
-#: src/gcm-calibrate-main.c:1113
+#: ../src/gcm-calibrate-main.c:1205
 msgid "CMP Digital Target 3"
 msgstr "CMP Digital Target 3"
 
 #. TRANSLATORS: this is probably a brand name
-#: src/gcm-calibrate-main.c:1117
+#: ../src/gcm-calibrate-main.c:1209
 msgid "CMP DT 003"
 msgstr "CMP DT 003"
 
 #. TRANSLATORS: this is probably a brand name
-#: src/gcm-calibrate-main.c:1121
-msgid "ColorChecker"
-msgstr "ColorChecker"
+#: ../src/gcm-calibrate-main.c:1213
+msgid "Color Checker"
+msgstr "Color Checker"
 
 #. TRANSLATORS: this is probably a brand name
-#: src/gcm-calibrate-main.c:1125
-msgid "ColorChecker DC"
-msgstr "ColorChecker DC"
+#: ../src/gcm-calibrate-main.c:1217
+msgid "Color Checker DC"
+msgstr "Color Checker DC"
 
 #. TRANSLATORS: this is probably a brand name
-#: src/gcm-calibrate-main.c:1129
-msgid "ColorChecker SG"
-msgstr "ColorChecker SG"
+#: ../src/gcm-calibrate-main.c:1221
+msgid "Color Checker SG"
+msgstr "Color Checker SG"
 
 #. TRANSLATORS: this is probably a brand name
-#: src/gcm-calibrate-main.c:1133
+#: ../src/gcm-calibrate-main.c:1225
 msgid "Hutchcolor"
 msgstr "Hutchcolor"
 
 #. TRANSLATORS: this is probably a brand name
-#: src/gcm-calibrate-main.c:1137
+#: ../src/gcm-calibrate-main.c:1229
 msgid "i1 RGB Scan 1.4"
 msgstr "i1 RGB Scan 1.4"
 
 #. TRANSLATORS: this is probably a brand name
-#: src/gcm-calibrate-main.c:1141
+#: ../src/gcm-calibrate-main.c:1233
 msgid "IT8.7/2"
 msgstr "IT8.7/2"
 
 #. TRANSLATORS: this is probably a brand name
-#: src/gcm-calibrate-main.c:1145
+#: ../src/gcm-calibrate-main.c:1237
 msgid "Laser Soft DC Pro"
 msgstr "Laser Soft DC Pro"
 
 #. TRANSLATORS: this is probably a brand name
-#: src/gcm-calibrate-main.c:1149
+#: ../src/gcm-calibrate-main.c:1241
 msgid "QPcard 201"
 msgstr "QPcard 201"
 
 #. TRANSLATORS: dialog message, preface. A calibration target looks like
 #. * this: http://www.colorreference.de/targets/target.jpg
-#: src/gcm-calibrate-main.c:1217
+#: ../src/gcm-calibrate-main.c:1319
 msgid ""
 "Before profiling the device, you have to manually capture an image of a "
 "calibration target and save it as a TIFF image file."
 msgstr ""
-"장치 프로파일을 만들기 전에, 반드시 수동으로 보정 대상 이미지를 캡쳐하고 "
+"장치를 프로파일 하기 전에, 반드시 수동으로 보정 타겟의 이미지를 캡쳐하여 "
 "TIFF 이미지 파일로 저장해야 합니다."
 
 #. TRANSLATORS: dialog message, preface
-#: src/gcm-calibrate-main.c:1222
+#: ../src/gcm-calibrate-main.c:1324
 msgid ""
 "Ensure that the contrast and brightness are not changed and color correction "
 "profiles have not been applied."
 msgstr ""
-"명암과 밝기가 바뀌지 않았는지 색 보정 프로파일을 아직 적용하지 않았는지 확인"
-"하십시오."
+"명암과 밝기가 바뀌지 않았는지 색 보정 프로파일이 아직 적용되지 않았는지 확인"
+"합니다."
 
 #. TRANSLATORS: dialog message, suffix
-#: src/gcm-calibrate-main.c:1225
+#: ../src/gcm-calibrate-main.c:1327
 msgid ""
 "The device sensor should have been cleaned prior to scanning and the output "
 "file resolution should be at least 200dpi."
@@ -1024,449 +941,425 @@ msgstr ""
 "최소 200dpi 이상이어야 합니다."
 
 #. TRANSLATORS: dialog message, preface
-#: src/gcm-calibrate-main.c:1231
+#: ../src/gcm-calibrate-main.c:1333
 msgid ""
 "Ensure that the white-balance has not been modified by the camera and that "
 "the lens is clean."
 msgstr ""
-"카메라가 화이트-밸런스를 건드리지 않게 설정했는지 확인하고, 렌즈를 깨끗하게 "
-"닦으십시오."
+"카메라가 화이트-벨런스를 조작하지 않게 설정되었는지 확인하고, 렌즈를 깨끗하"
+"게 닦아야 합니다."
 
 #. TRANSLATORS: this is the message body for the chart selection
-#: src/gcm-calibrate-main.c:1235
+#: ../src/gcm-calibrate-main.c:1337
 msgid "Please select the calibration target type."
-msgstr "보정 대상의 형식을 선택하십시오."
+msgstr "보정 대상의 종류를 선택하십시오."
 
 #. TRANSLATORS: this is the page title
-#: src/gcm-calibrate-main.c:1238
+#: ../src/gcm-calibrate-main.c:1340
 msgid "What target type do you have?"
-msgstr "어떤 대상 형식입니까?"
+msgstr "어떤 대상 유형을 가지고 계십니까?"
 
 #. TRANSLATORS: this is the calibration wizard page title
-#: src/gcm-calibrate-main.c:1270
+#: ../src/gcm-calibrate-main.c:1372
 msgid "Select Target"
 msgstr "대상 선택"
 
 #. TRANSLATORS: this is the page title
-#: src/gcm-calibrate-main.c:1305
+#: ../src/gcm-calibrate-main.c:1411
 msgid "Choose your display type"
-msgstr "디스플레이 형식 선택"
+msgstr "디스플레이 유형 선택"
 
 #. TRANSLATORS: this is intro page text
-#: src/gcm-calibrate-main.c:1312
+#: ../src/gcm-calibrate-main.c:1418
 msgid "Select the monitor type that is attached to your computer."
-msgstr "컴퓨터에 연결한 모니터의 형식을 선택하십시오."
+msgstr "컴퓨터에 연결한 모니터의 유형을 선택합니다."
 
-#: src/gcm-calibrate-main.c:1314
-msgid "LCD (CCFL backlight)"
-msgstr "LCD(CCFL 백라이트)"
+#: ../src/gcm-calibrate-main.c:1420
+msgid "LCD"
+msgstr "LCD"
 
-#: src/gcm-calibrate-main.c:1323
-msgid "LCD (White LED backlight)"
-msgstr "LCD(백색 LED 백라이트)"
-
-#: src/gcm-calibrate-main.c:1332
-msgid "LCD (RGB LED backlight)"
-msgstr "LCD(RGB LED 백라이트)"
-
-#: src/gcm-calibrate-main.c:1341
-msgid "LCD (Wide Gamut RGB LED backlight)"
-msgstr "LCD(넓은 색 영역 RGB LED 백라이트)"
-
-#: src/gcm-calibrate-main.c:1350
-msgid "LCD (Wide Gamut CCFL backlight)"
-msgstr "LCD(넓은 색 영역 CCFL 백라이트)"
-
-#: src/gcm-calibrate-main.c:1359
+#: ../src/gcm-calibrate-main.c:1429
 msgid "CRT"
 msgstr "CRT"
 
-#: src/gcm-calibrate-main.c:1368
+#: ../src/gcm-calibrate-main.c:1438
 msgid "Plasma"
 msgstr "플라즈마"
 
-#: src/gcm-calibrate-main.c:1377
+#: ../src/gcm-calibrate-main.c:1447
 msgid "Projector"
 msgstr "프로젝터"
 
 #. TRANSLATORS: this is the calibration wizard page title
-#: src/gcm-calibrate-main.c:1389
+#: ../src/gcm-calibrate-main.c:1459
 msgid "Choose Display Type"
-msgstr "디스플레이 형식 선택"
+msgstr "디스플레이 유형 선택"
 
 #. TRANSLATORS: this is the page title
-#: src/gcm-calibrate-main.c:1424
+#: ../src/gcm-calibrate-main.c:1497
 msgid "Choose your display target white point"
-msgstr "디스플레이 대상 화이트 포인트를 선택하십시오"
+msgstr "디스플레이 대상 화이트 포인트를 선택합니다"
 
 #. TRANSLATORS: this is intro page text
-#: src/gcm-calibrate-main.c:1431
+#: ../src/gcm-calibrate-main.c:1504
 msgid ""
 "Most displays should be calibrated to a CIE D65 illuminant for general usage."
-msgstr ""
-"대부분의 디스플레이는 일반적인 용도의 CIE D65 광원 표준에 따라 보정해야 합니"
-"다."
+msgstr "대부분의 디스플레이는 일반적인 사용을 위해 CIE D65 광원 표준에 따라 보정됩니다."
 
-#: src/gcm-calibrate-main.c:1433
+#: ../src/gcm-calibrate-main.c:1506
 msgid "CIE D50 (Printing and publishing)"
-msgstr "CIE D50(인쇄 및 출판)"
+msgstr "CIE D50 (인쇄 및 출판)"
 
-#: src/gcm-calibrate-main.c:1442
+#: ../src/gcm-calibrate-main.c:1515
 msgid "CIE D55"
 msgstr "CIE D55"
 
-#: src/gcm-calibrate-main.c:1451
+#: ../src/gcm-calibrate-main.c:1524
 msgid "CIE D65 (Photography and graphics)"
-msgstr "CIE D65(사진 및 그래픽)"
+msgstr "CIE D65 (사진과 그래픽)"
 
-#: src/gcm-calibrate-main.c:1461
+#: ../src/gcm-calibrate-main.c:1534
 msgid "CIE D75"
 msgstr "CIE D75"
 
-#: src/gcm-calibrate-main.c:1470
+#: ../src/gcm-calibrate-main.c:1543
 msgid "Native (Already set manually)"
-msgstr "기존 프로파일(이미 수동으로 설정)"
+msgstr "기존 프로파일(이미 수동으로 설정됨)"
 
 #. TRANSLATORS: this is the calibration wizard page title
-#: src/gcm-calibrate-main.c:1482
+#: ../src/gcm-calibrate-main.c:1555
 msgid "Choose Display Whitepoint"
 msgstr "디스플레이 화이트 포인트 선택"
 
 #. TRANSLATORS: this is the page title
-#: src/gcm-calibrate-main.c:1517
+#: ../src/gcm-calibrate-main.c:1593
 msgid "Choose profiling mode"
-msgstr "프로파일링 모드 선택"
+msgstr "프로파일 모드를 선택합니다"
 
 #. TRANSLATORS: this is intro page text
-#: src/gcm-calibrate-main.c:1524
+#: ../src/gcm-calibrate-main.c:1600
 msgid ""
 "Please indicate if you want to profile a local printer, generate some test "
 "patches, or profile using existing test patches."
 msgstr ""
-"지역 프린터의 프로파일을 만들거나, 테스트 패치를 만들거나, 기존 테스트 패치"
-"를 사용해 프로파일을 만들려면 선택하십시오."
+"지역 프린터를 프로파일 하거나, 테스트 패치를 만들거나, 기존 테스트 패치를 사"
+"용해 프로파일을 하려면 선택하세요."
 
 #. TRANSLATORS: this is the calibration wizard page title
-#: src/gcm-calibrate-main.c:1561
+#: ../src/gcm-calibrate-main.c:1637
 msgid "Calibration Mode"
 msgstr "보정 모드"
 
 #. TRANSLATORS: this is the page title
-#: src/gcm-calibrate-main.c:1600
+#: ../src/gcm-calibrate-main.c:1679
 msgid "Choose calibration quality"
 msgstr "보정 품질 선택"
 
 #. TRANSLATORS: this is intro page text
-#: src/gcm-calibrate-main.c:1607
+#: ../src/gcm-calibrate-main.c:1686
 msgid "Higher quality calibration requires many color samples and more time."
-msgstr "높은 수준의 보정시 수많은 색 표본과 더 많은 시간이 필요합니다."
+msgstr "높은 품질의 보정은 수많은 색 표본과 더 많은 시간이 필요합니다."
 
 #. TRANSLATORS: this is the message body for the chart selection
-#: src/gcm-calibrate-main.c:1611
+#: ../src/gcm-calibrate-main.c:1690
 msgid ""
 "A higher precision profile provides higher accuracy in color matching but "
 "requires more time for reading the color patches."
 msgstr ""
-"높은 정밀도의 프로파일으로 더 정확하게 색을 맞출 수 있지만 색 패치를 읽을 시"
-"간이 더 필요합니다."
+"높은 정밀도의 프로파일으로 더 정확한 색 매칭을 할 수 있지만 색 패치를 읽"
+"는 데 더 오랜 시간이 걸립니다."
 
 #. TRANSLATORS: this is the message body for the chart selection
-#: src/gcm-calibrate-main.c:1614
+#: ../src/gcm-calibrate-main.c:1693
 msgid "For a typical workflow, a normal precision profile is sufficient."
-msgstr "일반적인 작업 과정에는 일반 정밀도의 프로파일이면 충분합니다."
+msgstr "일반적인 작업에서는 보통 정밀도의 프로파일이면 충분합니다."
 
 #. TRANSLATORS: dialog message, preface
-#: src/gcm-calibrate-main.c:1619
+#: ../src/gcm-calibrate-main.c:1698
 msgid "The high precision profile also requires more paper and printer ink."
-msgstr "높은 정밀도의 프로파일은 더 많은 종이와 프린터 잉크를 사용합니다."
+msgstr "높은 정밀도의 프로파일은 더 많은 종이와 프린터 잉크가 사용 됩니다."
 
 #. TRANSLATORS: radio options for calibration precision
-#: src/gcm-calibrate-main.c:1624
+#: ../src/gcm-calibrate-main.c:1703
 msgid "Accurate"
 msgstr "정확히"
 
-#: src/gcm-calibrate-main.c:1625
+#: ../src/gcm-calibrate-main.c:1704
 msgid "Normal"
 msgstr "보통"
 
-#: src/gcm-calibrate-main.c:1626
+#: ../src/gcm-calibrate-main.c:1705
 msgid "Quick"
 msgstr "빠르게"
 
-#. TRANSLATORS: radio options for calibration precision
-#: src/gcm-calibrate-main.c:1633
+#: ../src/gcm-calibrate-main.c:1712
 #, c-format
-msgid "(about %u sheet of paper)"
-msgid_plural "(about %u sheets of paper)"
-msgstr[0] "(용지 약 %u장)"
+msgid "(about %i sheet of paper)"
+msgid_plural "(about %i sheets of paper)"
+msgstr[0] "(%i장의 용지)"
 
-#. TRANSLATORS: radio options for calibration precision
-#: src/gcm-calibrate-main.c:1644
+#: ../src/gcm-calibrate-main.c:1723
 #, c-format
-msgid "(about %u minute)"
-msgid_plural "(about %u minutes)"
-msgstr[0] "(약 %u분)"
+msgid "(about %i minute)"
+msgid_plural "(about %i minutes)"
+msgstr[0] "(%i분)"
 
 #. TRANSLATORS: this is the calibration wizard page title
-#: src/gcm-calibrate-main.c:1685
+#: ../src/gcm-calibrate-main.c:1764
 msgid "Calibration Quality"
 msgstr "보정 품질"
 
 #. TRANSLATORS: this is the page title
-#: src/gcm-calibrate-main.c:1718
+#: ../src/gcm-calibrate-main.c:1800
 msgid "Profile title"
 msgstr "프로파일 제목"
 
 #. TRANSLATORS: this is intro page text
-#: src/gcm-calibrate-main.c:1725
+#: ../src/gcm-calibrate-main.c:1807
 msgid "Choose a title to identify the profile on your system."
-msgstr "시스템의 프로파일을 식별할 제목을 선택하십시오."
+msgstr "시스템의 프로파일을 식별할 제목을 선택합니다."
 
 #. TRANSLATORS: this is the calibration wizard page title
-#: src/gcm-calibrate-main.c:1745
+#: ../src/gcm-calibrate-main.c:1828
 msgid "Profile Title"
 msgstr "프로파일 제목"
 
 #. TRANSLATORS: this is the page title
-#: src/gcm-calibrate-main.c:1764
+#: ../src/gcm-calibrate-main.c:1850
 msgid "Insert sensor hardware"
-msgstr "센서 하드웨어를 부착하십시오"
+msgstr "센서 하드웨어를 선택합니다"
 
 #. TRANSLATORS: this is intro page text
-#: src/gcm-calibrate-main.c:1771
+#: ../src/gcm-calibrate-main.c:1857
 msgid "You need to insert sensor hardware to continue."
 msgstr "계속하려면 센서 하드웨어를 연결해야 합니다."
 
 #. TRANSLATORS: this is the calibration wizard page title
-#: src/gcm-calibrate-main.c:1777
+#: ../src/gcm-calibrate-main.c:1863
 msgid "Sensor Check"
-msgstr "센서 점검"
+msgstr "센서 검사"
 
 #. TRANSLATORS: this is intro page text
-#: src/gcm-calibrate-main.c:1803
+#: ../src/gcm-calibrate-main.c:1892
 msgid "The device could not be found. Ensure it is plugged in and turned on."
-msgstr "장치를 찾을 수 없습니다. 연결하고 켰는지 확인하십시오."
+msgstr "장치를 찾을 수 없습니다. 연결되었는지 확인하고 켭니다."
 
 #. TRANSLATORS: this is saved in the profile
-#: src/gcm-calibrate-main.c:2035
+#: ../src/gcm-calibrate-main.c:2159
 msgid "Unknown serial"
-msgstr "알 수 없는 일련번호"
+msgstr "알 수 없는 시리얼"
 
 #. TRANSLATORS: this is saved in the profile
-#: src/gcm-calibrate-main.c:2040
+#: ../src/gcm-calibrate-main.c:2164
 msgid "Unknown model"
 msgstr "알 수 없는 모델"
 
 #. TRANSLATORS: this is saved in the profile
-#: src/gcm-calibrate-main.c:2045
+#: ../src/gcm-calibrate-main.c:2169
 msgid "Unknown description"
 msgstr "알 수 없는 설명"
 
 #. TRANSLATORS: this is saved in the profile
-#: src/gcm-calibrate-main.c:2050
+#: ../src/gcm-calibrate-main.c:2174
 msgid "Unknown manufacturer"
 msgstr "알 수 없는 제조사"
 
 #. TRANSLATORS: this is the copyright string, where it might be
 #. * "Copyright (c) 2009 Edward Scissorhands"
 #. * BIG RED FLASHING NOTE: YOU NEED TO USE ASCII ONLY
-#: src/gcm-calibrate-main.c:2057
+#: ../src/gcm-calibrate-main.c:2181
 msgid "Copyright (c)"
 msgstr "Copyright (c)"
 
 #. TRANSLATORS: we can make this modal (stay on top of) another window
-#: src/gcm-calibrate-main.c:2163 src/gcm-picker.c:695 src/gcm-viewer.c:1614
+#: ../src/gcm-calibrate-main.c:2299 ../src/gcm-picker.c:793
+#: ../src/gcm-viewer.c:1850
 msgid "Set the parent window to make this modal"
-msgstr "모달을 만들 부모 창 설정"
+msgstr "모달을 만들기 위한 부모 윈도우 설정"
 
 #. TRANSLATORS: show just the one profile, rather than all
-#: src/gcm-calibrate-main.c:2166
+#: ../src/gcm-calibrate-main.c:2302
 msgid "Set the specific device to calibrate"
-msgstr "보정할 개별 장치 설정"
+msgstr "지정한 장치를 보정하도록 설정"
 
-#: src/gcm-calibrate-main.c:2207
+#: ../src/gcm-calibrate-main.c:2343
 msgid "No device was specified!"
 msgstr "지정한 장치가 없습니다!"
 
 #. TRANSLATORS: this is when there is no profile for the device
-#: src/gcm-cell-renderer-profile-text.c:71
+#: ../src/gcm-cell-renderer-profile-text.c:71
 msgid "No profile"
-msgstr "프로파일 없음"
+msgstr "프로파일이 없음"
 
-#: src/gcm-cell-renderer-profile-text.c:87
+#: ../src/gcm-cell-renderer-profile-text.c:88
 #, c-format
 msgid "Default %s"
-msgstr "%s 기본값"
+msgstr "기본값 %s"
 
 #. TRANSLATORS: this is a profile prefix to signify the
 #. * profile has been auto-generated for this hardware
-#: src/gcm-cell-renderer-profile-text.c:102
+#: ../src/gcm-cell-renderer-profile-text.c:103
 msgid "Default: "
-msgstr "기본값: "
+msgstr "기본값:"
 
 #. TRANSLATORS: this is a profile prefix to signify the
 #. * profile his a standard space like AdobeRGB
-#: src/gcm-cell-renderer-profile-text.c:107
+#: ../src/gcm-cell-renderer-profile-text.c:108
 msgid "Colorspace: "
-msgstr "색 영역: "
+msgstr "색 영역:"
 
 #. TRANSLATORS: this is a profile prefix to signify the
 #. * profile is a test profile
-#: src/gcm-cell-renderer-profile-text.c:112
+#: ../src/gcm-cell-renderer-profile-text.c:113
 msgid "Test profile: "
-msgstr "검사 프로파일: "
+msgstr "검사 프로파일:"
 
 #. TRANSLATORS: turn on all debugging
-#: src/gcm-debug.c:91
+#: ../src/gcm-debug.c:105
 msgid "Show debugging information for all files"
-msgstr "모든 파일의 디버깅 정보 표시"
+msgstr "모든 파일의 디버깅 정보를 보이기"
 
-#: src/gcm-debug.c:142
+#: ../src/gcm-debug.c:162
 msgid "Debugging Options"
 msgstr "디버깅 옵션"
 
-#: src/gcm-debug.c:142
+#: ../src/gcm-debug.c:162
 msgid "Show debugging options"
-msgstr "디버깅 옵션 표시"
+msgstr "디버깅 옵션 보이기"
 
 #. TRANSLATORS: command line option: a list of catalogs to install
-#: src/gcm-import.c:91
+#: ../src/gcm-import.c:101
 msgid "ICC profile to install"
-msgstr "설치할 ICC 프로파일"
+msgstr "설치 할 ICC 프로파일"
 
-#. TRANSLATORS: nothing was specified on the command line
-#: src/gcm-import.c:117
+#: ../src/gcm-import.c:127
 msgid "No filename specified"
-msgstr "파일 이름을 지정하지 않았습니다"
+msgstr "파일 이름이 지정되지 않았습니다"
 
-#. TRANSLATORS: could not read file
-#: src/gcm-import.c:137 src/gcm-viewer.c:1291
+#: ../src/gcm-import.c:145 ../src/gcm-viewer.c:1484
 msgid "Failed to open ICC profile"
 msgstr "ICC 프로파일 열기 실패"
 
-#. TRANSLATORS: parsing error
-#: src/gcm-import.c:142
+#: ../src/gcm-import.c:150
 #, c-format
 msgid "Failed to parse file: %s"
-msgstr "파일 해석 실패: %s"
+msgstr "파일 분석 실패: %s"
 
 #. TRANSLATORS: message text
-#: src/gcm-import.c:157
+#: ../src/gcm-import.c:171
 #, c-format
 msgid "Profile description: %s"
 msgstr "프로파일 설명: %s"
 
 #. TRANSLATORS: message text
-#: src/gcm-import.c:167
+#: ../src/gcm-import.c:181
 msgid "Profile copyright:"
 msgstr "프로파일 저작자:"
 
-#. TRANSLATORS: color profile already been installed
-#: src/gcm-import.c:201
+#: ../src/gcm-import.c:217
 msgid "Color profile is already imported"
 msgstr "색 프로파일이 이미 있습니다"
 
-#: src/gcm-import.c:204 src/gcm-import.c:247
+#: ../src/gcm-import.c:221 ../src/gcm-import.c:265
 msgid "Show Details"
-msgstr "자세히 표시"
+msgstr "자세히 보이기"
 
 #. TRANSLATORS: the profile type
-#: src/gcm-import.c:220
+#: ../src/gcm-import.c:237
 msgid "Import display color profile?"
-msgstr "디스플레이 색 프로파일을 가져오시겠습니까?"
+msgstr "디스플레이 색 프로파일을 가져올까요?"
 
 #. TRANSLATORS: the profile type
-#: src/gcm-import.c:224
+#: ../src/gcm-import.c:241
 msgid "Import device color profile?"
-msgstr "장치 색 프로파일을 가져오시겠습니까?"
+msgstr "장치 색 프로파일을 가져올까요?"
 
 #. TRANSLATORS: the profile type
-#: src/gcm-import.c:228
+#: ../src/gcm-import.c:245
 msgid "Import named color profile?"
-msgstr "이름 붙은 색 프로파일을 가져오시겠습니까?"
+msgstr "이름이 붙은 색 프로파일을 가져올까요?"
 
 #. TRANSLATORS: the profile type
-#: src/gcm-import.c:232
+#: ../src/gcm-import.c:249
 msgid "Import color profile?"
-msgstr "색 프로파일을 가져오시겠습니까?"
+msgstr "색 프로파일을 가져올까요?"
 
 #. TRANSLATORS: button text
-#: src/gcm-import.c:246
+#: ../src/gcm-import.c:264 ../src/gcm-viewer.c:451
 msgid "Import"
 msgstr "가져오기"
 
-#. TRANSLATORS: could not read file
-#: src/gcm-import.c:271 src/gcm-viewer.c:1323
+#: ../src/gcm-import.c:289 ../src/gcm-viewer.c:1517
 msgid "Failed to import file"
 msgstr "파일 가져오기 실패"
 
 #. TRANSLATORS: this is the ICC profile description stored in an atom in the XServer
-#: src/gcm-inspect.c:53
+#: ../src/gcm-inspect.c:55
 msgid "Description:"
 msgstr "설명:"
 
 #. TRANSLATORS: this is the ICC profile copyright
-#: src/gcm-inspect.c:56
+#: ../src/gcm-inspect.c:58
 msgid "Copyright:"
 msgstr "저작권:"
 
 #. TRANSLATORS: the root window of all the screens
-#: src/gcm-inspect.c:178
+#: ../src/gcm-inspect.c:193
 msgid "Root window profile:"
-msgstr "최상위 창 프로파일:"
+msgstr "최 상위 윈도우 프로파일:"
 
 #. TRANSLATORS: the root window of all the screens
-#: src/gcm-inspect.c:189
+#: ../src/gcm-inspect.c:205
 msgid "Root window protocol version:"
-msgstr "최상위 창 프로토콜 버전:"
+msgstr "최 상위 윈도우 프로토콜 버전:"
 
 #. TRANSLATORS: no DBus session bus
-#: src/gcm-inspect.c:210 src/gcm-inspect.c:273 src/gcm-utils.c:110
+#: ../src/gcm-inspect.c:230 ../src/gcm-inspect.c:299 ../src/gcm-utils.c:117
 msgid "Failed to connect to session bus:"
-msgstr "세션 버스 연결에 실패했습니다:"
+msgstr "세션 버스에 연결하는데 실패했습니다:"
 
 #. TRANSLATORS: the DBus method failed
-#: src/gcm-inspect.c:227 src/gcm-inspect.c:290 src/gcm-utils.c:133
+#: ../src/gcm-inspect.c:248 ../src/gcm-inspect.c:317 ../src/gcm-utils.c:141
 msgid "The request failed:"
-msgstr "요청에 실패했습니다:"
+msgstr "요청이 실패했습니다:"
 
 #. TRANSLATORS: no profile has been asigned to this device
-#: src/gcm-inspect.c:235
+#: ../src/gcm-inspect.c:257
 msgid "There are no ICC profiles assigned to this file"
-msgstr "이 장치에 할당한 ICC 프로파일이 없습니다"
+msgstr "이 장치에는 ICC 프로파일이 없습니다"
 
 #. TRANSLATORS: this is a list of profiles suitable for the device
-#: src/gcm-inspect.c:240 src/gcm-inspect.c:306
+#: ../src/gcm-inspect.c:262 ../src/gcm-inspect.c:334
 msgid "Suitable profiles for:"
 msgstr "다음에 알맞은 프로파일:"
 
 #. TRANSLATORS: no profile has been asigned to this window
-#: src/gcm-inspect.c:301
+#: ../src/gcm-inspect.c:329
 msgid "There are no ICC profiles for this window"
-msgstr "이 창의 ICC 프로파일이 없습니다"
+msgstr "이 윈도우에는 ICC 프로파일이 없습니다"
 
 #. TRANSLATORS: command line option
-#: src/gcm-inspect.c:326
+#: ../src/gcm-inspect.c:365
 msgid "Show xserver properties"
-msgstr "X 서버 속성을 표시합니다"
+msgstr "X11 설정 보이기"
 
 #. TRANSLATORS: command line option
-#: src/gcm-inspect.c:329
+#: ../src/gcm-inspect.c:368
 msgid "Get the profiles for a specific file"
-msgstr "개별 파일의 프로파일을 가져옵니다"
+msgstr "특정 장치를 위한 프로파일 가져오기"
 
 #. TRANSLATORS: command line option
-#: src/gcm-inspect.c:332
+#: ../src/gcm-inspect.c:371
 msgid "Get the profile for a specific window"
-msgstr "개별 창의 프로파일을 가져옵니다"
+msgstr "특정 윈도우를 위한 프로파일 가져오기"
 
 #. TRANSLATORS: command line option
-#: src/gcm-inspect.c:335
+#: ../src/gcm-inspect.c:374
 msgid "Dump all details about this system"
-msgstr "이 시스템의 모든 자세한 정보를 모두 덤프합니다"
+msgstr "이 시스템에 관한 세부 정보를 모두 덤프"
 
 #. TRANSLATORS: just dumps the EDID to disk
-#: src/gcm-inspect.c:348
+#: ../src/gcm-inspect.c:387
 msgid "EDID inspect program"
 msgstr "EDID 검사 프로그램"
 
@@ -1474,364 +1367,369 @@ msgstr "EDID 검사 프로그램"
 #. TRANSLATORS: this is when the ambient light level is unknown
 #. TRANSLATORS: this the ICC profile type
 #. TRANSLATORS: this the ICC colorspace type
-#: src/gcm-picker.c:214 src/gcm-picker.c:221 src/gcm-viewer.c:579
-#: src/gcm-viewer.c:626
+#: ../src/gcm-picker.c:214 ../src/gcm-picker.c:221 ../src/gcm-viewer.c:686
+#: ../src/gcm-viewer.c:736
 msgid "Unknown"
 msgstr "알 수 없음"
 
-#. TRANSLATORS: this is displayed the user has not got suitable hardware
-#: src/gcm-picker.c:334
+#: ../src/gcm-picker.c:367
 msgid "No colorimeter is attached."
-msgstr "설치한 colorimeter 없음."
+msgstr "설치된 colorimeter가 없음."
 
-#. TRANSLATORS: this is displayed if VTE support is not enabled
-#: src/gcm-picker.c:350
+#: ../src/gcm-picker.c:384
 msgid "The sensor has no native driver."
-msgstr "센서에 자체 드라이버 없음."
+msgstr "센서에 본래 드라이버가 없습니다."
 
 #. TRANSLATORS: this is displayed the user has not got suitable hardware
-#: src/gcm-picker.c:359
+#: ../src/gcm-picker.c:393
 msgid "The attached colorimeter is not capable of reading a spot color."
-msgstr "부착한 colorimeter는 한 지점의 색을 읽는 기능이 없습니다."
+msgstr "부착한 colorimeter는 spot color을 읽는 기능이 없습니다."
 
 #. TRANSLATORS: this is when there are no profiles that can be used;
 #. * the search term is either "RGB" or "CMYK"
-#: src/gcm-picker.c:577
+#: ../src/gcm-picker.c:646
 #, c-format
 msgid "No %s color spaces available"
 msgstr "색 영역 %s을(를) 사용할 수 없습니다"
 
 #. TRANSLATORS: tool that is used to pick colors
-#: src/gcm-picker.c:710
+#: ../src/gcm-picker.c:811
 msgid "GNOME Color Manager Color Picker"
 msgstr "그놈 색 관리자 색 선택"
 
+#. TRANSLATORS: this is where the ICC profile has no description
+#: ../src/gcm-profile.c:162
+msgid "Missing description"
+msgstr "빠진 설명"
+
+#. TRANSLATORS: this is the profile creation date strftime format
+#: ../src/gcm-profile.c:583
+msgid "%B %e %Y, %I:%M:%S %p"
+msgstr "%Y년 %B %e일, %p %I:%M:%S"
+
+#. TRANSLATORS: this is the colorspace, e.g. red, green, blue
+#. TRANSLATORS: this the ICC colorspace type
+#: ../src/gcm-utils.c:328 ../src/gcm-viewer.c:717
+msgid "RGB"
+msgstr "RGB"
+
 #. TRANSLATORS: this is the colorspace, e.g. cyan, magenta, yellow, black
 #. TRANSLATORS: this the ICC colorspace type
-#: src/gcm-utils.c:289 src/gcm-viewer.c:619
+#: ../src/gcm-utils.c:332 ../src/gcm-viewer.c:729
 msgid "CMYK"
 msgstr "CMYK"
 
 #. TRANSLATORS: this is the colorspace type
-#: src/gcm-utils.c:293
+#: ../src/gcm-utils.c:336
 msgid "gray"
 msgstr "회색"
 
 #. TRANSLATORS: title, usually we can tell based on the EDID data or output name
-#: src/gcm-viewer.c:326
+#: ../src/gcm-viewer.c:394
 msgid "Permanently delete profile?"
-msgstr "프로파일을 완전히 삭제하시겠습니까?"
+msgstr "프로파일은 영구적으로 삭제할까요?"
 
 #. TRANSLATORS: dialog message
-#: src/gcm-viewer.c:329
+#: ../src/gcm-viewer.c:397
 msgid ""
 "Are you sure you want to remove this profile from your system permanently?"
-msgstr "정말로 이 프로파일을 시스템에서 완전히 제거하시겠습니까?"
+msgstr "정말로 이 프로파일을 시스템에서 완전히 지울까요?"
 
 #. TRANSLATORS: button, delete a profile
-#: src/gcm-viewer.c:332
+#: ../src/gcm-viewer.c:400
 msgid "Delete"
 msgstr "삭제"
 
-#: src/gcm-viewer.c:374
-msgid "_Import"
-msgstr "가져오기(_I)"
-
 #. TRANSLATORS: filter name on the file->open dialog
-#: src/gcm-viewer.c:392
+#: ../src/gcm-viewer.c:469
 msgid "Supported ICC profiles"
-msgstr "지원 ICC 프로파일"
+msgstr "지원하는 ICC 프로파일"
 
 #. TRANSLATORS: could not read file
-#: src/gcm-viewer.c:424
+#: ../src/gcm-viewer.c:505
 msgid "Failed to copy file"
 msgstr "파일 복사 실패"
 
 #. TRANSLATORS: this the ICC profile type
-#: src/gcm-viewer.c:552
+#: ../src/gcm-viewer.c:659
 msgid "Input device"
 msgstr "입력 장치"
 
 #. TRANSLATORS: this the ICC profile type
-#: src/gcm-viewer.c:556
+#: ../src/gcm-viewer.c:663
 msgid "Display device"
 msgstr "디스플레이 장치"
 
 #. TRANSLATORS: this the ICC profile type
-#: src/gcm-viewer.c:560
+#: ../src/gcm-viewer.c:667
 msgid "Output device"
 msgstr "출력 장치"
 
 #. TRANSLATORS: this the ICC profile type
-#: src/gcm-viewer.c:564
+#: ../src/gcm-viewer.c:671
 msgid "Devicelink"
 msgstr "장치 연결"
 
 #. TRANSLATORS: this the ICC profile type
-#: src/gcm-viewer.c:568
+#: ../src/gcm-viewer.c:675
 msgid "Colorspace conversion"
 msgstr "색 영역 변환"
 
 #. TRANSLATORS: this the ICC profile kind
-#: src/gcm-viewer.c:572
+#: ../src/gcm-viewer.c:679
 msgid "Abstract"
 msgstr "요약"
 
 #. TRANSLATORS: this the ICC profile type
-#: src/gcm-viewer.c:576
+#: ../src/gcm-viewer.c:683
 msgid "Named color"
-msgstr "이름 붙은 색"
+msgstr "이름이 붙은 색"
 
 #. TRANSLATORS: this the ICC colorspace type
-#: src/gcm-viewer.c:591
+#: ../src/gcm-viewer.c:697
+msgid "XYZ"
+msgstr "XYZ"
+
+#. TRANSLATORS: this the ICC colorspace type
+#: ../src/gcm-viewer.c:701
 msgid "LAB"
 msgstr "LAB"
 
 #. TRANSLATORS: this the ICC colorspace type
-#: src/gcm-viewer.c:595
+#: ../src/gcm-viewer.c:705
 msgid "LUV"
 msgstr "LUV"
 
 #. TRANSLATORS: this the ICC colorspace type
-#: src/gcm-viewer.c:599
+#: ../src/gcm-viewer.c:709
 msgid "YCbCr"
 msgstr "YCbCr"
 
 #. TRANSLATORS: this the ICC colorspace type
-#: src/gcm-viewer.c:603
+#: ../src/gcm-viewer.c:713
 msgid "Yxy"
 msgstr "Yxy"
 
 #. TRANSLATORS: this the ICC colorspace type
-#: src/gcm-viewer.c:611
+#: ../src/gcm-viewer.c:721
 msgid "Gray"
 msgstr "Gray"
 
 #. TRANSLATORS: this the ICC colorspace type
-#: src/gcm-viewer.c:615
+#: ../src/gcm-viewer.c:725
 msgid "HSV"
 msgstr "HSV"
 
 #. TRANSLATORS: this the ICC colorspace type
-#: src/gcm-viewer.c:623
+#: ../src/gcm-viewer.c:733
 msgid "CMY"
 msgstr "CMY"
 
 #. TRANSLATORS: e.g. sRGB or adbode RGB
-#: src/gcm-viewer.c:659
+#: ../src/gcm-viewer.c:788
 msgid "Standard space"
 msgstr "표준 영역"
 
 #. TRANSLATORS: the raw EDID MD5 of the display device
-#: src/gcm-viewer.c:661
+#: ../src/gcm-viewer.c:790
 msgid "Display checksum"
 msgstr "디스플레이 체크섬"
 
-#: src/gcm-viewer.c:662
+#: ../src/gcm-viewer.c:791
 msgid "Display model"
 msgstr "디스플레이 모델"
 
-#: src/gcm-viewer.c:663
+#: ../src/gcm-viewer.c:792
 msgid "Display serial number"
-msgstr "디스플레이 일련번호"
+msgstr "디스플레이 일련 번호"
 
 #. TRANSLATORS: the PNPID is a three letter code, e.g. DEL
-#: src/gcm-viewer.c:665
+#: ../src/gcm-viewer.c:794
 msgid "Display PNPID"
 msgstr "디스플레이 PNPID"
 
 #. TRANSLATORS: who made the display
-#: src/gcm-viewer.c:667
+#: ../src/gcm-viewer.c:796
 msgid "Display vendor"
 msgstr "디스플레이 공급자"
 
 #. TRANSLATORS: the raw profile MD5
-#: src/gcm-viewer.c:669
+#: ../src/gcm-viewer.c:798
 msgid "File checksum"
 msgstr "파일 체크섬"
 
 #. TRANSLATORS: the color framework, e.g. 'colord'
-#: src/gcm-viewer.c:671
+#: ../src/gcm-viewer.c:800
 msgid "Framework product"
 msgstr "프레임워크 제품"
 
 #. TRANSLATORS: the framework binary, e.g. gcm-viewer
-#: src/gcm-viewer.c:673
+#: ../src/gcm-viewer.c:802
 msgid "Framework program"
 msgstr "프레임워크 프로그램"
 
 #. TRANSLATORS: the framework release, e.g. '1.22'
-#: src/gcm-viewer.c:675
+#: ../src/gcm-viewer.c:804
 msgid "Framework version"
 msgstr "프레임워크 버전"
 
 #. TRANSLATORS: Where the profile data came from, e.g. 'test' or 'standard'
-#: src/gcm-viewer.c:677
+#: ../src/gcm-viewer.c:806
 msgid "Data source type"
-msgstr "데이터 원본 형식"
+msgstr "데이터 "
 
 #. TRANSLATORS: how the qualifier is formatted, e.g. 'ColorSpace.Paper.DPI'
-#: src/gcm-viewer.c:679
+#: ../src/gcm-viewer.c:808
 msgid "Mapping format"
 msgstr "매핑 형식"
 
 #. TRANSLATORS: The qualifiers for the profile, e.g. 'RGB.Glossy.300dpi'
-#: src/gcm-viewer.c:681
+#: ../src/gcm-viewer.c:810
 msgid "Mapping qualifier"
 msgstr "매핑 이름"
 
 #. TRANSLATORS: The original device the profile was made for
-#: src/gcm-viewer.c:683
+#: ../src/gcm-viewer.c:812
 msgid "Mapping device"
 msgstr "매핑 장치"
 
 #. TRANSLATORS: The average error when making the profile
-#: src/gcm-viewer.c:685
+#: ../src/gcm-viewer.c:814
 msgid "Delta-E average"
 msgstr "델타-E 평균"
 
 #. TRANSLATORS: the maximum error when making the profile
-#: src/gcm-viewer.c:687
+#: ../src/gcm-viewer.c:816
 msgid "Delta-E maximum"
 msgstr "델타-E 최대값"
 
 #. TRANSLATORS: the RMS error when making the profile
-#: src/gcm-viewer.c:689
+#: ../src/gcm-viewer.c:818
 msgid "Delta-E RMS"
 msgstr "델타-E 제곱근 평균"
 
 #. TRANSLATORS: The device name, e.g. 'huey'
-#: src/gcm-viewer.c:691
+#: ../src/gcm-viewer.c:820
 msgid "Calibration device"
 msgstr "보정 장치"
 
 #. TRANSLATORS: screen type e.g. 'glossy' or 'matte'
-#: src/gcm-viewer.c:693
+#: ../src/gcm-viewer.c:822
 msgid "Screen surface finish"
 msgstr "화면 표면 마감"
 
 #. TRANSLATORS: e.g. DVI or VGA
-#: src/gcm-viewer.c:695
+#: ../src/gcm-viewer.c:824
 msgid "Connection type"
-msgstr "연결 형식"
+msgstr "연결 종류"
 
 #. TRANSLATORS: e.g. Screen brightness in percent
-#: src/gcm-viewer.c:697
+#: ../src/gcm-viewer.c:826
 msgid "Screen brightness"
 msgstr "화면 밝기"
 
 #. TRANSLATORS: e.g. the 3D volume of the gamut graph
-#: src/gcm-viewer.c:699
+#: ../src/gcm-viewer.c:828
 msgid "Gamut volume"
-msgstr "영역 볼륨"
+msgstr "영역 그래프"
 
 #. TRANSLATORS: e.g. what proportion of sRGB is covered
-#: src/gcm-viewer.c:701
+#: ../src/gcm-viewer.c:830
 msgid "sRGB coverage"
-msgstr "sRGB 허용 범위"
+msgstr "sRGB 커버리지"
 
 #. TRANSLATORS: e.g. what proportion of AdobeRGB is covered
-#: src/gcm-viewer.c:703
+#: ../src/gcm-viewer.c:832
 msgid "Adobe RGB coverage"
-msgstr "어도비 RGB 허용 범위"
+msgstr "어도비 RGB 커버리지"
 
 #. TRANSLATORS: the profile is broken
-#: src/gcm-viewer.c:799
+#: ../src/gcm-viewer.c:943
 msgid "No description has been set"
 msgstr "설명을 정하지 않았습니다"
 
 #. TRANSLATORS: the profile is broken
-#: src/gcm-viewer.c:803
+#: ../src/gcm-viewer.c:947
 msgid "No copyright has been set"
 msgstr "저작권을 설정하지 않았습니다"
 
 #. TRANSLATORS: the profile is broken
-#: src/gcm-viewer.c:807
+#: ../src/gcm-viewer.c:951
 msgid "The display compensation table is invalid"
 msgstr "디스플레이 보정 테이블이 잘못되었습니다"
 
 #. TRANSLATORS: the profile is broken
-#: src/gcm-viewer.c:811
+#: ../src/gcm-viewer.c:955
 msgid "A scum dot is present for media white"
-msgstr "미디어 화이트에 이상한 점이 있습니다"
+msgstr "미디어 화이트 중에 이상한 점이 있습니다."
 
 #. TRANSLATORS: the profile is broken
-#: src/gcm-viewer.c:815
+#: ../src/gcm-viewer.c:959
 msgid "The gray axis contains significant amounts of color"
 msgstr "회색 축에 아주 많은 색이 들어 있습니다"
 
 #. TRANSLATORS: the profile is broken
-#: src/gcm-viewer.c:819
+#: ../src/gcm-viewer.c:963
 msgid "The gray axis is non-monotonic"
-msgstr "회색 축이 단색 계열이 아닙니다"
+msgstr "회색 축이 단조 증가하지 않습니다"
 
 #. TRANSLATORS: the profile is broken
-#: src/gcm-viewer.c:823
+#: ../src/gcm-viewer.c:967
 msgid "One or more of the primaries are invalid"
 msgstr "하나 이상의 주요 색이 잘못되었습니다"
 
 #. TRANSLATORS: the profile is broken
-#: src/gcm-viewer.c:827
+#: ../src/gcm-viewer.c:971
 msgid "The primaries do not add to white"
 msgstr "주요 색이 화이트 성분을 추가하지 않습니다"
 
 #. TRANSLATORS: the profile is broken
-#: src/gcm-viewer.c:831
+#: ../src/gcm-viewer.c:975
 msgid "One or more of the primaries is unlikely"
 msgstr "하나 이상의 주요 색이 주요 색이 아닌 것 같습니다"
 
 #. TRANSLATORS: the profile is broken
-#: src/gcm-viewer.c:835
+#: ../src/gcm-viewer.c:979
 msgid "The white is not D50 white"
 msgstr "화이트가 D50 화이트가 아닙니다"
 
 #. TRANSLATORS: the profile is broken
-#: src/gcm-viewer.c:839
-msgid "The whitepoint temperature is unlikely"
-msgstr "화이트 포인트 온도가 유효한 값이 아닌 것 같습니다"
-
-#. TRANSLATORS: the profile is broken
-#: src/gcm-viewer.c:843
+#: ../src/gcm-viewer.c:983
 msgid "Unknown warning type"
-msgstr "알 수 없는 경고 형식"
+msgstr "알 수 없는 경고 종류"
 
 #. TRANSLATORS: if the device has a VCGT profile
-#: src/gcm-viewer.c:980
+#: ../src/gcm-viewer.c:1146
 msgid "Yes"
 msgstr "예"
 
 #. TRANSLATORS: if the device has a VCGT profile
-#: src/gcm-viewer.c:983
+#: ../src/gcm-viewer.c:1149
 msgid "No"
 msgstr "아니요"
 
 #. TRANSLATORS: profiles that have warnings are useable,
 #. * but may not be any good
-#: src/gcm-viewer.c:1009
+#: ../src/gcm-viewer.c:1176
 msgid "The profile has the following problems:"
 msgstr "프로파일에 다음 문제가 있습니다:"
 
-#. TRANSLATORS: this is the icc creation date strftime format
-#: src/gcm-viewer.c:1101
-msgid "%B %e %Y, %I∶%M∶%S %p"
-msgstr "%Y년 %B %e일, %p %I∶%M∶%S"
-
 #. TRANSLATORS: this is the tooltip when the profile can be deleted
-#: src/gcm-viewer.c:1124
+#: ../src/gcm-viewer.c:1290
 msgid "Delete this profile"
 msgstr "프로파일 삭제(_D)"
 
 #. TRANSLATORS: this is the tooltip when the profile cannot be deleted
-#: src/gcm-viewer.c:1127
+#: ../src/gcm-viewer.c:1293
 msgid "This profile cannot be deleted"
-msgstr "이 프로파일을 삭제할 수 없습니다"
+msgstr "이 프로파일을 삭제할 수 없습니다."
 
 #. TRANSLATORS: show just the one profile, rather than all
-#: src/gcm-viewer.c:1617
+#: ../src/gcm-viewer.c:1853
 msgid "Set the specific profile to show"
-msgstr "표시할 개별 프로파일을 지정합니다"
+msgstr "이 특정 모델을 디버깅"
 
 #. TRANSLATORS: show just the one filename, rather than all
-#: src/gcm-viewer.c:1620
+#: ../src/gcm-viewer.c:1856
 msgid "Set the specific file to show"
-msgstr "표시할 개별 파일을 지정합니다"
+msgstr "특정 파일을 보이도록 설정"

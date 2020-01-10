@@ -27,20 +27,23 @@
 #include <math.h>
 #include <locale.h>
 #include <colord.h>
-#include <stdlib.h>
 
+#include "gcm-profile.h"
 #include "gcm-utils.h"
 #include "gcm-debug.h"
 
+/**
+ * gcm_import_show_details:
+ **/
 static gboolean
 gcm_import_show_details (GtkWindow *window,
 			 gboolean is_profile_id,
 			 const gchar *data)
 {
 	gboolean ret;
+	GError *error = NULL;
+	GPtrArray *argv;
 	guint xid;
-	g_autoptr(GError) error = NULL;
-	g_autoptr(GPtrArray) argv = NULL;
 
 	/* spawn new viewer async and modal to this dialog */
 	argv = g_ptr_array_new_with_free_func (g_free);
@@ -60,30 +63,37 @@ gcm_import_show_details (GtkWindow *window,
 			     NULL,
 			     &error);
 
-	if (!ret)
+	if (!ret) {
 		g_warning ("failed to spawn viewer: %s", error->message);
+		g_error_free (error);
+	}
+	g_ptr_array_unref (argv);
 	return ret;
 }
 
+/**
+ * main:
+ **/
 int
 main (int argc, char **argv)
 {
-	g_autoptr(CdClient) client = NULL;
-	g_autoptr(CdProfile) profile_tmp = NULL;
+	CdClient *client = NULL;
+	CdProfile *profile_tmp = NULL;
 	const gchar *copyright;
 	const gchar *description;
 	const gchar *title;
-	const gchar *lang;
 	gboolean ret;
+	gchar **files = NULL;
+	GcmProfile *profile = NULL;
+	GError *error = NULL;
+	GFile *destination = NULL;
+	GFile *file = NULL;
 	GOptionContext *context;
+	GString *string = NULL;
 	GtkResponseType response;
+	GtkWidget *image = NULL;
 	GtkWidget *dialog;
-	g_autoptr(CdIcc) icc = NULL;
-	g_autoptr(GError) error = NULL;
-	g_autoptr(GFile) destination = NULL;
-	g_autoptr(GFile) file = NULL;
-	g_autoptr(GString) string = NULL;
-	g_auto(GStrv) files = NULL;
+	guint retval = 1;
 
 	const GOptionEntry options[] = {
 		{ G_OPTION_REMAINING, '\0', 0, G_OPTION_ARG_FILENAME_ARRAY, &files,
@@ -109,47 +119,51 @@ main (int argc, char **argv)
 
 	/* nothing sent */
 	if (files == NULL) {
+		/* TRANSLATORS: nothing was specified on the command line */
 		dialog = gtk_message_dialog_new (NULL,
 						 0,
 						 GTK_MESSAGE_ERROR,
 						 GTK_BUTTONS_CLOSE,
-						 /* TRANSLATORS: nothing was specified on the command line */
 						 _("No filename specified"));
 		gtk_window_set_icon_name (GTK_WINDOW (dialog),
 					  GCM_STOCK_ICON);
 		gtk_dialog_run (GTK_DIALOG (dialog));
 		gtk_widget_destroy (dialog);
-		return EXIT_FAILURE;
+		goto out;
 	}
 
 	/* load profile */
-	icc = cd_icc_new ();
+	profile = gcm_profile_new ();
 	file = g_file_new_for_path (files[0]);
-	ret = cd_icc_load_file (icc, file,
-				CD_ICC_LOAD_FLAGS_FALLBACK_MD5,
-				NULL, &error);
+	ret = gcm_profile_parse (profile, file, &error);
 	if (!ret) {
+		/* TRANSLATORS: could not read file */
 		dialog = gtk_message_dialog_new (NULL,
 						 0,
 						 GTK_MESSAGE_ERROR,
 						 GTK_BUTTONS_CLOSE,
-						 /* TRANSLATORS: could not read file */
 						 _("Failed to open ICC profile"));
 		gtk_window_set_icon_name (GTK_WINDOW (dialog),
 					  GCM_STOCK_ICON);
+		/* TRANSLATORS: parsing error */
 		gtk_message_dialog_format_secondary_text (GTK_MESSAGE_DIALOG (dialog),
-							  /* TRANSLATORS: parsing error */
 							  _("Failed to parse file: %s"),
 							  error->message);
 		gtk_dialog_run (GTK_DIALOG (dialog));
+		g_error_free (error);
 		gtk_widget_destroy (dialog);
-		return EXIT_FAILURE;
+		goto out;
 	}
 
 	/* get data */
-	lang = g_getenv ("LANG");
-	description = cd_icc_get_description (icc, lang, NULL);
-	copyright = cd_icc_get_copyright (icc, lang, NULL);
+	description = gcm_profile_get_description (profile);
+	copyright = gcm_profile_get_copyright (profile);
+
+	/* use the same icon as the color control panel */
+	image = gtk_image_new_from_icon_name ("preferences-color",
+					      GTK_ICON_SIZE_DIALOG);
+	gtk_misc_set_alignment (GTK_MISC (image), 0.5, 0.0);
+	gtk_widget_show (image);
 
 	/* create message */
 	string = g_string_new ("");
@@ -175,12 +189,13 @@ main (int argc, char **argv)
 	if (!ret) {
 		g_warning ("failed to connect to colord: %s",
 			   error->message);
-		return EXIT_FAILURE;
+		g_error_free (error);
+		goto out;
 	}
 
 	profile_tmp = cd_client_find_profile_by_property_sync (client,
 							      CD_PROFILE_METADATA_FILE_CHECKSUM,
-							      cd_icc_get_checksum (icc),
+							      gcm_profile_get_checksum (profile),
 							      NULL,
 							      NULL);
 	if (profile_tmp != NULL) {
@@ -191,15 +206,17 @@ main (int argc, char **argv)
 			g_warning ("failed to connect to profile %s: %s",
 				   cd_profile_get_object_path (profile_tmp),
 				   error->message);
-			return EXIT_FAILURE;
+			g_error_free (error);
+			goto out;
 		}
+		/* TRANSLATORS: color profile already been installed */
 		dialog = gtk_message_dialog_new (NULL,
 						 0,
 						 GTK_MESSAGE_INFO,
 						 GTK_BUTTONS_CLOSE,
-						 /* TRANSLATORS: color profile already been installed */
 						 _("Color profile is already imported"));
 		gtk_window_set_icon_name (GTK_WINDOW (dialog), GCM_STOCK_ICON);
+		gtk_message_dialog_set_image (GTK_MESSAGE_DIALOG (dialog), image);
 		gtk_message_dialog_format_secondary_text (GTK_MESSAGE_DIALOG (dialog), "%s", string->str);
 		gtk_dialog_add_button (GTK_DIALOG (dialog), _("Show Details"), GTK_RESPONSE_HELP);
 		response = gtk_dialog_run (GTK_DIALOG (dialog));
@@ -210,11 +227,11 @@ main (int argc, char **argv)
 			goto try_harder;
 		}
 		gtk_widget_destroy (dialog);
-		return EXIT_FAILURE;
+		goto out;
 	}
 
 	/* get correct title */
-	switch (cd_icc_get_kind (icc)) {
+	switch (gcm_profile_get_kind (profile)) {
 	case CD_PROFILE_KIND_DISPLAY_DEVICE:
 		/* TRANSLATORS: the profile type */
 		title = _("Import display color profile?");
@@ -240,6 +257,7 @@ main (int argc, char **argv)
 					 GTK_BUTTONS_CANCEL,
 					 "%s",
 					 title);
+	gtk_message_dialog_set_image (GTK_MESSAGE_DIALOG (dialog), image);
 	gtk_window_set_icon_name (GTK_WINDOW (dialog), GCM_STOCK_ICON);
 	gtk_message_dialog_format_secondary_text (GTK_MESSAGE_DIALOG (dialog), "%s", string->str);
 	/* TRANSLATORS: button text */
@@ -255,7 +273,7 @@ try_harder:
 
 	/* not the correct response */
 	if (response != GTK_RESPONSE_OK)
-		return EXIT_FAILURE;
+		goto out;
 
 	/* copy icc file to users profile path */
 	profile_tmp = cd_client_import_profile_sync (client,
@@ -263,18 +281,33 @@ try_harder:
 						     NULL,
 						     &error);
 	if (profile_tmp == NULL) {
+		/* TRANSLATORS: could not read file */
 		dialog = gtk_message_dialog_new (NULL,
 						 0,
 						 GTK_MESSAGE_ERROR,
 						 GTK_BUTTONS_CLOSE,
-						 /* TRANSLATORS: could not read file */
 						 _("Failed to import file"));
 		gtk_window_set_icon_name (GTK_WINDOW (dialog), GCM_STOCK_ICON);
 		gtk_message_dialog_format_secondary_text (GTK_MESSAGE_DIALOG (dialog), "%s", error->message);
 		gtk_dialog_run (GTK_DIALOG (dialog));
+		g_error_free (error);
 		gtk_widget_destroy (dialog);
-		return EXIT_FAILURE;
+		goto out;
 	}
-	return EXIT_SUCCESS;
+out:
+	if (file != NULL)
+		g_object_unref (file);
+	if (string != NULL)
+		g_string_free (string, TRUE);
+	if (profile != NULL)
+		g_object_unref (profile);
+	if (client != NULL)
+		g_object_unref (client);
+	if (profile_tmp != NULL)
+		g_object_unref (profile_tmp);
+	if (destination != NULL)
+		g_object_unref (destination);
+	g_strfreev (files);
+	return retval;
 }
 

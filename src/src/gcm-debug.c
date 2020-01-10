@@ -29,6 +29,11 @@
 static gboolean _verbose = FALSE;
 static gboolean _console = FALSE;
 
+/**
+ * gcm_debug_is_verbose:
+ *
+ * Returns: TRUE if we have debugging enabled
+ **/
 gboolean
 gcm_debug_is_verbose (void)
 {
@@ -43,12 +48,18 @@ gcm_debug_is_verbose (void)
 }
 
 
+/**
+ * gcm_debug_ignore_cb:
+ **/
 static void
 gcm_debug_ignore_cb (const gchar *log_domain, GLogLevelFlags log_level,
 		     const gchar *message, gpointer user_data)
 {
 }
 
+/**
+ * gcm_debug_handler_cb:
+ **/
 static void
 gcm_debug_handler_cb (const gchar *log_domain, GLogLevelFlags log_level,
 		      const gchar *message, gpointer user_data)
@@ -82,6 +93,9 @@ gcm_debug_handler_cb (const gchar *log_domain, GLogLevelFlags log_level,
 	}
 }
 
+/**
+ * gcm_debug_pre_parse_hook:
+ */
 static gboolean
 gcm_debug_pre_parse_hook (GOptionContext *context, GOptionGroup *group, gpointer data, GError **error)
 {
@@ -97,6 +111,9 @@ gcm_debug_pre_parse_hook (GOptionContext *context, GOptionGroup *group, gpointer
 	return TRUE;
 }
 
+/**
+ * gcm_debug_setup:
+ */
 void
 gcm_debug_setup (gboolean enabled)
 {
@@ -115,6 +132,9 @@ gcm_debug_setup (gboolean enabled)
 	}
 }
 
+/**
+ * gcm_debug_post_parse_hook:
+ */
 static gboolean
 gcm_debug_post_parse_hook (GOptionContext *context, GOptionGroup *group, gpointer data, GError **error)
 {

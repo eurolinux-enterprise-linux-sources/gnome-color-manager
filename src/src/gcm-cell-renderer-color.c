@@ -1,6 +1,6 @@
 /* -*- Mode: C; tab-width: 8; indent-tabs-mode: t; c-basic-offset: 8 -*-
  *
- * Copyright (C) 2011-2015 Richard Hughes <richard@hughsie.com>
+ * Copyright (C) 2011 Richard Hughes <richard@hughsie.com>
  *
  * Licensed under the GNU General Public License Version 2
  *
@@ -63,14 +63,14 @@ static void
 gcm_cell_renderer_set_color (GcmCellRendererColor *renderer)
 {
 	CdColorRGB8 rgb;
-	g_autoptr(GdkPixbuf) pixbuf = NULL;
+	GdkPixbuf *pixbuf = NULL;
 	gint height = 26; /* TODO: needs to be a property */
 	gint width = 400; /* TODO: needs to be a property */
 	gint x, y;
 	guchar *pixels;
 	guint pos;
 	cmsHPROFILE profile_srgb = NULL;
-	cmsHPROFILE profile_lab = NULL;
+	cmsHPROFILE profile_xyz = NULL;
 	cmsHTRANSFORM xform = NULL;
 
 	/* nothing set yet */
@@ -78,9 +78,9 @@ gcm_cell_renderer_set_color (GcmCellRendererColor *renderer)
 		goto out;
 
 	/* convert the color to sRGB */
-	profile_lab = cmsCreateLab2Profile (NULL);
+	profile_xyz = cmsCreateXYZProfile ();
 	profile_srgb = cmsCreate_sRGBProfile ();
-	xform = cmsCreateTransform (profile_lab, TYPE_Lab_DBL,
+	xform = cmsCreateTransform (profile_xyz, TYPE_XYZ_DBL,
 				    profile_srgb, TYPE_RGB_8,
 				    INTENT_ABSOLUTE_COLORIMETRIC, 0);
 	cmsDoTransform (xform, renderer->color, &rgb, 1);
@@ -102,25 +102,23 @@ out:
 	g_object_set (renderer, "pixbuf", pixbuf, NULL);
 	if (profile_srgb != NULL)
 		cmsCloseProfile (profile_srgb);
-	if (profile_lab != NULL)
-		cmsCloseProfile (profile_lab);
+	if (profile_xyz != NULL)
+		cmsCloseProfile (profile_xyz);
 	if (xform != NULL)
 		cmsDeleteTransform (xform);
+	if (pixbuf != NULL)
+		g_object_unref (pixbuf);
 }
 
 static void
 gcm_cell_renderer_color_set_property (GObject *object, guint param_id,
 				      const GValue *value, GParamSpec *pspec)
 {
-	CdColorLab *tmp;
 	GcmCellRendererColor *renderer = GCM_CELL_RENDERER_COLOR (object);
 
 	switch (param_id) {
 	case PROP_COLOR:
-		tmp = g_value_get_boxed (value);
-		if (tmp == NULL)
-			return;
-		cd_color_lab_copy (tmp, renderer->color);
+		cd_color_xyz_copy (g_value_get_boxed (value), renderer->color);
 		gcm_cell_renderer_set_color (renderer);
 		break;
 	case PROP_PROFILE:
@@ -135,13 +133,17 @@ gcm_cell_renderer_color_set_property (GObject *object, guint param_id,
 	}
 }
 
+/**
+ * gcm_cell_renderer_finalize:
+ * @object: The object to finalize
+ **/
 static void
 gcm_cell_renderer_finalize (GObject *object)
 {
 	GcmCellRendererColor *renderer;
 	renderer = GCM_CELL_RENDERER_COLOR (object);
 	g_free (renderer->icon_name);
-	cd_color_lab_free (renderer->color);
+	cd_color_xyz_free (renderer->color);
 	if (renderer->profile != NULL)
 		g_object_unref (renderer->profile);
 	G_OBJECT_CLASS (parent_class)->finalize (object);
@@ -171,12 +173,18 @@ gcm_cell_renderer_color_class_init (GcmCellRendererColorClass *class)
 					 G_PARAM_READWRITE));
 }
 
+/**
+ * gcm_cell_renderer_color_init:
+ **/
 static void
 gcm_cell_renderer_color_init (GcmCellRendererColor *renderer)
 {
-	renderer->color = cd_color_lab_new ();
+	renderer->color = cd_color_xyz_new ();
 }
 
+/**
+ * gcm_cell_renderer_color_new:
+ **/
 GtkCellRenderer *
 gcm_cell_renderer_color_new (void)
 {

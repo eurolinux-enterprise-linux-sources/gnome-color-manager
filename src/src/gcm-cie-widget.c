@@ -402,6 +402,9 @@ enum
 	PROP_LAST
 };
 
+/**
+ * gcm_cie_get_property:
+ **/
 static void
 gcm_cie_get_property (GObject *object, guint prop_id, GValue *value, GParamSpec *pspec)
 {
@@ -419,6 +422,9 @@ gcm_cie_get_property (GObject *object, guint prop_id, GValue *value, GParamSpec 
 	}
 }
 
+/**
+ * gcm_cie_set_property:
+ **/
 static void
 gcm_cie_set_property (GObject *object, guint prop_id, const GValue *value, GParamSpec *pspec)
 {
@@ -454,6 +460,9 @@ gcm_cie_set_property (GObject *object, guint prop_id, const GValue *value, GPara
 	gtk_widget_show (GTK_WIDGET (cie));
 }
 
+/**
+ * gcm_cie_widget_class_init:
+ **/
 static void
 gcm_cie_widget_class_init (GcmCieWidgetClass *class)
 {
@@ -500,8 +509,11 @@ gcm_cie_widget_class_init (GcmCieWidgetClass *class)
 							     G_PARAM_WRITABLE));
 }
 
+/**
+ * gcm_cie_widget_set_from_profile:
+ **/
 void
-gcm_cie_widget_set_from_profile (GtkWidget *widget, CdIcc *profile)
+gcm_cie_widget_set_from_profile (GtkWidget *widget, GcmProfile *profile)
 {
 	GcmCieWidget *cie = GCM_CIE_WIDGET (widget);
 	CdColorXYZ *white;
@@ -538,6 +550,9 @@ gcm_cie_widget_set_from_profile (GtkWidget *widget, CdIcc *profile)
 	cd_color_xyz_free (blue);
 }
 
+/**
+ * gcm_cie_widget_init:
+ **/
 static void
 gcm_cie_widget_init (GcmCieWidget *cie)
 {
@@ -574,6 +589,9 @@ gcm_cie_widget_init (GcmCieWidget *cie)
 	pango_font_description_free (desc);
 }
 
+/**
+ * gcm_cie_widget_finalize:
+ **/
 static void
 gcm_cie_widget_finalize (GObject *object)
 {
@@ -588,6 +606,11 @@ gcm_cie_widget_finalize (GObject *object)
 	G_OBJECT_CLASS (gcm_cie_widget_parent_class)->finalize (object);
 }
 
+/**
+ * gcm_cie_widget_draw_grid:
+ *
+ * Draw the 10x10 dotted grid onto the cie.
+ **/
 static void
 gcm_cie_widget_draw_grid (GcmCieWidget *cie, cairo_t *cr)
 {
@@ -621,6 +644,9 @@ gcm_cie_widget_draw_grid (GcmCieWidget *cie, cairo_t *cr)
 	cairo_restore (cr);
 }
 
+/**
+ * gcm_cie_widget_map_to_display:
+ **/
 static void
 gcm_cie_widget_map_to_display (GcmCieWidget *cie, gdouble x, gdouble y, gdouble *x_retval, gdouble *y_retval)
 {
@@ -630,6 +656,9 @@ gcm_cie_widget_map_to_display (GcmCieWidget *cie, gdouble x, gdouble y, gdouble 
 	*y_retval = ((priv->chart_height - 1) - y * (priv->chart_height - 1)) - priv->y_offset;
 }
 
+/**
+ * gcm_cie_widget_map_from_display:
+ **/
 static void
 gcm_cie_widget_map_from_display (GcmCieWidget *cie, gdouble x, gdouble y, gdouble *x_retval, gdouble *y_retval)
 {
@@ -639,6 +668,9 @@ gcm_cie_widget_map_from_display (GcmCieWidget *cie, gdouble x, gdouble y, gdoubl
 	*y_retval = 1.0 - ((gdouble) y + priv->y_offset) / (priv->chart_height - 1);
 }
 
+/**
+ * gcm_cie_widget_compute_monochrome_color_location:
+ **/
 static void
 gcm_cie_widget_compute_monochrome_color_location (GcmCieWidget *cie, gdouble wave_length,
 						  gdouble *x_retval, gdouble *y_retval)
@@ -651,6 +683,9 @@ gcm_cie_widget_compute_monochrome_color_location (GcmCieWidget *cie, gdouble wav
 	gcm_cie_widget_map_to_display (cie, px, py, x_retval, y_retval);
 }
 
+/**
+ * gcm_cie_widget_save_point:
+ **/
 static void
 gcm_cie_widget_save_point (GcmCieWidget *cie, const guint y, const gdouble value)
 {
@@ -671,6 +706,9 @@ gcm_cie_widget_save_point (GcmCieWidget *cie, const guint y, const gdouble value
 	}
 }
 
+/**
+ * gcm_cie_widget_add_point:
+ **/
 static void
 gcm_cie_widget_add_point (GcmCieWidget *cie, gdouble icx, gdouble icy, gdouble icx_last, gdouble icy_last)
 {
@@ -718,6 +756,9 @@ gcm_cie_widget_add_point (GcmCieWidget *cie, gdouble icx, gdouble icy, gdouble i
 	}
 }
 
+/**
+ * gcm_cie_widget_get_min_max_tongue:
+ **/
 static void
 gcm_cie_widget_get_min_max_tongue (GcmCieWidget *cie)
 {
@@ -730,7 +771,7 @@ gcm_cie_widget_get_min_max_tongue (GcmCieWidget *cie)
 
 	/* add enough elements to the array */
 	g_ptr_array_set_size (priv->tongue_buffer, 0);
-	for (i = 0; i < priv->chart_height; i++) {
+	for (i=0; i<priv->chart_height; i++) {
 		item = g_new0 (GcmCieWidgetBufferItem, 1);
 		g_ptr_array_add (priv->tongue_buffer, item);
 	}
@@ -751,6 +792,9 @@ gcm_cie_widget_get_min_max_tongue (GcmCieWidget *cie)
 	gcm_cie_widget_add_point (cie, icx, icy, icx_last, icy_last);
 }
 
+/**
+ * gcm_cie_widget_draw_tongue_outline:
+ **/
 static void
 gcm_cie_widget_draw_tongue_outline (GcmCieWidget *cie, cairo_t *cr)
 {
@@ -907,6 +951,9 @@ gcm_cie_widget_gamma_correct (GcmCieWidget *cie, gdouble *c)
 	}
 }
 
+/**
+ * gcm_cie_widget_gamma_correct_rgb:
+ **/
 static void
 gcm_cie_widget_gamma_correct_rgb (GcmCieWidget *cie,
 				  gdouble *r, gdouble *g, gdouble *b)
@@ -916,6 +963,9 @@ gcm_cie_widget_gamma_correct_rgb (GcmCieWidget *cie,
 	gcm_cie_widget_gamma_correct (cie, b);
 }
 
+/**
+ * gcm_cie_widget_draw_gamut_outline:
+ **/
 static void
 gcm_cie_widget_draw_gamut_outline (GcmCieWidget *cie, cairo_t *cr)
 {
@@ -949,6 +999,9 @@ out:
 	cairo_restore (cr);
 }
 
+/**
+ * gcm_cie_widget_draw_white_point_cross:
+ **/
 static void
 gcm_cie_widget_draw_white_point_cross (GcmCieWidget *cie, cairo_t *cr)
 {
@@ -1001,6 +1054,9 @@ gcm_cie_widget_draw_white_point_cross (GcmCieWidget *cie, cairo_t *cr)
 	cairo_restore (cr);
 }
 
+/**
+ * gcm_cie_widget_draw_line:
+ **/
 static void
 gcm_cie_widget_draw_line (GcmCieWidget *cie, cairo_t *cr)
 {
@@ -1070,6 +1126,9 @@ gcm_cie_widget_draw_line (GcmCieWidget *cie, cairo_t *cr)
 	gcm_cie_widget_draw_gamut_outline (cie, cr);
 }
 
+/**
+ * gcm_cie_widget_draw_bounding_box:
+ **/
 static void
 gcm_cie_widget_draw_bounding_box (cairo_t *cr, gint x, gint y, gint width, gint height)
 {
@@ -1085,6 +1144,11 @@ gcm_cie_widget_draw_bounding_box (cairo_t *cr, gint x, gint y, gint width, gint 
 	cairo_stroke (cr);
 }
 
+/**
+ * gcm_cie_widget_draw_cie:
+ *
+ * Draw the complete cie, with the box, the grid, the horseshoe and the shading.
+ **/
 static void
 gcm_cie_widget_draw_cie (GtkWidget *cie_widget, cairo_t *cr)
 {
@@ -1116,6 +1180,11 @@ gcm_cie_widget_draw_cie (GtkWidget *cie_widget, cairo_t *cr)
 	cairo_restore (cr);
 }
 
+/**
+ * gcm_cie_widget_draw:
+ *
+ * Just repaint the entire cie widget on expose.
+ **/
 static gboolean
 gcm_cie_widget_draw (GtkWidget *cie, cairo_t *cr)
 {
@@ -1123,6 +1192,10 @@ gcm_cie_widget_draw (GtkWidget *cie, cairo_t *cr)
 	return FALSE;
 }
 
+/**
+ * gcm_cie_widget_new:
+ * Return value: A new GcmCieWidget object.
+ **/
 GtkWidget *
 gcm_cie_widget_new (void)
 {

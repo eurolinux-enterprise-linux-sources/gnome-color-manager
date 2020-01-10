@@ -1,6 +1,6 @@
 /* -*- Mode: C; tab-width: 8; indent-tabs-mode: t; c-basic-offset: 8 -*-
  *
- * Copyright (C) 2009-2015 Richard Hughes <richard@hughsie.com>
+ * Copyright (C) 2009-2010 Richard Hughes <richard@hughsie.com>
  *
  * Licensed under the GNU General Public License Version 2
  *
@@ -25,7 +25,6 @@
 #include <gtk/gtk.h>
 #include <gdk/gdkx.h>
 #include <colord.h>
-#include <math.h>
 
 #include "gcm-utils.h"
 
@@ -34,6 +33,9 @@
 #define PK_DBUS_INTERFACE_QUERY				"org.freedesktop.PackageKit.Query"
 #define PK_DBUS_INTERFACE_MODIFY			"org.freedesktop.PackageKit.Modify"
 
+/**
+ * gcm_utils_linkify:
+ **/
 gchar *
 gcm_utils_linkify (const gchar *hostile_text)
 {
@@ -41,7 +43,7 @@ gcm_utils_linkify (const gchar *hostile_text)
 	guint j = 0;
 	gboolean ret;
 	GString *string;
-	g_autofree gchar *text = NULL;
+	gchar *text;
 
 	/* Properly escape this as some profiles 'helpfully' put markup in like:
 	 * "Copyright (C) 2005-2010 Kai-Uwe Behrmann <www.behrmann.name>" */
@@ -75,25 +77,30 @@ gcm_utils_linkify (const gchar *hostile_text)
 			break;
 		}
 	}
+	g_free (text);
 	return g_string_free (string, FALSE);
 }
 
+/**
+ * gcm_utils_install_package:
+ **/
 gboolean
 gcm_utils_install_package (const gchar *package_name, GtkWindow *window)
 {
 	GDBusConnection *connection;
+	GVariant *args = NULL;
+	GVariant *response = NULL;
+	GVariantBuilder *builder = NULL;
+	GError *error = NULL;
+	gboolean ret = FALSE;
 	guint32 xid = 0;
-	g_autoptr(GError) error = NULL;
-	g_auto(GStrv) packages = NULL;
-	g_autoptr(GVariant) args = NULL;
-	g_autoptr(GVariantBuilder) builder = NULL;
-	g_autoptr(GVariant) response = NULL;
+	gchar **packages = NULL;
 
 	g_return_val_if_fail (package_name != NULL, FALSE);
 
 #ifndef HAVE_PACKAGEKIT
-	g_warning ("cannot install %s: this package was not compiled with --packagekit", package_name);
-	return FALSE;
+	g_warning ("cannot install %s: this package was not compiled with --enable-packagekit", package_name);
+	goto out;
 #endif
 
 	/* get xid of this window */
@@ -108,7 +115,8 @@ gcm_utils_install_package (const gchar *package_name, GtkWindow *window)
 	if (connection == NULL) {
 		/* TRANSLATORS: no DBus session bus */
 		g_print ("%s %s\n", _("Failed to connect to session bus:"), error->message);
-		return FALSE;
+		g_error_free (error);
+		goto out;
 	}
 
 	/* create arguments */
@@ -131,11 +139,21 @@ gcm_utils_install_package (const gchar *package_name, GtkWindow *window)
 	if (response == NULL) {
 		/* TRANSLATORS: the DBus method failed */
 		g_warning ("%s %s\n", _("The request failed:"), error->message);
-		return FALSE;
+		g_error_free (error);
+		goto out;
 	}
 
 	/* success */
-	return TRUE;
+	ret = TRUE;
+out:
+	if (builder != NULL)
+		g_variant_builder_unref (builder);
+	if (args != NULL)
+		g_variant_unref (args);
+	if (response != NULL)
+		g_variant_unref (response);
+	g_strfreev (packages);
+	return ret;
 }
 
 /**
@@ -174,18 +192,26 @@ gcm_utils_output_is_lcd (const gchar *output_name)
 	return FALSE;
 }
 
+/**
+ * gcm_utils_get_profile_destination:
+ **/
 GFile *
 gcm_utils_get_profile_destination (GFile *file)
 {
-	g_autofree gchar *basename = NULL;
-	g_autofree gchar *destination = NULL;
+	gchar *basename;
+	gchar *destination;
+	GFile *dest;
 
 	g_return_val_if_fail (file != NULL, NULL);
 
 	/* get destination filename for this source file */
 	basename = g_file_get_basename (file);
 	destination = g_build_filename (g_get_user_data_dir (), "icc", basename, NULL);
-	return g_file_new_for_path (destination);
+	dest = g_file_new_for_path (destination);
+
+	g_free (basename);
+	g_free (destination);
+	return dest;
 }
 
 /**
@@ -208,7 +234,7 @@ gcm_utils_ptr_array_to_strv (GPtrArray *array)
 
 	/* copy the array to a strv */
 	value = g_new0 (gchar *, array->len + 1);
-	for (i = 0; i < array->len; i++) {
+	for (i=0; i<array->len; i++) {
 		value_temp = (const gchar *) g_ptr_array_index (array, i);
 		value[i] = g_strdup (value_temp);
 	}
@@ -216,11 +242,16 @@ gcm_utils_ptr_array_to_strv (GPtrArray *array)
 	return value;
 }
 
+/**
+ * gcm_gnome_help:
+ * @link_id: Subsection of help file, or %NULL.
+ **/
 gboolean
 gcm_gnome_help (const gchar *link_id)
 {
-	g_autoptr(GError) error = NULL;
-	g_autofree gchar *uri = NULL;
+	GError *error = NULL;
+	gchar *uri;
+	gboolean ret = TRUE;
 
 	if (link_id)
 		uri = g_strconcat ("help:gnome-color-manager?", link_id, NULL);
@@ -236,11 +267,17 @@ gcm_gnome_help (const gchar *link_id)
 					    GTK_MESSAGE_ERROR, GTK_BUTTONS_OK, "%s", error->message);
 		gtk_dialog_run (GTK_DIALOG(d));
 		gtk_widget_destroy (d);
-		return FALSE;
+		g_error_free (error);
+		ret = FALSE;
 	}
-	return TRUE;
+
+	g_free (uri);
+	return ret;
 }
 
+/**
+ * gcm_utils_alphanum_lcase:
+ **/
 void
 gcm_utils_alphanum_lcase (gchar *data)
 {
@@ -249,13 +286,16 @@ gcm_utils_alphanum_lcase (gchar *data)
 	g_return_if_fail (data != NULL);
 
 	/* replace unsafe chars, and make lowercase */
-	for (i = 0; data[i] != '\0'; i++) {
+	for (i=0; data[i] != '\0'; i++) {
 		if (!g_ascii_isalnum (data[i]))
 			data[i] = '_';
 		data[i] = g_ascii_tolower (data[i]);
 	}
 }
 
+/**
+ * gcm_utils_ensure_sensible_filename:
+ **/
 void
 gcm_utils_ensure_sensible_filename (gchar *data)
 {
@@ -264,7 +304,7 @@ gcm_utils_ensure_sensible_filename (gchar *data)
 	g_return_if_fail (data != NULL);
 
 	/* replace unsafe chars, and make lowercase */
-	for (i = 0; data[i] != '\0'; i++) {
+	for (i=0; data[i] != '\0'; i++) {
 		if (data[i] != ' ' &&
 		    data[i] != '-' &&
 		    data[i] != '(' &&
@@ -277,6 +317,9 @@ gcm_utils_ensure_sensible_filename (gchar *data)
 	}
 }
 
+/**
+ * cd_colorspace_to_localised_string:
+ **/
 const gchar *
 cd_colorspace_to_localised_string (CdColorspace colorspace)
 {
@@ -295,99 +338,31 @@ cd_colorspace_to_localised_string (CdColorspace colorspace)
 	return NULL;
 }
 
-static CdPixelFormat
-gcm_utils_get_pixel_format (GdkPixbuf *pixbuf)
-{
-	guint bits;
-	CdPixelFormat format = CD_PIXEL_FORMAT_UNKNOWN;
-
-	/* no alpha channel */
-	bits = gdk_pixbuf_get_bits_per_sample (pixbuf);
-	if (!gdk_pixbuf_get_has_alpha (pixbuf) && bits == 8) {
-		format = CD_PIXEL_FORMAT_RGB24;
-		goto out;
-	}
-
-	/* alpha channel */
-	if (bits == 8) {
-		format = CD_PIXEL_FORMAT_RGBA32;
-		goto out;
-	}
-out:
-	return format;
-}
-
+/**
+ * gcm_profile_has_colorspace_description:
+ * @profile: A valid #CdProfile
+ *
+ * Finds out if the profile contains a colorspace description.
+ *
+ * Return value: %TRUE if the description mentions the profile colorspace explicity,
+ * e.g. "Adobe RGB" for %CD_COLORSPACE_RGB.
+ **/
 gboolean
-gcm_utils_image_convert (GtkImage *image,
-			 CdIcc *input,
-			 CdIcc *abstract,
-			 CdIcc *output,
-			 GError **error)
+gcm_profile_has_colorspace_description (CdProfile *profile)
 {
-	CdPixelFormat pixel_format;
-	g_autoptr(CdTransform) transform = NULL;
-	GdkPixbuf *pixbuf;
-	GdkPixbuf *original_pixbuf;
-	gboolean ret = TRUE;
-	guchar *data;
-	guint bpp;
+	CdColorspace colorspace;
+	const gchar *description;
 
-	/* get pixbuf */
-	pixbuf = gtk_image_get_pixbuf (image);
-	if (pixbuf == NULL)
-		return FALSE;
+	g_return_val_if_fail (CD_IS_PROFILE (profile), FALSE);
 
-	/* work out the pixel format */
-	pixel_format = gcm_utils_get_pixel_format (pixbuf);
-	if (pixel_format == CD_PIXEL_FORMAT_UNKNOWN) {
-		ret = FALSE;
-		g_set_error_literal (error, 1, 0, "format not supported");
-		return FALSE;
-	}
+	/* for each profile type */
+	colorspace = cd_profile_get_colorspace (profile);
+	description = cd_profile_get_title (profile);
+	if (colorspace == CD_COLORSPACE_RGB)
+		return (g_strstr_len (description, -1, "RGB") != NULL);
+	if (colorspace == CD_COLORSPACE_CMYK)
+		return (g_strstr_len (description, -1, "CMYK") != NULL);
 
-	/* get a copy of the original image, *not* a ref */
-	original_pixbuf = g_object_get_data (G_OBJECT (pixbuf), "GcmImageOld");
-	if (original_pixbuf == NULL) {
-		data = g_memdup (gdk_pixbuf_get_pixels (pixbuf),
-				 gdk_pixbuf_get_bits_per_sample (pixbuf) *
-				 gdk_pixbuf_get_rowstride (pixbuf) *
-				 gdk_pixbuf_get_height (pixbuf) / 8);
-		original_pixbuf = gdk_pixbuf_new_from_data (data,
-			  gdk_pixbuf_get_colorspace (pixbuf),
-			  gdk_pixbuf_get_has_alpha (pixbuf),
-			  gdk_pixbuf_get_bits_per_sample (pixbuf),
-			  gdk_pixbuf_get_width (pixbuf),
-			  gdk_pixbuf_get_height (pixbuf),
-			  gdk_pixbuf_get_rowstride (pixbuf),
-			  (GdkPixbufDestroyNotify) g_free, NULL);
-		g_object_set_data_full (G_OBJECT (pixbuf), "GcmImageOld",
-					original_pixbuf,
-					(GDestroyNotify) g_object_unref);
-	}
-
-	/* convert in-place */
-	transform = cd_transform_new ();
-	cd_transform_set_input_icc (transform, input);
-	cd_transform_set_abstract_icc (transform, abstract);
-	cd_transform_set_output_icc (transform, output);
-	cd_transform_set_rendering_intent (transform, CD_RENDERING_INTENT_PERCEPTUAL);
-	cd_transform_set_input_pixel_format (transform, pixel_format);
-	cd_transform_set_output_pixel_format (transform, pixel_format);
-	bpp = gdk_pixbuf_get_rowstride (pixbuf) / gdk_pixbuf_get_width (pixbuf);
-	ret = cd_transform_process (transform,
-				    gdk_pixbuf_get_pixels (original_pixbuf),
-				    gdk_pixbuf_get_pixels (pixbuf),
-				    gdk_pixbuf_get_width (pixbuf),
-				    gdk_pixbuf_get_height (pixbuf),
-				    gdk_pixbuf_get_rowstride (pixbuf) / bpp,
-				    NULL,
-				    error);
-	if (!ret)
-		return FALSE;
-
-	/* refresh */
-	g_object_ref (pixbuf);
-	gtk_image_set_from_pixbuf (image, pixbuf);
-	g_object_unref (pixbuf);
-	return TRUE;
+	/* nothing */
+	return FALSE;
 }

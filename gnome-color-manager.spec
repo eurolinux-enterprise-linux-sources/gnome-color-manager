@@ -1,15 +1,37 @@
-Name:      gnome-color-manager
-Version:   3.28.0
-Release:   1%{?dist}
 Summary:   Color management tools for GNOME
-
+Name:      gnome-color-manager
+Version:   3.8.2
+Release:   6%{?dist}
 License:   GPLv2+
-URL:       http://mail.gnome.org/mailman/listinfo/gnome-color-manager-list
-Source0:   http://download.gnome.org/sources/gnome-color-manager/3.28/%{name}-%{version}.tar.xz
+Group:     Applications/System
+URL:       http://projects.gnome.org/gnome-color-manager/
+Source0:   http://download.gnome.org/sources/gnome-color-manager/3.8/%{name}-%{version}.tar.xz
+
+Patch0: translations.patch
+
+Requires:  color-filesystem >= 1-7
+Requires:  gnome-icon-theme
+Requires:  shared-mime-info
+Requires:  shared-color-profiles
+Requires:  dconf
+
+# Not actually a hard requirement; it just sucks to have to install the
+# package using PackageKit before the user can calibrate
+%if 0%{?rhel} == 0
+Requires:  argyllcms
+%endif
 
 BuildRequires: gtk3-devel >= 3.0.0
+BuildRequires: scrollkeeper
+BuildRequires: gnome-doc-utils >= 0.3.2
 BuildRequires: desktop-file-utils
 BuildRequires: gettext
+BuildRequires: libtool
+BuildRequires: vte3-devel
+BuildRequires: gnome-doc-utils
+BuildRequires: intltool
+BuildRequires: libgudev1-devel
+BuildRequires: libXrandr-devel
 BuildRequires: lcms2-devel
 BuildRequires: libtiff-devel
 BuildRequires: libexif-devel
@@ -18,18 +40,12 @@ BuildRequires: libcanberra-devel
 BuildRequires: glib2-devel >= 2.25.9-2
 BuildRequires: docbook-utils
 BuildRequires: colord-devel >= 0.1.12
-BuildRequires: colord-gtk-devel >= 0.1.22
+BuildRequires: gnome-desktop3-devel
 BuildRequires: itstool
-BuildRequires: meson
-BuildRequires: vte291-devel
+BuildRequires: colord-gtk-devel
 
-Requires: shared-mime-info
-
-# Not actually a hard requirement; it just sucks to have to install the
-# package using PackageKit before the user can calibrate
-%if 0%{?rhel} == 0
-Requires: argyllcms
-%endif
+Requires(post):   /usr/bin/gtk-update-icon-cache
+Requires(postun): /usr/bin/gtk-update-icon-cache
 
 # obsolete sub-package
 Obsoletes: gnome-color-manager-devel <= 3.1.1
@@ -41,19 +57,27 @@ and generate color profiles in the GNOME desktop.
 
 %prep
 %setup -q
+%patch0 -p2
 
 %build
-%meson
-%meson_build
+%configure --disable-scrollkeeper --disable-schemas-install --disable-clutter
+make %{?_smp_mflags}
 
 %install
-%meson_install
+make install DESTDIR=$RPM_BUILD_ROOT
+
+for i in gcm-calibrate gcm-import ; do
+  desktop-file-install --delete-original                                \
+    --dir=$RPM_BUILD_ROOT%{_datadir}/applications/                      \
+    $RPM_BUILD_ROOT%{_datadir}/applications/$i.desktop
+done
 
 %find_lang %name --with-gnome
 
 %post
 touch --no-create %{_datadir}/icons/hicolor &>/dev/null || :
 update-desktop-database %{_datadir}/applications &> /dev/null || :
+update-mime-database %{_datadir}/mime &> /dev/null || :
 
 %postun
 if [ $1 -eq 0 ]; then
@@ -62,53 +86,32 @@ if [ $1 -eq 0 ]; then
     glib-compile-schemas %{_datadir}/glib-2.0/schemas &> /dev/null || :
 fi
 update-desktop-database %{_datadir}/applications &> /dev/null || :
+update-mime-database %{_datadir}/mime &> /dev/null || :
 
 %posttrans
 gtk-update-icon-cache %{_datadir}/icons/hicolor &> /dev/null || :
 glib-compile-schemas %{_datadir}/glib-2.0/schemas &> /dev/null || :
 
 %files -f %{name}.lang
-%license COPYING
-%doc AUTHORS README
+%defattr(-,root,root,-)
+%doc AUTHORS COPYING NEWS README
 %{_bindir}/gcm-*
 %{_libexecdir}/gcm-*
-%{_datadir}/applications/gcm-*.desktop
-%{_datadir}/applications/org.gnome.ColorProfileViewer.desktop
 %dir %{_datadir}/gnome-color-manager
 %dir %{_datadir}/gnome-color-manager/targets
 %dir %{_datadir}/gnome-color-manager/icons
 %dir %{_datadir}/gnome-color-manager/figures
 %dir %{_datadir}/gnome-color-manager/ti1
-%{_datadir}/gnome-color-manager/targets/*
-%{_datadir}/gnome-color-manager/icons/*
-%{_datadir}/gnome-color-manager/figures/*
-%{_datadir}/gnome-color-manager/ti1/*
+%{_datadir}/gnome-color-manager/targets
+%{_datadir}/gnome-color-manager/icons
+%{_datadir}/gnome-color-manager/figures
+%{_datadir}/gnome-color-manager/ti1
+%{_datadir}/man/man1/*.1.gz
 %{_datadir}/icons/hicolor/*/*/*.png
 %{_datadir}/icons/hicolor/scalable/*/*.svg*
-%{_datadir}/metainfo/org.gnome.ColorProfileViewer.appdata.xml
-%{_mandir}/man1/*.1*
+%{_datadir}/applications/gcm-*.desktop
 
 %changelog
-* Mon Mar 12 2018 Kalev Lember <klember@redhat.com> - 3.28.0-1
-- Update to 3.28.0
-- Resolves: #1567477
-
-* Tue Oct 24 2017 Debarshi Ray <rishi@fedoraproject.org> - 3.22.2-2
-- Rebuild against the rebased exiv2
-- Resolves: #1487203
-
-* Wed Nov 23 2016 Kalev Lember <klember@redhat.com> - 3.22.2-1
-- Update to 3.22.2
-- Resolves: #1386882
-
-* Fri May 22 2015 Matthias Clasen <mclasen@redhat.com> - 3.14.2-2
-- Fix changelog
-Related: #1174571
-
-* Mon Mar 23 2015 Richard Hughes <rhughes@redhat.com> - 3.14.2-1
-- Update to 3.14.2
-- Resolves: #1174571
-
 * Fri Jan 24 2014 Daniel Mach <dmach@redhat.com> - 3.8.2-6
 - Mass rebuild 2014-01-24
 

@@ -28,10 +28,17 @@
 
 static void     gcm_print_finalize	(GObject     *object);
 
-typedef struct
+#define GCM_PRINT_GET_PRIVATE(o) (G_TYPE_INSTANCE_GET_PRIVATE ((o), GCM_TYPE_PRINT, GcmPrintPrivate))
+
+/**
+ * GcmPrintPrivate:
+ *
+ * Private #GcmPrint data
+ **/
+struct _GcmPrintPrivate
 {
 	GtkPrintSettings		*settings;
-} GcmPrintPrivate;
+};
 
 enum {
 	SIGNAL_STATUS_CHANGED,
@@ -40,8 +47,7 @@ enum {
 
 static guint signals[SIGNAL_LAST] = { 0 };
 
-G_DEFINE_TYPE_WITH_PRIVATE (GcmPrint, gcm_print, G_TYPE_OBJECT)
-#define GET_PRIVATE(o) (gcm_print_get_instance_private (o))
+G_DEFINE_TYPE (GcmPrint, gcm_print, G_TYPE_OBJECT)
 
 /* temporary object so we can pass state */
 typedef struct {
@@ -54,6 +60,9 @@ typedef struct {
 	GError			*error;
 } GcmPrintTask;
 
+/**
+ * gcm_print_class_init:
+ **/
 static void
 gcm_print_class_init (GcmPrintClass *klass)
 {
@@ -69,6 +78,8 @@ gcm_print_class_init (GcmPrintClass *klass)
 			      G_STRUCT_OFFSET (GcmPrintClass, status_changed),
 			      NULL, NULL, g_cclosure_marshal_VOID__UINT,
 			      G_TYPE_NONE, 1, G_TYPE_UINT);
+
+	g_type_class_add_private (klass, sizeof (GcmPrintPrivate));
 }
 
 /**
@@ -89,14 +100,21 @@ gcm_print_begin_print_cb (GtkPrintOperation *operation, GtkPrintContext *context
 	task->filenames = task->render_callback (task->print, page_setup, task->user_data, &task->error);
 	if (task->filenames == NULL) {
 		gtk_print_operation_cancel (operation);
-		return;
+		goto out;
 	}
 
 	/* setting the page count */
-	g_debug ("setting %u pages", task->filenames->len);
+	g_debug ("setting %i pages", task->filenames->len);
 	gtk_print_operation_set_n_pages (operation, task->filenames->len);
+out:
+	return;
 }
 
+/**
+ * gcm_print_draw_page_cb:
+ *
+ * Emitted for every page that is printed. The signal handler must render the page onto the cairo context
+ **/
 static void
 gcm_print_draw_page_cb (GtkPrintOperation *operation, GtkPrintContext *context, gint page_nr, GcmPrintTask *task)
 {
@@ -104,9 +122,9 @@ gcm_print_draw_page_cb (GtkPrintOperation *operation, GtkPrintContext *context, 
 	gdouble width = 0.0f;
 	gdouble height = 0.0f;
 	const gchar *filename;
+	GdkPixbuf *pixbuf = NULL;
 	cairo_surface_t *surface = NULL;
 	gdouble scale;
-	g_autoptr(GdkPixbuf) pixbuf = NULL;
 
 	/* get the size of the page in _pixels_ */
 	width = gtk_print_context_get_width (context);
@@ -122,7 +140,11 @@ gcm_print_draw_page_cb (GtkPrintOperation *operation, GtkPrintContext *context, 
 	}
 
 	/* create a surface of the pixmap */
-	surface = gdk_cairo_surface_create_from_pixbuf (pixbuf, 1, NULL);
+	surface = cairo_image_surface_create_for_data (gdk_pixbuf_get_pixels (pixbuf),
+						       CAIRO_FORMAT_RGB24,
+						       gdk_pixbuf_get_width (pixbuf),
+						       gdk_pixbuf_get_height (pixbuf),
+						       gdk_pixbuf_get_rowstride (pixbuf));
 
 	/* scale image to fill the page, but preserve aspect */
 	scale = MIN (width / gdk_pixbuf_get_width (pixbuf), height / gdk_pixbuf_get_height (pixbuf));
@@ -135,8 +157,13 @@ gcm_print_draw_page_cb (GtkPrintOperation *operation, GtkPrintContext *context, 
 out:
 	if (surface != NULL)
 		cairo_surface_destroy (surface);
+	if (pixbuf != NULL)
+		g_object_unref (pixbuf);
 }
 
+/**
+ * gcm_print_loop_quit_idle_cb:
+ **/
 static gboolean
 gcm_print_loop_quit_idle_cb (GcmPrintTask *task)
 {
@@ -144,6 +171,9 @@ gcm_print_loop_quit_idle_cb (GcmPrintTask *task)
 	return FALSE;
 }
 
+/**
+ * gcm_print_status_changed_cb:
+ **/
 static void
 gcm_print_status_changed_cb (GtkPrintOperation *operation, GcmPrintTask *task)
 {
@@ -151,7 +181,7 @@ gcm_print_status_changed_cb (GtkPrintOperation *operation, GcmPrintTask *task)
 
 	/* signal the status change */
 	status = gtk_print_operation_get_status (operation);
-	g_debug ("emit: status-changed: %u", status);
+	g_debug ("emit: status-changed: %i", status);
 	g_signal_emit (task->print, signals[SIGNAL_STATUS_CHANGED], 0, status);
 
 	/* done? */
@@ -170,20 +200,26 @@ gcm_print_status_changed_cb (GtkPrintOperation *operation, GcmPrintTask *task)
 	}
 }
 
+/**
+ * gcm_print_done_cb:
+ **/
 static void
 gcm_print_done_cb (GtkPrintOperation *operation, GtkPrintOperationResult result, GcmPrintTask *task)
 {
 	g_debug ("we're done rendering...");
 }
 
+/**
+ * gcm_print_with_render_callback:
+ **/
 gboolean
 gcm_print_with_render_callback (GcmPrint *print, GtkWindow *window, GcmPrintRenderCb render_callback, gpointer user_data, GError **error)
 {
-	GcmPrintPrivate *priv = GET_PRIVATE (print);
+	GcmPrintPrivate *priv = print->priv;
 	gboolean ret = TRUE;
 	GcmPrintTask *task;
+	GtkPrintOperation *operation;
 	GtkPrintOperationResult res;
-	g_autoptr(GtkPrintOperation) operation = NULL;
 
 	/* create temp object */
 	task = g_new0 (GcmPrintTask, 1);
@@ -250,27 +286,39 @@ out:
 	if (task->error != NULL)
 		g_error_free (task->error);
 	g_free (task);
+	g_object_unref (operation);
 	return ret;
 }
 
+/**
+ * gcm_print_init:
+ **/
 static void
 gcm_print_init (GcmPrint *print)
 {
-	GcmPrintPrivate *priv = GET_PRIVATE (print);
-	priv->settings = gtk_print_settings_new ();
+	print->priv = GCM_PRINT_GET_PRIVATE (print);
+	print->priv->settings = gtk_print_settings_new ();
 }
 
+/**
+ * gcm_print_finalize:
+ **/
 static void
 gcm_print_finalize (GObject *object)
 {
 	GcmPrint *print = GCM_PRINT (object);
-	GcmPrintPrivate *priv = GET_PRIVATE (print);
+	GcmPrintPrivate *priv = print->priv;
 
 	g_object_unref (priv->settings);
 
 	G_OBJECT_CLASS (gcm_print_parent_class)->finalize (object);
 }
 
+/**
+ * gcm_print_new:
+ *
+ * Return value: a new GcmPrint object.
+ **/
 GcmPrint *
 gcm_print_new (void)
 {

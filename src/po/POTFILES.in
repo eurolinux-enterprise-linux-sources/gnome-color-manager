@@ -1,10 +1,9 @@
-# List of source files containing translatable strings.
-# Please keep this file sorted alphabetically.
-data/appdata/org.gnome.ColorProfileViewer.appdata.xml.in
 data/gcm-calibrate.desktop.in
 data/gcm-import.desktop.in
 data/gcm-picker.desktop.in
-data/org.gnome.ColorProfileViewer.desktop.in
+[type: gettext/glade]data/gcm-picker.ui
+data/gcm-viewer.desktop.in
+[type: gettext/glade]data/gcm-viewer.ui
 src/gcm-calibrate-argyll.c
 src/gcm-calibrate.c
 src/gcm-calibrate-main.c
@@ -13,7 +12,6 @@ src/gcm-debug.c
 src/gcm-import.c
 src/gcm-inspect.c
 src/gcm-picker.c
-src/gcm-picker.ui
+src/gcm-profile.c
 src/gcm-utils.c
 src/gcm-viewer.c
-src/gcm-viewer.ui

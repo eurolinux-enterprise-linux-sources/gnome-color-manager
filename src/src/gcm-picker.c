@@ -1,6 +1,6 @@
 /* -*- Mode: C; tab-width: 8; indent-tabs-mode: t; c-basic-offset: 8 -*-
  *
- * Copyright (C) 2010-2015 Richard Hughes <richard@hughsie.com>
+ * Copyright (C) 2010 Richard Hughes <richard@hughsie.com>
  *
  * Licensed under the GNU General Public License Version 2
  *
@@ -35,19 +35,16 @@
 #include "gcm-utils.h"
 #include "gcm-debug.h"
 
-typedef struct {
-	CdClient	*client;
-	const gchar	*profile_filename;
-	gboolean	 done_measure;
-	CdColorXYZ	 last_sample;
-	CdSensor	*sensor;
-	gdouble		 last_ambient;
-	GtkBuilder	*builder;
-	GtkWidget	*info_bar_hardware_label;
-	GtkWidget	*info_bar_hardware;
-	guint		 xid;
-	guint		 unlock_timer;
-} GcmPickerPrivate;
+static CdClient *client = NULL;
+static const gchar *profile_filename = NULL;
+static gboolean done_measure = FALSE;
+static CdColorXYZ last_sample;
+static CdSensor *sensor = NULL;
+static gdouble last_ambient = -1.0f;
+static GtkBuilder *builder = NULL;
+static GtkWidget *info_bar_hardware_label = NULL;
+static GtkWidget *info_bar_hardware = NULL;
+static guint xid = 0;
 
 enum {
 	GCM_PREFS_COMBO_COLUMN_TEXT,
@@ -55,6 +52,9 @@ enum {
 	GCM_PREFS_COMBO_COLUMN_LAST
 };
 
+/**
+ * gcm_picker_set_pixbuf_color:
+ **/
 static void
 gcm_picker_set_pixbuf_color (GdkPixbuf *pixbuf, gchar red, gchar green, gchar blue)
 {
@@ -70,7 +70,7 @@ gcm_picker_set_pixbuf_color (GdkPixbuf *pixbuf, gchar red, gchar green, gchar bl
 
 	/* set to all the correct colors */
 	for (y=0; y<height; y++) {
-		for (x = 0; x < width; x++) {
+		for (x=0; x<width; x++) {
 			p = pixels + y * rowstride + x * n_channels;
 			p[0] = red;
 			p[1] = green;
@@ -79,8 +79,11 @@ gcm_picker_set_pixbuf_color (GdkPixbuf *pixbuf, gchar red, gchar green, gchar bl
 	}
 }
 
+/**
+ * gcm_picker_refresh_results:
+ **/
 static void
-gcm_picker_refresh_results (GcmPickerPrivate *priv)
+gcm_picker_refresh_results (void)
 {
 	cmsCIExyY xyY;
 	cmsHPROFILE profile_lab;
@@ -90,34 +93,31 @@ gcm_picker_refresh_results (GcmPickerPrivate *priv)
 	cmsHTRANSFORM transform_lab;
 	cmsHTRANSFORM transform_rgb;
 	gboolean ret;
+	gchar *text_ambient = NULL;
+	gchar *text_error = NULL;
+	gchar *text_lab = NULL;
+	gchar *text_rgb = NULL;
+	gchar *text_temperature = NULL;
+	gchar *text_whitepoint = NULL;
+	gchar *text_xyz = NULL;
 	CdColorLab color_lab;
 	CdColorRGB8 color_rgb;
 	CdColorXYZ color_error;
 	CdColorXYZ color_xyz;
+	GdkPixbuf *pixbuf = NULL;
 	gdouble temperature = 0.0f;
 	GtkImage *image;
 	GtkLabel *label;
-	g_autoptr(GdkPixbuf) pixbuf = NULL;
-	g_autofree gchar *text_ambient = NULL;
-	g_autofree gchar *text_error = NULL;
-	g_autofree gchar *text_lab = NULL;
-	g_autofree gchar *text_rgb = NULL;
-	g_autofree gchar *text_temperature = NULL;
-	g_autofree gchar *text_whitepoint = NULL;
-	g_autofree gchar *text_xyz = NULL;
 
 	/* nothing set yet */
-	if (priv->profile_filename == NULL)
-		return;
+	if (profile_filename == NULL)
+		goto out;
 
 	/* copy as we're modifying the value */
-	cd_color_xyz_copy (&priv->last_sample, &color_xyz);
+	cd_color_xyz_copy (&last_sample, &color_xyz);
 
 	/* create new pixbuf of the right size */
-	image = GTK_IMAGE (gtk_builder_get_object (priv->builder, "image_preview"));
-	pixbuf = gdk_pixbuf_new (GDK_COLORSPACE_RGB, FALSE, 8,
-				 gtk_widget_get_allocated_width (GTK_WIDGET (image)),
-				 gtk_widget_get_allocated_height (GTK_WIDGET (image)));
+	pixbuf = gdk_pixbuf_new (GDK_COLORSPACE_RGB, FALSE, 8, 200, 200);
 
 	/* lcms scales these for some reason */
 	color_xyz.X /= 100.0f;
@@ -126,7 +126,7 @@ gcm_picker_refresh_results (GcmPickerPrivate *priv)
 
 	/* get profiles */
 	profile_xyz = cmsCreateXYZProfile ();
-	profile_rgb = cmsOpenProfileFromFile (priv->profile_filename, "r");
+	profile_rgb = cmsOpenProfileFromFile (profile_filename, "r");
 	profile_lab = cmsCreateLab4Profile (cmsD50_xyY ());
 
 	/* create transforms */
@@ -134,17 +134,17 @@ gcm_picker_refresh_results (GcmPickerPrivate *priv)
 					    profile_rgb, TYPE_RGB_8,
 					    INTENT_PERCEPTUAL, 0);
 	if (transform_rgb == NULL)
-		return;
+		goto out;
 	transform_lab = cmsCreateTransform (profile_xyz, TYPE_XYZ_DBL,
 					    profile_lab, TYPE_Lab_DBL,
 					    INTENT_PERCEPTUAL, 0);
 	if (transform_lab == NULL)
-		return;
+		goto out;
 	transform_error = cmsCreateTransform (profile_rgb, TYPE_RGB_8,
 					      profile_xyz, TYPE_XYZ_DBL,
 					      INTENT_PERCEPTUAL, 0);
 	if (transform_error == NULL)
-		return;
+		goto out;
 
 	cmsDoTransform (transform_rgb, &color_xyz, &color_rgb, 1);
 	cmsDoTransform (transform_lab, &color_xyz, &color_lab, 1);
@@ -159,15 +159,15 @@ gcm_picker_refresh_results (GcmPickerPrivate *priv)
 	cmsCloseProfile (profile_lab);
 
 	/* set XYZ */
-	label = GTK_LABEL (gtk_builder_get_object (priv->builder, "label_xyz"));
+	label = GTK_LABEL (gtk_builder_get_object (builder, "label_xyz"));
 	text_xyz = g_strdup_printf ("%.3f, %.3f, %.3f",
-				    priv->last_sample.X,
-				    priv->last_sample.Y,
-				    priv->last_sample.Z);
+				    last_sample.X,
+				    last_sample.Y,
+				    last_sample.Z);
 	gtk_label_set_label (label, text_xyz);
 
 	/* set LAB */
-	label = GTK_LABEL (gtk_builder_get_object (priv->builder, "label_lab"));
+	label = GTK_LABEL (gtk_builder_get_object (builder, "label_lab"));
 	text_lab = g_strdup_printf ("%.3f, %.3f, %.3f",
 				    color_lab.L,
 				    color_lab.a,
@@ -175,8 +175,8 @@ gcm_picker_refresh_results (GcmPickerPrivate *priv)
 	gtk_label_set_label (label, text_lab);
 
 	/* set whitepoint */
-	cmsXYZ2xyY (&xyY, (cmsCIEXYZ *)&priv->last_sample);
-	label = GTK_LABEL (gtk_builder_get_object (priv->builder, "label_whitepoint"));
+	cmsXYZ2xyY (&xyY, (cmsCIEXYZ *)&last_sample);
+	label = GTK_LABEL (gtk_builder_get_object (builder, "label_whitepoint"));
 	text_whitepoint = g_strdup_printf ("%.3f,%.3f [%.3f]",
 					   xyY.x, xyY.y, xyY.Y);
 	gtk_label_set_label (label, text_whitepoint);
@@ -187,12 +187,12 @@ gcm_picker_refresh_results (GcmPickerPrivate *priv)
 		/* round to nearest 10K */
 		temperature = (((guint) temperature) / 10) * 10;
 	}
-	label = GTK_LABEL (gtk_builder_get_object (priv->builder, "label_temperature"));
+	label = GTK_LABEL (gtk_builder_get_object (builder, "label_temperature"));
 	text_temperature = g_strdup_printf ("%.0fK", temperature);
 	gtk_label_set_label (label, text_temperature);
 
 	/* set RGB */
-	label = GTK_LABEL (gtk_builder_get_object (priv->builder, "label_rgb"));
+	label = GTK_LABEL (gtk_builder_get_object (builder, "label_rgb"));
 	text_rgb = g_strdup_printf ("%i, %i, %i (#%02X%02X%02X)",
 				    color_rgb.R, color_rgb.G, color_rgb.B,
 				    color_rgb.R, color_rgb.G, color_rgb.B);
@@ -200,7 +200,7 @@ gcm_picker_refresh_results (GcmPickerPrivate *priv)
 	gcm_picker_set_pixbuf_color (pixbuf, color_rgb.R, color_rgb.G, color_rgb.B);
 
 	/* set error */
-	label = GTK_LABEL (gtk_builder_get_object (priv->builder, "label_error"));
+	label = GTK_LABEL (gtk_builder_get_object (builder, "label_error"));
 	if (color_xyz.X > 0.01f &&
 	    color_xyz.Y > 0.01f &&
 	    color_xyz.Z > 0.01f) {
@@ -215,88 +215,85 @@ gcm_picker_refresh_results (GcmPickerPrivate *priv)
 	}
 
 	/* set ambient */
-	label = GTK_LABEL (gtk_builder_get_object (priv->builder, "label_ambient"));
-	if (priv->last_ambient < 0) {
+	label = GTK_LABEL (gtk_builder_get_object (builder, "label_ambient"));
+	if (last_ambient < 0) {
 		/* TRANSLATORS: this is when the ambient light level is unknown */
 		gtk_label_set_label (label, _("Unknown"));
 	} else {
-		text_ambient = g_strdup_printf ("%.1f Lux", priv->last_ambient);
+		text_ambient = g_strdup_printf ("%.1f Lux", last_ambient);
 		gtk_label_set_label (label, text_ambient);
 	}
 
 	/* set image */
+	image = GTK_IMAGE (gtk_builder_get_object (builder, "image_preview"));
 	gtk_image_set_from_pixbuf (image, pixbuf);
+out:
+	g_free (text_ambient);
+	g_free (text_error);
+	g_free (text_lab);
+	g_free (text_rgb);
+	g_free (text_temperature);
+	g_free (text_whitepoint);
+	g_free (text_xyz);
+	if (pixbuf != NULL)
+		g_object_unref (pixbuf);
 }
 
+/**
+ * gcm_picker_got_results:
+ **/
 static void
-gcm_picker_got_results (GcmPickerPrivate *priv)
+gcm_picker_got_results (void)
 {
 	GtkWidget *widget;
 
 	/* set expanded */
-	widget = GTK_WIDGET (gtk_builder_get_object (priv->builder, "expander_results"));
+	widget = GTK_WIDGET (gtk_builder_get_object (builder, "expander_results"));
 	gtk_expander_set_expanded (GTK_EXPANDER (widget), TRUE);
 	gtk_widget_set_sensitive (widget, TRUE);
 
 	/* we've got results so make sure it's sensitive */
-	priv->done_measure = TRUE;
+	done_measure = TRUE;
 }
 
-static gboolean
-gcm_picker_unlock_timeout_cb (gpointer user_data)
-{
-	g_autoptr(GError) error = NULL;
-	GcmPickerPrivate *priv = (GcmPickerPrivate *) user_data;
-
-	/* unlock */
-	if (!cd_sensor_unlock_sync (priv->sensor, NULL, &error))
-		g_warning ("failed to unlock: %s", error->message);
-	priv->unlock_timer = 0;
-	return FALSE;
-}
-
+/**
+ * gcm_picker_measure_cb:
+ **/
 static void
 gcm_picker_measure_cb (GtkWidget *widget, gpointer data)
 {
-	GcmPickerPrivate *priv = (GcmPickerPrivate *) data;
 	gboolean ret;
-	g_autoptr(CdColorXYZ) tmp = NULL;
-	g_autoptr(GError) error = NULL;
+	CdColorXYZ *tmp = NULL;
+	GError *error = NULL;
 
 	/* reset the image */
-	widget = GTK_WIDGET (gtk_builder_get_object (priv->builder, "image_preview"));
+	widget = GTK_WIDGET (gtk_builder_get_object (builder, "image_preview"));
 	gtk_image_set_from_file (GTK_IMAGE (widget), DATADIR "/icons/hicolor/64x64/apps/gnome-color-manager.png");
 
 	/* lock */
-	if (!cd_sensor_get_locked (priv->sensor)) {
-		ret = cd_sensor_lock_sync (priv->sensor,
-					   NULL,
-					   &error);
-		if (!ret) {
-			g_warning ("failed to lock: %s", error->message);
-			return;
-		}
-	}
-
-	/* cancel pending unlock */
-	if (priv->unlock_timer != 0) {
-		g_source_remove (priv->unlock_timer);
-		priv->unlock_timer = 0;
+	ret = cd_sensor_lock_sync (sensor,
+				   NULL,
+				   &error);
+	if (!ret) {
+		g_warning ("failed to lock: %s", error->message);
+		g_error_free (error);
+		goto out;
 	}
 
 	/* get color */
-	tmp = cd_sensor_get_sample_sync (priv->sensor,
+	tmp = cd_sensor_get_sample_sync (sensor,
 					 CD_SENSOR_CAP_LCD,
 					 NULL,
 					 &error);
 	if (tmp == NULL) {
 		g_warning ("failed to get sample: %s", error->message);
+		g_clear_error (&error);
 		goto out_unlock;
 	}
-	cd_color_xyz_copy (tmp, &priv->last_sample);
+	cd_color_xyz_copy (tmp, &last_sample);
 #if 0
 	/* get ambient */
-	ret = cd_sensor_get_sample_sync (priv->sensor,
+	ret = cd_sensor_get_sample_sync (sensor,
 					 CD_SENSOR_CAP_AMBIENT,
 					 NULL,
 					 &last_ambient,
@@ -304,59 +301,96 @@ gcm_picker_measure_cb (GtkWidget *widget, gpointer data)
 					 &error);
 	if (!ret) {
 		g_warning ("failed to get ambient: %s", error->message);
+		g_clear_error (&error);
 		goto out_unlock;
 	}
 #endif
 out_unlock:
-	/* unlock after a small delay */
-	priv->unlock_timer = g_timeout_add_seconds (30, gcm_picker_unlock_timeout_cb, data);
-	gcm_picker_refresh_results (priv);
-	gcm_picker_got_results (priv);
+	/* unlock */
+	ret = cd_sensor_unlock_sync (sensor,
+				     NULL,
+				     &error);
+	if (!ret) {
+		g_warning ("failed to unlock: %s", error->message);
+		g_error_free (error);
+		goto out;
+	}
+
+	gcm_picker_refresh_results ();
+	gcm_picker_got_results ();
+out:
+	if (tmp != NULL)
+		cd_color_xyz_free (tmp);
 }
 
+/**
+ * gcm_picker_close_cb:
+ **/
 static void
-gcm_picker_sensor_client_setup_ui (GcmPickerPrivate *priv)
+gcm_picker_close_cb (GtkWidget *widget, gpointer data)
+{
+	GtkApplication *application = (GtkApplication *) data;
+	g_application_release (G_APPLICATION (application));
+}
+
+/**
+ * gcm_picker_delete_event_cb:
+ **/
+static gboolean
+gcm_picker_delete_event_cb (GtkWidget *widget, GdkEvent *event, gpointer data)
+{
+	gcm_picker_close_cb (widget, data);
+	return FALSE;
+}
+
+/**
+ * gcm_picker_sensor_client_setup_ui:
+ **/
+static void
+gcm_picker_sensor_client_setup_ui (void)
 {
 	gboolean ret = FALSE;
 	GtkWidget *widget;
-	g_autoptr(GError) error = NULL;
-	g_autoptr(GPtrArray) sensors;
+	GPtrArray *sensors;
+	GError *error = NULL;
 
 	/* no present */
-	sensors = cd_client_get_sensors_sync (priv->client, NULL, &error);
+	sensors = cd_client_get_sensors_sync (client, NULL, &error);
 	if (sensors == NULL) {
 		g_warning ("%s", error->message);
+		g_error_free (error);
 		goto out;
 	}
 	if (sensors->len == 0) {
-		gtk_label_set_label (GTK_LABEL (priv->info_bar_hardware_label),
-				    /* TRANSLATORS: this is displayed the user has not got suitable hardware */
+		/* TRANSLATORS: this is displayed the user has not got suitable hardware */
+		gtk_label_set_label (GTK_LABEL (info_bar_hardware_label),
 				    _("No colorimeter is attached."));
 		goto out;
 	}
-	priv->sensor = g_object_ref (g_ptr_array_index (sensors, 0));
+	sensor = g_object_ref (g_ptr_array_index (sensors, 0));
 
 	/* connect to the profile */
-	ret = cd_sensor_connect_sync (priv->sensor, NULL, &error);
+	ret = cd_sensor_connect_sync (sensor, NULL, &error);
 	if (!ret) {
 		g_warning ("failed to connect to sensor: %s",
 			   error->message);
+		g_error_free (error);
 		goto out;
 	}
 
-	if (!cd_sensor_get_native (priv->sensor)) {
-		gtk_label_set_label (GTK_LABEL (priv->info_bar_hardware_label),
-				     /* TRANSLATORS: this is displayed if VTE support is not enabled */
+	if (!cd_sensor_get_native (sensor)) {
+		 /* TRANSLATORS: this is displayed if VTE support is not enabled */
+		gtk_label_set_label (GTK_LABEL (info_bar_hardware_label),
 				     _("The sensor has no native driver."));
 		goto out;
 	}
 
 #if 0
 	/* no support */
-	ret = cd_sensor_supports_spot (priv->sensor);
+	ret = cd_sensor_supports_spot (sensor);
 	if (!ret) {
 		/* TRANSLATORS: this is displayed the user has not got suitable hardware */
-		gtk_label_set_label (GTK_LABEL (priv->info_bar_hardware_label), _("The attached colorimeter is not capable of reading a spot color."));
+		gtk_label_set_label (GTK_LABEL (info_bar_hardware_label), _("The attached colorimeter is not capable of reading a spot color."));
 		goto out;
 	}
 #else
@@ -364,21 +398,29 @@ gcm_picker_sensor_client_setup_ui (GcmPickerPrivate *priv)
 #endif
 
 out:
-	widget = GTK_WIDGET (gtk_builder_get_object (priv->builder, "button_measure"));
+	if (sensors != NULL)
+		g_ptr_array_unref (sensors);
+	widget = GTK_WIDGET (gtk_builder_get_object (builder, "button_measure"));
 	gtk_widget_set_sensitive (widget, ret);
-	widget = GTK_WIDGET (gtk_builder_get_object (priv->builder, "expander_results"));
-	gtk_widget_set_sensitive (widget, ret && priv->done_measure);
-	gtk_widget_set_visible (priv->info_bar_hardware, !ret);
+	widget = GTK_WIDGET (gtk_builder_get_object (builder, "expander_results"));
+	gtk_widget_set_sensitive (widget, ret && done_measure);
+	gtk_widget_set_visible (info_bar_hardware, !ret);
 }
 
+/**
+ * gcm_picker_sensor_client_changed_cb:
+ **/
 static void
 gcm_picker_sensor_client_changed_cb (CdClient *_client,
 				     CdSensor *_sensor,
-				     GcmPickerPrivate *priv)
+				     gpointer user_data)
 {
-	gcm_picker_sensor_client_setup_ui (priv);
+	gcm_picker_sensor_client_setup_ui ();
 }
 
+/**
+ * gcm_window_set_parent_xid:
+ **/
 static void
 gcm_window_set_parent_xid (GtkWindow *window, guint32 _xid)
 {
@@ -395,22 +437,30 @@ gcm_window_set_parent_xid (GtkWindow *window, guint32 _xid)
 	gdk_window_set_transient_for (our_window, parent_window);
 }
 
+/**
+ * gcm_picker_error_cb:
+ **/
 static void
 gcm_picker_error_cb (cmsContext ContextID, cmsUInt32Number errorcode, const char *text)
 {
-	g_warning ("LCMS error %u: %s", errorcode, text);
+	g_warning ("LCMS error %i: %s", errorcode, text);
 }
 
+/**
+ * gcm_prefs_space_combo_changed_cb:
+ **/
 static void
-gcm_prefs_space_combo_changed_cb (GtkWidget *widget, GcmPickerPrivate *priv)
+gcm_prefs_space_combo_changed_cb (GtkWidget *widget, gpointer data)
 {
+	gboolean ret;
 	GtkTreeIter iter;
 	GtkTreeModel *model;
-	g_autoptr(CdProfile) profile = NULL;
+	CdProfile *profile = NULL;
 
 	/* no selection */
-	if (!gtk_combo_box_get_active_iter (GTK_COMBO_BOX(widget), &iter))
-		return;
+	ret = gtk_combo_box_get_active_iter (GTK_COMBO_BOX(widget), &iter);
+	if (!ret)
+		goto out;
 
 	/* get profile */
 	model = gtk_combo_box_get_model (GTK_COMBO_BOX(widget));
@@ -418,24 +468,31 @@ gcm_prefs_space_combo_changed_cb (GtkWidget *widget, GcmPickerPrivate *priv)
 			    GCM_PREFS_COMBO_COLUMN_PROFILE, &profile,
 			    -1);
 	if (profile == NULL)
-		return;
+		goto out;
 
-	priv->profile_filename = cd_profile_get_filename (profile);
-	g_debug ("changed picker space %s", priv->profile_filename);
+	profile_filename = cd_profile_get_filename (profile);
+	g_debug ("changed picker space %s", profile_filename);
 
-	gcm_picker_refresh_results (priv);
+	gcm_picker_refresh_results ();
+out:
+	if (profile != NULL)
+		g_object_unref (profile);
 }
 
+/**
+ * gcm_prefs_set_combo_simple_text:
+ **/
 static void
 gcm_prefs_set_combo_simple_text (GtkWidget *combo_box)
 {
 	GtkCellRenderer *renderer;
-	g_autoptr(GtkListStore) store = NULL;
+	GtkListStore *store;
 
 	store = gtk_list_store_new (2, G_TYPE_STRING, CD_TYPE_PROFILE);
 	gtk_tree_sortable_set_sort_column_id (GTK_TREE_SORTABLE (store),
 					      GCM_PREFS_COMBO_COLUMN_TEXT, GTK_SORT_ASCENDING);
 	gtk_combo_box_set_model (GTK_COMBO_BOX (combo_box), GTK_TREE_MODEL (store));
+	g_object_unref (store);
 
 	renderer = gtk_cell_renderer_text_new ();
 	g_object_set (renderer,
@@ -449,6 +506,9 @@ gcm_prefs_set_combo_simple_text (GtkWidget *combo_box)
 					NULL);
 }
 
+/**
+ * gcm_prefs_combobox_add_profile:
+ **/
 static void
 gcm_prefs_combobox_add_profile (GtkWidget *widget, CdProfile *profile, GtkTreeIter *iter)
 {
@@ -470,37 +530,42 @@ gcm_prefs_combobox_add_profile (GtkWidget *widget, CdProfile *profile, GtkTreeIt
 			    -1);
 }
 
+/**
+ * gcm_prefs_setup_space_combobox:
+ **/
 static void
-gcm_prefs_setup_space_combobox (GcmPickerPrivate *priv, GtkWidget *widget)
+gcm_prefs_setup_space_combobox (GtkWidget *widget)
 {
 	CdColorspace colorspace;
 	CdDevice *device_tmp;
 	CdProfile *profile;
 	const gchar *filename;
 	const gchar *tmp;
+	gboolean has_colorspace_description;
 	gboolean has_profile = FALSE;
 	gboolean has_vcgt;
+	gchar *text = NULL;
 	gboolean ret;
+	GError *error = NULL;
+	GPtrArray *devices = NULL;
+	GPtrArray *profile_array = NULL;
 	GtkTreeIter iter;
 	GtkTreeModel *model;
 	guint i;
-	g_autofree gchar *text = NULL;
-	g_autoptr(GError) error = NULL;
-	g_autoptr(GPtrArray) devices = NULL;
-	g_autoptr(GPtrArray) profile_array = NULL;
 
 	/* get new list */
-	profile_array = cd_client_get_profiles_sync (priv->client,
+	profile_array = cd_client_get_profiles_sync (client,
 						     NULL,
 						     &error);
 	if (profile_array == NULL) {
 		g_warning ("failed to get profiles: %s",
 			   error->message);
-		return;
+		g_error_free (error);
+		goto out;
 	}
 
 	/* update each list */
-	for (i = 0; i < profile_array->len; i++) {
+	for (i=0; i<profile_array->len; i++) {
 		profile = g_ptr_array_index (profile_array, i);
 
 		/* connect to the profile */
@@ -508,7 +573,8 @@ gcm_prefs_setup_space_combobox (GcmPickerPrivate *priv, GtkWidget *widget)
 		if (!ret) {
 			g_warning ("failed to connect to profile: %s",
 				   error->message);
-			return;
+			g_error_free (error);
+			goto out;
 		}
 
 		/* ignore profiles from other user accounts */
@@ -522,15 +588,16 @@ gcm_prefs_setup_space_combobox (GcmPickerPrivate *priv, GtkWidget *widget)
 
 		/* only for correct kind */
 		has_vcgt = cd_profile_get_has_vcgt (profile);
-		tmp = cd_profile_get_metadata_item (profile, CD_PROFILE_METADATA_STANDARD_SPACE);
+		has_colorspace_description = gcm_profile_has_colorspace_description (profile);
 		colorspace = cd_profile_get_colorspace (profile);
-		if (!has_vcgt && tmp != NULL &&
+		if (!has_vcgt && has_colorspace_description &&
 		    colorspace == CD_COLORSPACE_RGB) {
 			gcm_prefs_combobox_add_profile (widget, profile, &iter);
 
 			/* set active option */
+			tmp = cd_profile_get_metadata_item (profile, CD_PROFILE_METADATA_STANDARD_SPACE);
 			if (g_strcmp0 (tmp, "adobe-rgb") == 0) {
-				priv->profile_filename = filename;
+				profile_filename = filename;
 				gtk_combo_box_set_active_iter (GTK_COMBO_BOX (widget), &iter);
 			}
 			has_profile = TRUE;
@@ -538,11 +605,11 @@ gcm_prefs_setup_space_combobox (GcmPickerPrivate *priv, GtkWidget *widget)
 	}
 
 	/* add device profiles */
-	devices = cd_client_get_devices_by_kind_sync (priv->client,
+	devices = cd_client_get_devices_by_kind_sync (client,
 						      CD_DEVICE_KIND_DISPLAY,
 						      NULL,
 						      &error);
-	for (i = 0; i < devices->len; i++) {
+	for (i=0; i<devices->len; i++) {
 		device_tmp = g_ptr_array_index (devices, i);
 
 		/* connect to the device */
@@ -550,7 +617,8 @@ gcm_prefs_setup_space_combobox (GcmPickerPrivate *priv, GtkWidget *widget)
 		if (!ret) {
 			g_warning ("failed to connect to device: %s",
 				   error->message);
-			return;
+			g_error_free (error);
+			goto out;
 		}
 
 		profile = cd_device_get_default_profile (device_tmp);
@@ -562,7 +630,8 @@ gcm_prefs_setup_space_combobox (GcmPickerPrivate *priv, GtkWidget *widget)
 		if (!ret) {
 			g_warning ("failed to connect to profile: %s",
 				   error->message);
-			return;
+			g_error_free (error);
+			goto out;
 		}
 
 		/* add device profile */
@@ -584,109 +653,138 @@ gcm_prefs_setup_space_combobox (GcmPickerPrivate *priv, GtkWidget *widget)
 		gtk_combo_box_set_active (GTK_COMBO_BOX (widget), 0);
 		gtk_widget_set_sensitive (widget, FALSE);
 	}
+out:
+	if (devices != NULL)
+		g_ptr_array_unref (devices);
+	if (profile_array != NULL)
+		g_ptr_array_unref (profile_array);
+	g_free (text);
 }
 
+/**
+ * gcm_picker_activate_cb:
+ **/
 static void
-gcm_picker_activate_cb (GApplication *application, GcmPickerPrivate *priv)
+gcm_picker_activate_cb (GApplication *application, gpointer user_data)
 {
 	GtkWindow *window;
-	window = GTK_WINDOW (gtk_builder_get_object (priv->builder, "dialog_picker"));
+	window = GTK_WINDOW (gtk_builder_get_object (builder, "dialog_picker"));
 	gtk_window_present (window);
 }
 
+/**
+ * gcm_picker_startup_cb:
+ **/
 static void
-gcm_picker_startup_cb (GApplication *application, GcmPickerPrivate *priv)
+gcm_picker_startup_cb (GApplication *application, gpointer user_data)
 {
 	gboolean ret;
+	GError *error = NULL;
 	GtkWidget *main_window;
 	GtkWidget *widget;
 	guint retval = 0;
-	g_autoptr(GError) error = NULL;
 
 	/* get UI */
-	priv->builder = gtk_builder_new ();
-	retval = gtk_builder_add_from_resource (priv->builder,
+	builder = gtk_builder_new ();
+	retval = gtk_builder_add_from_resource (builder,
 						"/org/gnome/color-manager/gcm-picker.ui",
 						&error);
 	if (retval == 0) {
 		g_warning ("failed to load ui: %s", error->message);
-		return;
+		g_error_free (error);
+		goto out;
 	}
 
-	main_window = GTK_WIDGET (gtk_builder_get_object (priv->builder, "dialog_picker"));
+	main_window = GTK_WIDGET (gtk_builder_get_object (builder, "dialog_picker"));
 	gtk_application_add_window (GTK_APPLICATION (application), GTK_WINDOW (main_window));
 	gtk_window_set_icon_name (GTK_WINDOW (main_window), GCM_STOCK_ICON);
+	g_signal_connect (main_window, "delete_event",
+			  G_CALLBACK (gcm_picker_delete_event_cb), application);
 
-	widget = GTK_WIDGET (gtk_builder_get_object (priv->builder, "button_measure"));
+	widget = GTK_WIDGET (gtk_builder_get_object (builder, "button_close"));
 	g_signal_connect (widget, "clicked",
-			  G_CALLBACK (gcm_picker_measure_cb), priv);
+			  G_CALLBACK (gcm_picker_close_cb), application);
 
-	widget = GTK_WIDGET (gtk_builder_get_object (priv->builder, "image_preview"));
+
+	widget = GTK_WIDGET (gtk_builder_get_object (builder, "button_measure"));
+	g_signal_connect (widget, "clicked",
+			  G_CALLBACK (gcm_picker_measure_cb), NULL);
+
+	widget = GTK_WIDGET (gtk_builder_get_object (builder, "image_preview"));
 	gtk_widget_set_size_request (widget, 200, 200);
 
 	/* add application specific icons to search path */
 	gtk_icon_theme_append_search_path (gtk_icon_theme_get_default (),
-	                                   PKGDATADIR G_DIR_SEPARATOR_S "icons");
+	                                   GCM_DATA G_DIR_SEPARATOR_S "icons");
 
 	/* create a last sample */
 	//cd_color_xyz_clear (&last_sample);
 
 	/* set the parent window if it is specified */
-	if (priv->xid != 0) {
-		g_debug ("Setting xid %u", priv->xid);
-		gcm_window_set_parent_xid (GTK_WINDOW (main_window), priv->xid);
+	if (xid != 0) {
+		g_debug ("Setting xid %i", xid);
+		gcm_window_set_parent_xid (GTK_WINDOW (main_window), xid);
 	}
 
 	/* use an info bar if there is no device, or the wrong device */
-	priv->info_bar_hardware = gtk_info_bar_new ();
-	priv->info_bar_hardware_label = gtk_label_new (NULL);
-	gtk_info_bar_set_message_type (GTK_INFO_BAR(priv->info_bar_hardware), GTK_MESSAGE_INFO);
-	widget = gtk_info_bar_get_content_area (GTK_INFO_BAR(priv->info_bar_hardware));
-	gtk_container_add (GTK_CONTAINER(widget), priv->info_bar_hardware_label);
-	gtk_widget_show (priv->info_bar_hardware_label);
+	info_bar_hardware = gtk_info_bar_new ();
+	info_bar_hardware_label = gtk_label_new (NULL);
+	gtk_info_bar_set_message_type (GTK_INFO_BAR(info_bar_hardware), GTK_MESSAGE_INFO);
+	widget = gtk_info_bar_get_content_area (GTK_INFO_BAR(info_bar_hardware));
+	gtk_container_add (GTK_CONTAINER(widget), info_bar_hardware_label);
+	gtk_widget_show (info_bar_hardware_label);
 
 	/* add infobar to devices pane */
-	widget = GTK_WIDGET (gtk_builder_get_object (priv->builder, "box1"));
-	gtk_box_pack_start (GTK_BOX(widget), priv->info_bar_hardware, FALSE, FALSE, 0);
+	widget = GTK_WIDGET (gtk_builder_get_object (builder, "vbox1"));
+	gtk_box_pack_start (GTK_BOX(widget), info_bar_hardware, FALSE, FALSE, 0);
 
 	/* maintain a list of profiles */
-	priv->client = cd_client_new ();
-	ret = cd_client_connect_sync (priv->client, NULL, &error);
+	client = cd_client_new ();
+	ret = cd_client_connect_sync (client,
+				      NULL,
+				      &error);
 	if (!ret) {
 		g_warning ("failed to connect to colord: %s",
 			   error->message);
-		return;
+		g_error_free (error);
+		goto out;
 	}
-	g_signal_connect (priv->client, "sensor-added",
-			  G_CALLBACK (gcm_picker_sensor_client_changed_cb), priv);
-	g_signal_connect (priv->client, "sensor-removed",
-			  G_CALLBACK (gcm_picker_sensor_client_changed_cb), priv);
+	g_signal_connect (client, "sensor-added",
+			  G_CALLBACK (gcm_picker_sensor_client_changed_cb), NULL);
+	g_signal_connect (client, "sensor-removed",
+			  G_CALLBACK (gcm_picker_sensor_client_changed_cb), NULL);
 
 	/* disable some ui if no hardware */
-	gcm_picker_sensor_client_setup_ui (priv);
+	gcm_picker_sensor_client_setup_ui ();
 
 	/* setup RGB combobox */
-	widget = GTK_WIDGET (gtk_builder_get_object (priv->builder, "combobox_colorspace"));
+	widget = GTK_WIDGET (gtk_builder_get_object (builder, "combobox_colorspace"));
 	gcm_prefs_set_combo_simple_text (widget);
-	gcm_prefs_setup_space_combobox (priv, widget);
+	gcm_prefs_setup_space_combobox (widget);
 	g_signal_connect (G_OBJECT (widget), "changed",
-			  G_CALLBACK (gcm_prefs_space_combo_changed_cb), priv);
+			  G_CALLBACK (gcm_prefs_space_combo_changed_cb), NULL);
+
+	/* setup results expander */
+//	gcm_picker_refresh_results (NULL);
 
 	/* setup initial preview window */
-	widget = GTK_WIDGET (gtk_builder_get_object (priv->builder, "image_preview"));
+	widget = GTK_WIDGET (gtk_builder_get_object (builder, "image_preview"));
 	gtk_image_set_from_file (GTK_IMAGE (widget), DATADIR "/icons/hicolor/64x64/apps/gnome-color-manager.png");
 
 	/* wait */
 	gtk_widget_show (main_window);
+out:
+	return;
 }
 
+/**
+ * main:
+ **/
 int
 main (int argc, char *argv[])
 {
-	GcmPickerPrivate *priv;
 	GOptionContext *context;
 	GtkApplication *application;
-	guint xid = 0;
 	int status = 0;
 
 	const GOptionEntry options[] = {
@@ -702,6 +800,9 @@ main (int argc, char *argv[])
 	bind_textdomain_codeset (GETTEXT_PACKAGE, "UTF-8");
 	textdomain (GETTEXT_PACKAGE);
 
+	/* setup type system */
+	g_type_init ();
+
 	/* setup LCMS */
 	cmsSetLogErrorHandler (gcm_picker_error_cb);
 
@@ -714,25 +815,20 @@ main (int argc, char *argv[])
 	g_option_context_parse (context, &argc, &argv, NULL);
 	g_option_context_free (context);
 
-	/* create private */
-	priv = g_new0 (GcmPickerPrivate, 1);
-	priv->last_ambient = -1.0f;
-	priv->xid = xid;
-
 	/* ensure single instance */
 	application = gtk_application_new ("org.gnome.ColorManager.Picker", 0);
 	g_signal_connect (application, "startup",
-			  G_CALLBACK (gcm_picker_startup_cb), priv);
+			  G_CALLBACK (gcm_picker_startup_cb), NULL);
 	g_signal_connect (application, "activate",
-			  G_CALLBACK (gcm_picker_activate_cb), priv);
+			  G_CALLBACK (gcm_picker_activate_cb), NULL);
 
 	status = g_application_run (G_APPLICATION (application), argc, argv);
 
 	g_object_unref (application);
-	if (priv->client != NULL)
-		g_object_unref (priv->client);
-	if (priv->builder != NULL)
-		g_object_unref (priv->builder);
-	g_free (priv);
+	if (client != NULL)
+		g_object_unref (client);
+	if (builder != NULL)
+		g_object_unref (builder);
 	return status;
 }
+

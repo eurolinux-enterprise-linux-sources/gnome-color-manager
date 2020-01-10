@@ -5,7 +5,7 @@
 # This file is distributed under the same license as the gnome-color-manager
 # package.
 #
-# Mattias Põldaru <mahfiaz gmail com>, 2009-2010, 2013, 2015.
+# Mattias Põldaru <mahfiaz gmail com>, 2009-2010.
 # Ivar Smolin <mahfiaz gmail com>, 2010.
 #
 msgid ""
@@ -13,16 +13,17 @@ msgstr ""
 "Project-Id-Version: Gnome-color-manager\n"
 "Report-Msgid-Bugs-To: http://bugzilla.gnome.org/enter_bug.cgi?product=gnome-"
 "color-manager&keywords=I18N+L10N\n"
-"POT-Creation-Date: 2015-03-15 07:05+0000\n"
-"PO-Revision-Date: 2015-03-15 09:46+0300\n"
+"POT-Creation-Date: 2013-03-12 17:41+0000\n"
+"PO-Revision-Date: 2013-03-13 21:15+0300\n"
 "Last-Translator: Mattias Põldaru <mahfiaz@gmail.com>\n"
 "Language-Team: Gnome Estonian Translation Team <gnome-et@linux.ee>\n"
-"Language: et\n"
+"Language: \n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=(n != 1);\n"
-"X-Generator: Poedit 1.5.4\n"
+"X-Poedit-Language: Estonian\n"
+"X-Poedit-Country: Estonia\n"
 
 msgid "Color"
 msgstr "Värvus"
@@ -43,77 +44,52 @@ msgstr "Värvivalija"
 msgid "Use the color sensor to sample spot colors"
 msgstr "Värvisensori kasutamine punktvärvide lugemiseks."
 
+#. Button text, to get a single sample of color
+msgid "_Measure"
+msgstr "_Mõõda"
+
 #. the color representation
-#. TRANSLATORS: this the ICC colorspace type
-msgid "XYZ"
-msgstr "XYZ"
+msgid "XYZ:"
+msgstr "XYZ:"
 
 #. Lab is the color representation and D50 is the white point
-msgid "Lab (D50)"
-msgstr "Lab (D50)"
+msgid "Lab (D50):"
+msgstr "Lab (D50):"
 
 #. This refers to the amount of ambient light on the sensor
-msgid "Media whitepoint"
-msgstr "Meediumi valgepunkt"
+msgid "Media whitepoint:"
+msgstr "Meediumi valgepunkt:"
 
 #. This refers to the amount of ambient light on the sensor
-msgid "Color Temperature"
-msgstr "Värvustemperatuur"
+msgid "Color Temperature:"
+msgstr "Värvustemperatuur:"
 
 # tõlkekommentaar tundub kohatu
 #. This refers to the amount of ambient light on the sensor
-msgid "Ambient"
-msgstr "Ümbrus"
+msgid "Ambient:"
+msgstr "Ümbrus:"
 
 #. This is the title to a combobox that switches the RGB conversion between different colorspaces such as Adobe RGB and sRGB
-#. The profile colorspace, e.g. RGB
-msgid "Colorspace"
-msgstr "Värviruum"
+msgid "Colorspace:"
+msgstr "Värviruum:"
 
 #. These are the values of the chosen color in Red, Green, Blue encoding
-#. TRANSLATORS: this is the colorspace, e.g. red, green, blue
-#. TRANSLATORS: this the ICC colorspace type
-msgid "RGB"
-msgstr "RGB"
+msgid "RGB:"
+msgstr "RGB:"
 
 #. This shows the error in the conversion to RGB.
-msgid "Error"
-msgstr "Viga"
+msgid "Error:"
+msgstr "Viga:"
 
 #. Expander title, the results from the color picker
 msgid "Results"
 msgstr "Tulemused"
 
-#. Button text, to get a single sample of color
-msgid "_Measure"
-msgstr "_Mõõda"
-
-#. TRANSLATORS: this is the application name for libcanberra
-msgid "GNOME Color Manager"
-msgstr "GNOME värvihaldus"
-
-msgid "Inspect and compare installed color profiles"
-msgstr "Paigaldatud värviprofiilide vaatamine ja võrdlemine"
-
-msgid ""
-"GNOME Color Profile Viewer shows installed color profiles on your system and "
-"allows you to calibrate displays, printers and cameras using a wizard."
-msgstr ""
-"GNOME värviprofiilide näitaja kuvab süsteemi paigaldatud värviprofiile ja "
-"võimaldab kuvareid, printereid ja kaameraid nõustaja abil kalibreerida."
-
-msgid ""
-"This functionality is typically used by GNOME Control Center from the color "
-"panel although can be used on its own."
-msgstr ""
-"Seda funktsionaalsust kasutatakse tavaliselt GNOME juhtpuldi kaudu, kuigi "
-"seda saab kasutada ka eraldi."
-
 msgid "Color Profile Viewer"
 msgstr "Värviprofiilide näitaja"
 
-msgid "Color;ICC;"
-msgstr "Värvus;Värvid;ICC;Värvihaldus;"
+msgid "Inspect and compare installed color profiles"
+msgstr "Paigaldatud värviprofiilide vaatamine ja võrdlemine"
 
 msgid "Add a profile for the device"
 msgstr "Seadmele profiili lisamine"
@@ -125,6 +101,10 @@ msgstr "Seadmest profiili eemaldamine"
 msgid "Profile type"
 msgstr "Profiili liik"
 
+#. The profile colorspace, e.g. RGB
+msgid "Colorspace"
+msgstr "Värviruum"
+
 #. When the profile was created
 msgid "Created"
 msgstr "Loodud"
@@ -134,12 +114,12 @@ msgid "Version"
 msgstr "Versioon"
 
 #. The manufacturer of the profile
-msgid "Manufacturer"
-msgstr "Tootja"
+msgid "Device manufacturer"
+msgstr "Seadme tootja"
 
 #. The manufacturer of the profile
-msgid "Model"
-msgstr "Mudel"
+msgid "Device model"
+msgstr "Seadme mudel"
 
 #. If the profile contains a display correction table
 msgid "Display correction"
@@ -150,8 +130,8 @@ msgid "White point"
 msgstr "Valgepunkt"
 
 #. The licence of the profile, normally non-free
-msgid "Copyright"
-msgstr "Autoriõigus"
+msgid "License"
+msgstr "Litsents"
 
 #. The file size in bytes of the profile
 msgid "File size"
@@ -179,6 +159,12 @@ msgstr "CIE 1931 diagramm kuvab profiili ulatuse (gamut) taasesituse 2D pinnal"
 
 msgid "CIE 1931"
 msgstr "CIE 1931"
+
+msgid "This 3D hull is what the profile looks like in Lab space"
+msgstr "See 3D kaetus (hull) näitab, kuidas profiil paistab Lab värviruumis"
+
+msgid "3D Gamut"
+msgstr "3D ulatus (gamut)"
 
 msgid "Response out"
 msgstr "Vastus välja"
@@ -318,6 +304,10 @@ msgstr "Sel korral ei suudetud näidist lugeda."
 
 msgid "Retry"
 msgstr "Proovi uuesti"
+
+#. TRANSLATORS: this is the application name for libcanberra
+msgid "GNOME Color Manager"
+msgstr "GNOME värvihaldus"
 
 msgid "No firmware is installed for this instrument."
 msgstr "Selle kalibreerimisseadme püsivara pole paigaldatud."
@@ -478,12 +468,6 @@ msgstr "Palun lülita mõõteseade kalibreerimisrežiimile."
 msgid "Select calibration target image"
 msgstr "Kalibreerimise testtabeli valimine"
 
-msgid "_Cancel"
-msgstr "_Loobu"
-
-msgid "_Open"
-msgstr "_Ava"
-
 #. TRANSLATORS: filter name on the file->open dialog
 msgid "Supported images files"
 msgstr "Toetatud pildifailid"
@@ -503,6 +487,9 @@ msgstr "CIE-väärtused"
 #. TRANSLATORS: dialog for file->open dialog
 msgid "Select ICC Profile File"
 msgstr "ICC-profiili faili avamine"
+
+msgid "Open"
+msgstr "Ava"
 
 msgid "Calibration is not complete"
 msgstr "Kalibreerimine pole valmis"
@@ -727,15 +714,15 @@ msgid "CMP DT 003"
 msgstr "CMP DT 003"
 
 #. TRANSLATORS: this is probably a brand name
-msgid "ColorChecker"
-msgstr "ColorChecker"
+msgid "Color Checker"
+msgstr "Color Checker"
 
 #. TRANSLATORS: this is probably a brand name
-msgid "ColorChecker DC"
+msgid "Color Checker DC"
 msgstr "Color Checker DC"
 
 #. TRANSLATORS: this is probably a brand name
-msgid "ColorChecker SG"
+msgid "Color Checker SG"
 msgstr "Color Checker SG"
 
 #. TRANSLATORS: this is probably a brand name
@@ -810,20 +797,8 @@ msgstr "Vali kuva liik"
 msgid "Select the monitor type that is attached to your computer."
 msgstr "Vali, mis liiki monitor on su arvutiga ühendatud."
 
-msgid "LCD (CCFL backlight)"
-msgstr "LCD (CCFL taustvalgus)"
-
-msgid "LCD (White LED backlight)"
-msgstr "LCD (valge LED taustvalgus)"
-
-msgid "LCD (RGB LED backlight)"
-msgstr "LCD (RGB LED taustvalgus)"
-
-msgid "LCD (Wide Gamut RGB LED backlight)"
-msgstr "LCD (Wide Gamut RGB LED taustvalgus)"
-
-msgid "LCD (Wide Gamut CCFL backlight)"
-msgstr "LCD (Wide Gamut CCFL taustvalgus)"
+msgid "LCD"
+msgstr "LCD"
 
 msgid "CRT"
 msgstr "CRT"
@@ -1164,6 +1139,19 @@ msgstr "Ühtegi %s värviruumi pole saadaval"
 msgid "GNOME Color Manager Color Picker"
 msgstr "GNOME värvihalduri värvivalija"
 
+#. TRANSLATORS: this is where the ICC profile has no description
+msgid "Missing description"
+msgstr "Kirjeldus puudub"
+
+#. TRANSLATORS: this is the profile creation date strftime format
+msgid "%B %e %Y, %I:%M:%S %p"
+msgstr "%e. %B %Y, %H:%M:%S"
+
+#. TRANSLATORS: this is the colorspace, e.g. red, green, blue
+#. TRANSLATORS: this the ICC colorspace type
+msgid "RGB"
+msgstr "RGB"
+
 #. TRANSLATORS: this is the colorspace, e.g. cyan, magenta, yellow, black
 #. TRANSLATORS: this the ICC colorspace type
 msgid "CMYK"
@@ -1186,9 +1174,6 @@ msgstr ""
 #. TRANSLATORS: button, delete a profile
 msgid "Delete"
 msgstr "Kustuta"
-
-msgid "_Import"
-msgstr "_Impordi"
 
 #. TRANSLATORS: filter name on the file->open dialog
 msgid "Supported ICC profiles"
@@ -1225,6 +1210,10 @@ msgstr "Kokkuvõte"
 #. TRANSLATORS: this the ICC profile type
 msgid "Named color"
 msgstr "Värvuse nimi"
+
+#. TRANSLATORS: this the ICC colorspace type
+msgid "XYZ"
+msgstr "XYZ"
 
 #. TRANSLATORS: this the ICC colorspace type
 msgid "LAB"
@@ -1389,10 +1378,6 @@ msgid "The white is not D50 white"
 msgstr "Valge pole D50 valge"
 
 #. TRANSLATORS: the profile is broken
-msgid "The whitepoint temperature is unlikely"
-msgstr "Valgepunkti temperatuur on vähetõenäoline"
-
-#. TRANSLATORS: the profile is broken
 msgid "Unknown warning type"
 msgstr "Tundmatut liiki hoiatus"
 
@@ -1409,10 +1394,6 @@ msgstr "Ei"
 msgid "The profile has the following problems:"
 msgstr "Profiilil on järgnevad vead:"
 
-#. TRANSLATORS: this is the icc creation date strftime format
-msgid "%B %e %Y, %I:%M:%S %p"
-msgstr "%e. %B %Y, %H:%M:%S"
-
 #. TRANSLATORS: this is the tooltip when the profile can be deleted
 msgid "Delete this profile"
 msgstr "Selle profiili kustutamine"
@@ -1428,33 +1409,6 @@ msgstr "Kuvamiseks kindla profiili valimine"
 #. TRANSLATORS: show just the one filename, rather than all
 msgid "Set the specific file to show"
 msgstr "Kuvamiseks kindla faili määramine"
-
-#~ msgid "XYZ:"
-#~ msgstr "XYZ:"
-
-#~ msgid "Colorspace:"
-#~ msgstr "Värviruum:"
-
-#~ msgid "RGB:"
-#~ msgstr "RGB:"
-
-#~ msgid "This 3D hull is what the profile looks like in Lab space"
-#~ msgstr "See 3D kaetus (hull) näitab, kuidas profiil paistab Lab värviruumis"
-
-#~ msgid "3D Gamut"
-#~ msgstr "3D ulatus (gamut)"
-
-#~ msgid "LCD"
-#~ msgstr "LCD"
-
-#~ msgid "Device model"
-#~ msgstr "Seadme mudel"
-
-#~ msgid "License"
-#~ msgstr "Litsents"
-
-#~ msgid "Missing description"
-#~ msgstr "Kirjeldus puudub"
 
 #~ msgid ""
 #~ "Could not calibrate and profile using this color measuring instrument"
@@ -1796,6 +1750,9 @@ msgstr "Kuvamiseks kindla faili määramine"
 #~ msgstr ""
 #~ "Ülalasuvate väljade automaatseks täitmiseks võib siia aknasse lohistada "
 #~ "pildifaile."
+
+#~ msgid "Model:"
+#~ msgstr "Mudel:"
 
 #~ msgid "More details"
 #~ msgstr "Üksikasjad"
