@@ -1,6 +1,6 @@
 Name:      gnome-color-manager
 Version:   3.22.2
-Release:   1%{?dist}
+Release:   2%{?dist}
 Summary:   Color management tools for GNOME
 
 License:   GPLv2+
@@ -14,7 +14,7 @@ BuildRequires: intltool
 BuildRequires: lcms2-devel
 BuildRequires: libtiff-devel
 BuildRequires: libexif-devel
-BuildRequires: exiv2-devel
+BuildRequires: exiv2-devel >= 0.26
 BuildRequires: libcanberra-devel
 BuildRequires: glib2-devel >= 2.25.9-2
 BuildRequires: docbook-utils
@@ -89,6 +89,10 @@ glib-compile-schemas %{_datadir}/glib-2.0/schemas &> /dev/null || :
 %{_datadir}/icons/hicolor/scalable/*/*.svg*
 
 %changelog
+* Tue Oct 24 2017 Debarshi Ray <rishi@fedoraproject.org> - 3.22.2-2
+- Rebuild against the rebased exiv2
+- Resolves: #1487203
+
 * Wed Nov 23 2016 Kalev Lember <klember@redhat.com> - 3.22.2-1
 - Update to 3.22.2
 - Resolves: #1386882
