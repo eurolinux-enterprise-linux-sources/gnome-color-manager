@@ -1,4 +1,5 @@
 SUBDIRS = 						\
+	appdata						\
 	ti1						\
 	tests						\
 	targets						\
@@ -34,3 +35,4 @@ DISTCLEANFILES =					\
 	gcm-viewer.desktop				\
 	gcm-import.desktop
 
+-include $(top_srcdir)/git.mk

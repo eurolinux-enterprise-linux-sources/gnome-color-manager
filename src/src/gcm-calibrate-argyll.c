@@ -160,12 +160,15 @@ gcm_calibrate_argyll_get_display (const gchar *output_name,
 {
 	gboolean ret = FALSE;
 	gchar *command = NULL;
-	gchar *data = NULL;
+	const gchar *data;
+	gchar *data_stderr = NULL;
+	gchar *data_stdout = NULL;
 	gchar *name;
 	gchar **split = NULL;
 	gint exit_status;
 	guint display = G_MAXUINT;
 	guint i;
+	const gchar *argv[] = { "dispcal", NULL };
 
 	/* get correct name of the command */
 	command = gcm_calibrate_argyll_get_tool_filename ("dispcal", error);
@@ -173,13 +176,31 @@ gcm_calibrate_argyll_get_display (const gchar *output_name,
 		goto out;
 
 	/* execute it and capture stderr */
-	ret = g_spawn_command_line_sync (command,
-					 NULL,
-					 &data,
-					 &exit_status,
-					 error);
+	argv[0] = command;
+	ret = g_spawn_sync (NULL,
+			    (gchar **) argv,
+			    NULL,
+			    0,
+			    NULL, NULL,
+			    &data_stdout,
+			    &data_stderr,
+			    &exit_status,
+			    error);
 	if (!ret)
 		goto out;
+
+	/* recent versions of dispcal switched to stderr output */
+	if (data_stdout != NULL && data_stdout[0] != '\0') {
+		data = data_stdout;
+	} else if (data_stderr != NULL && data_stderr[0] != '\0') {
+		data = data_stderr;
+	} else {
+		g_set_error_literal (error,
+				     GCM_CALIBRATE_ERROR,
+				     GCM_CALIBRATE_ERROR_INTERNAL,
+				     "no sensible output from dispcal");
+		goto out;
+	}
 
 	/* split it into lines */
 	split = g_strsplit (data, "\n", -1);
@@ -191,6 +212,8 @@ gcm_calibrate_argyll_get_display (const gchar *output_name,
 					     "failed to match display as RandR is faulty");
 			goto out;
 		}
+		if (strlen (split[i]) < 27)
+			continue;
 		name = g_strdup (split[i]);
 		g_strdelimit (name, " ", '\0');
 		if (g_strcmp0 (output_name, &name[26]) == 0) {
@@ -210,7 +233,8 @@ gcm_calibrate_argyll_get_display (const gchar *output_name,
 	}
 out:
 	g_free (command);
-	g_free (data);
+	g_free (data_stdout);
+	g_free (data_stderr);
 	g_strfreev (split);
 	return display;
 }
@@ -227,13 +251,47 @@ gcm_calibrate_argyll_get_display_kind (GcmCalibrateArgyll *calibrate_argyll)
 		      "display-kind", &device_kind,
 		      NULL);
 
-	if (device_kind == GCM_CALIBRATE_DEVICE_KIND_LCD)
+	if (device_kind == GCM_CALIBRATE_DEVICE_KIND_LCD_CCFL)
 		return 'l';
+	if (device_kind == GCM_CALIBRATE_DEVICE_KIND_LCD_LED_WHITE)
+		return 'e';
+	if (device_kind == GCM_CALIBRATE_DEVICE_KIND_LCD_LED_RGB)
+		return 'b';
+        if (device_kind == GCM_CALIBRATE_DEVICE_KIND_LCD_LED_RGB_WIDE)
+                return 'B';
+	if (device_kind == GCM_CALIBRATE_DEVICE_KIND_LCD_CCFL_WIDE)
+		return 'L';
 	if (device_kind == GCM_CALIBRATE_DEVICE_KIND_CRT)
 		return 'c';
 	if (device_kind == GCM_CALIBRATE_DEVICE_KIND_PROJECTOR)
 		return 'p';
 	return '\0';
+}
+
+/**
+ * gcm_calibrate_argyll_get_sensor_test_window_size:
+ **/
+static const gchar *
+gcm_calibrate_argyll_get_sensor_test_window_size (GcmCalibrateArgyll *calibrate_argyll)
+{
+	CdSensorKind sensor_kind;
+
+	g_object_get (calibrate_argyll,
+		      "sensor-kind", &sensor_kind,
+		      NULL);
+
+	if (sensor_kind == CD_SENSOR_KIND_COLOR_MUNKI_PHOTO)
+		return "0.5,0.5,0.8,1.5";
+	if (sensor_kind == CD_SENSOR_KIND_I1_DISPLAY3)
+		return "0.5,0.5,0.6,1.0";
+	if (sensor_kind == CD_SENSOR_KIND_I1_DISPLAY2)
+		return "0.5,0.4,0.9,1.2";
+	if (sensor_kind == CD_SENSOR_KIND_COLOR_MUNKI_SMILE)
+		return "0.5,0.4,0.9,1.2";
+	if (sensor_kind == CD_SENSOR_KIND_COLORHUG)
+		return "0.5,0.5,0.6,0.8";
+
+	return "0.5,0.5,1.0,1.0";
 }
 
 /**
@@ -270,17 +328,19 @@ gcm_calibrate_argyll_fork_command (GcmCalibrateArgyll *calibrate_argyll,
 
 	/* try to run */
 	working_directory = gcm_calibrate_get_working_path (GCM_CALIBRATE (calibrate_argyll));
-	ret = vte_terminal_fork_command_full (VTE_TERMINAL(priv->terminal),
-					      VTE_PTY_DEFAULT,
-					      working_directory,
-					      argv, (gchar**)envp,
+	ret = vte_terminal_spawn_sync (VTE_TERMINAL(priv->terminal),
+				       VTE_PTY_DEFAULT,
+				       working_directory,
+				       argv, (gchar**)envp,
 #ifdef FIXED_ARGYLL
-					      0,
+				       0,
 #else
-					      G_SPAWN_FILE_AND_ARGV_ZERO,
+				       G_SPAWN_FILE_AND_ARGV_ZERO,
 #endif
-					      NULL, NULL,
-					      &priv->child_pid, error);
+				       NULL, NULL,
+				       &priv->child_pid,
+				       NULL,
+				       error);
 	if (!ret)
 		goto out;
 
@@ -371,7 +431,7 @@ gcm_calibrate_argyll_display_neutralise (GcmCalibrateArgyll *calibrate_argyll,
 	if (sensor_kind == CD_SENSOR_KIND_COLOR_MUNKI_PHOTO) {
 		g_ptr_array_add (array, g_strdup ("-H"));
 	}
-	g_ptr_array_add (array, g_strdup ("-P 0.5,0.5,0.8"));
+	g_ptr_array_add (array, g_strdup_printf ("-P %s", gcm_calibrate_argyll_get_sensor_test_window_size (calibrate_argyll)));
 	g_ptr_array_add (array, g_strdup (basename));
 	argv = gcm_utils_ptr_array_to_strv (array);
 	gcm_calibrate_argyll_debug_argv (command, argv);
@@ -576,7 +636,7 @@ gcm_calibrate_argyll_display_draw_and_measure (GcmCalibrateArgyll *calibrate_arg
 		g_ptr_array_add (array, g_strdup ("-H"));
 		g_ptr_array_add (array, g_strdup ("-N"));
 	}
-	g_ptr_array_add (array, g_strdup ("-P 0.5,0.5,0.8"));
+	g_ptr_array_add (array, g_strdup_printf ("-P %s", gcm_calibrate_argyll_get_sensor_test_window_size (calibrate_argyll)));
 	g_ptr_array_add (array, g_strdup (basename));
 	argv = gcm_utils_ptr_array_to_strv (array);
 	gcm_calibrate_argyll_debug_argv (command, argv);
@@ -678,6 +738,7 @@ gcm_calibrate_argyll_display_generate_profile (GcmCalibrateArgyll *calibrate_arg
 	g_ptr_array_add (array, g_strdup_printf ("-C%s", copyright));
 	g_ptr_array_add (array, g_strdup (gcm_calibrate_argyll_get_quality_arg (calibrate_argyll)));
 	g_ptr_array_add (array, g_strdup ("-aG"));
+	g_ptr_array_add (array, g_strdup ("-Zp"));
 	g_ptr_array_add (array, g_strdup (basename));
 	argv = gcm_utils_ptr_array_to_strv (array);
 	gcm_calibrate_argyll_debug_argv (command, argv);
@@ -1736,6 +1797,7 @@ gcm_calibrate_argyll_printer (GcmCalibrate *calibrate,
 
 	/* page setup, and then we're done */
 	if (print_kind == GCM_CALIBRATE_PRINT_KIND_GENERATE) {
+		const gchar *argv[] = { BINDIR "/nautilus", "", NULL };
 
 		/* get the paper size */
 		paper_size = gcm_calibrate_argyll_get_paper_size (calibrate, window);
@@ -1756,9 +1818,15 @@ gcm_calibrate_argyll_printer (GcmCalibrate *calibrate,
 		if (!ret)
 			goto out;
 
-		cmdline = g_strdup_printf ("nautilus \"%s\"", working_path);
-		g_debug ("we need to open the directory we're using: %s", cmdline);
-		ret = g_spawn_command_line_async (cmdline, error);
+		g_debug ("we need to open the directory we're using: %s", working_path);
+		argv[1] = working_path;
+		ret = g_spawn_async (NULL,
+				     (gchar **) argv,
+				     NULL,
+				     0,
+				     NULL, NULL,
+				     NULL,
+				     error);
 		goto out;
 	}
 
@@ -2011,16 +2079,14 @@ static void gcm_calibrate_argyll_flush_vte (GcmCalibrateArgyll *calibrate_argyll
  **/
 static void
 gcm_calibrate_argyll_exit_cb (VteTerminal *terminal,
+			      gint exit_status,
 			      GcmCalibrateArgyll *calibrate_argyll)
 {
-	gint exit_status;
 	GcmCalibrateArgyllPrivate *priv = calibrate_argyll->priv;
 
 	/* flush the VTE output */
 	gcm_calibrate_argyll_flush_vte (calibrate_argyll);
 
-	/* get the child exit status */
-	exit_status = vte_terminal_get_child_exit_status (terminal);
 	g_debug ("child exit-status is %i", exit_status);
 	if (exit_status == 0)
 		priv->response = GTK_RESPONSE_ACCEPT;

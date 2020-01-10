@@ -45,6 +45,7 @@ static GtkBuilder *builder = NULL;
 static GtkWidget *info_bar_hardware_label = NULL;
 static GtkWidget *info_bar_hardware = NULL;
 static guint xid = 0;
+static guint unlock_timer = 0;
 
 enum {
 	GCM_PREFS_COMBO_COLUMN_TEXT,
@@ -117,7 +118,10 @@ gcm_picker_refresh_results (void)
 	cd_color_xyz_copy (&last_sample, &color_xyz);
 
 	/* create new pixbuf of the right size */
-	pixbuf = gdk_pixbuf_new (GDK_COLORSPACE_RGB, FALSE, 8, 200, 200);
+	image = GTK_IMAGE (gtk_builder_get_object (builder, "image_preview"));
+	pixbuf = gdk_pixbuf_new (GDK_COLORSPACE_RGB, FALSE, 8,
+				 gtk_widget_get_allocated_width (GTK_WIDGET (image)),
+				 gtk_widget_get_allocated_height (GTK_WIDGET (image)));
 
 	/* lcms scales these for some reason */
 	color_xyz.X /= 100.0f;
@@ -225,7 +229,6 @@ gcm_picker_refresh_results (void)
 	}
 
 	/* set image */
-	image = GTK_IMAGE (gtk_builder_get_object (builder, "image_preview"));
 	gtk_image_set_from_pixbuf (image, pixbuf);
 out:
 	g_free (text_ambient);
@@ -257,6 +260,25 @@ gcm_picker_got_results (void)
 }
 
 /**
+ * gcm_picker_unlock_timeout_cb:
+ **/
+static gboolean
+gcm_picker_unlock_timeout_cb (gpointer user_data)
+{
+	gboolean ret;
+	GError *error = NULL;
+
+	/* unlock */
+	ret = cd_sensor_unlock_sync (sensor, NULL, &error);
+	if (!ret) {
+		g_warning ("failed to unlock: %s", error->message);
+		g_error_free (error);
+	}
+	unlock_timer = 0;
+	return FALSE;
+}
+
+/**
  * gcm_picker_measure_cb:
  **/
 static void
@@ -271,13 +293,21 @@ gcm_picker_measure_cb (GtkWidget *widget, gpointer data)
 	gtk_image_set_from_file (GTK_IMAGE (widget), DATADIR "/icons/hicolor/64x64/apps/gnome-color-manager.png");
 
 	/* lock */
-	ret = cd_sensor_lock_sync (sensor,
-				   NULL,
-				   &error);
-	if (!ret) {
-		g_warning ("failed to lock: %s", error->message);
-		g_error_free (error);
-		goto out;
+	if (!cd_sensor_get_locked (sensor)) {
+		ret = cd_sensor_lock_sync (sensor,
+					   NULL,
+					   &error);
+		if (!ret) {
+			g_warning ("failed to lock: %s", error->message);
+			g_error_free (error);
+			goto out;
+		}
+	}
+
+	/* cancel pending unlock */
+	if (unlock_timer != 0) {
+		g_source_remove (unlock_timer);
+		unlock_timer = 0;
 	}
 
 	/* get color */
@@ -306,16 +336,8 @@ gcm_picker_measure_cb (GtkWidget *widget, gpointer data)
 	}
 #endif
 out_unlock:
-	/* unlock */
-	ret = cd_sensor_unlock_sync (sensor,
-				     NULL,
-				     &error);
-	if (!ret) {
-		g_warning ("failed to unlock: %s", error->message);
-		g_error_free (error);
-		goto out;
-	}
-
+	/* unlock after a small delay */
+	unlock_timer = g_timeout_add_seconds (30, gcm_picker_unlock_timeout_cb, data);
 	gcm_picker_refresh_results ();
 	gcm_picker_got_results ();
 out:
@@ -541,7 +563,6 @@ gcm_prefs_setup_space_combobox (GtkWidget *widget)
 	CdProfile *profile;
 	const gchar *filename;
 	const gchar *tmp;
-	gboolean has_colorspace_description;
 	gboolean has_profile = FALSE;
 	gboolean has_vcgt;
 	gchar *text = NULL;
@@ -588,14 +609,13 @@ gcm_prefs_setup_space_combobox (GtkWidget *widget)
 
 		/* only for correct kind */
 		has_vcgt = cd_profile_get_has_vcgt (profile);
-		has_colorspace_description = gcm_profile_has_colorspace_description (profile);
+		tmp = cd_profile_get_metadata_item (profile, CD_PROFILE_METADATA_STANDARD_SPACE);
 		colorspace = cd_profile_get_colorspace (profile);
-		if (!has_vcgt && has_colorspace_description &&
+		if (!has_vcgt && tmp != NULL &&
 		    colorspace == CD_COLORSPACE_RGB) {
 			gcm_prefs_combobox_add_profile (widget, profile, &iter);
 
 			/* set active option */
-			tmp = cd_profile_get_metadata_item (profile, CD_PROFILE_METADATA_STANDARD_SPACE);
 			if (g_strcmp0 (tmp, "adobe-rgb") == 0) {
 				profile_filename = filename;
 				gtk_combo_box_set_active_iter (GTK_COMBO_BOX (widget), &iter);
@@ -735,7 +755,7 @@ gcm_picker_startup_cb (GApplication *application, gpointer user_data)
 	gtk_widget_show (info_bar_hardware_label);
 
 	/* add infobar to devices pane */
-	widget = GTK_WIDGET (gtk_builder_get_object (builder, "vbox1"));
+	widget = GTK_WIDGET (gtk_builder_get_object (builder, "box1"));
 	gtk_box_pack_start (GTK_BOX(widget), info_bar_hardware, FALSE, FALSE, 0);
 
 	/* maintain a list of profiles */
@@ -799,9 +819,6 @@ main (int argc, char *argv[])
 	bindtextdomain (GETTEXT_PACKAGE, LOCALEDIR);
 	bind_textdomain_codeset (GETTEXT_PACKAGE, "UTF-8");
 	textdomain (GETTEXT_PACKAGE);
-
-	/* setup type system */
-	g_type_init ();
 
 	/* setup LCMS */
 	cmsSetLogErrorHandler (gcm_picker_error_cb);

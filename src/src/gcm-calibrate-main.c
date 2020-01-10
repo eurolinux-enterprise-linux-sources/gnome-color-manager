@@ -655,7 +655,16 @@ gcm_calib_label_activate_link_cb (GtkLabel *label,
 {
 	gboolean ret;
 	GError *error = NULL;
-	ret = g_spawn_command_line_async (BINDIR "/gnome-control-center color", &error);
+	const gchar *argv[] = { BINDIR "/gnome-control-center color",
+				"color",
+				NULL };
+	ret = g_spawn_async (NULL,
+			     (gchar **) argv,
+			     NULL,
+			     0,
+			     NULL, NULL,
+			     NULL,
+			     &error);
 	if (!ret) {
 		g_warning ("failed to launch the control center: %s",
 			   error->message);
@@ -800,22 +809,28 @@ static void
 gcm_calib_show_profile_button_clicked_cb (GtkButton *button,
 					  GcmCalibratePriv *priv)
 {
+	const gchar *argv[] = { BINDIR "/nautilus", "", NULL };
 	gboolean ret;
-	gchar *command_line;
+	gchar *path;
 	GError *error = NULL;
 
 	/* just hardcode nautilus to open the folder */
-	command_line = g_strdup_printf ("nautilus %s/%s",
-					g_get_user_data_dir (),
-					"icc");
-	ret = g_spawn_command_line_async (command_line, &error);
+	path = g_build_filename (g_get_user_data_dir (), "icc", NULL);
+	argv[1] = path;
+	ret = g_spawn_async (NULL,
+			     (gchar **) argv,
+			     NULL,
+			     0,
+			     NULL, NULL,
+			     NULL,
+			     &error);
 	if (!ret) {
 		g_warning ("failed to show profile: %s", error->message);
 		g_error_free (error);
 		goto out;
 	}
 out:
-	g_free (command_line);
+	g_free (path);
 }
 
 /**
@@ -1214,15 +1229,15 @@ gcm_calib_reference_kind_to_localised_string (GcmCalibrateReferenceKind kind)
 	}
 	if (kind == GCM_CALIBRATE_REFERENCE_KIND_COLOR_CHECKER) {
 		/* TRANSLATORS: this is probably a brand name */
-		return _("Color Checker");
+		return _("ColorChecker");
 	}
 	if (kind == GCM_CALIBRATE_REFERENCE_KIND_COLOR_CHECKER_DC) {
 		/* TRANSLATORS: this is probably a brand name */
-		return _("Color Checker DC");
+		return _("ColorChecker DC");
 	}
 	if (kind == GCM_CALIBRATE_REFERENCE_KIND_COLOR_CHECKER_SG) {
 		/* TRANSLATORS: this is probably a brand name */
-		return _("Color Checker SG");
+		return _("ColorChecker SG");
 	}
 	if (kind == GCM_CALIBRATE_REFERENCE_KIND_HUTCHCOLOR) {
 		/* TRANSLATORS: this is probably a brand name */
@@ -1421,10 +1436,46 @@ gcm_calib_setup_page_display_kind (GcmCalibratePriv *priv)
 	/* TRANSLATORS: this is intro page text */
 	gcm_calib_add_page_para (content, _("Select the monitor type that is attached to your computer."));
 
-	widget = gtk_radio_button_new_with_label (NULL, _("LCD"));
+	widget = gtk_radio_button_new_with_label (NULL, _("LCD (CCFL backlight)"));
 	g_object_set_data (G_OBJECT (widget),
 			   "GcmCalib::display-kind",
-			   GUINT_TO_POINTER (GCM_CALIBRATE_DEVICE_KIND_LCD));
+			   GUINT_TO_POINTER (GCM_CALIBRATE_DEVICE_KIND_LCD_CCFL));
+	g_signal_connect (widget, "toggled",
+			  G_CALLBACK (gcm_calib_display_kind_toggled_cb), priv);
+	gtk_box_pack_start (GTK_BOX (content), widget, FALSE, FALSE, 0);
+
+	list = gtk_radio_button_get_group (GTK_RADIO_BUTTON (widget));
+	widget = gtk_radio_button_new_with_label (list, _("LCD (White LED backlight)"));
+	g_object_set_data (G_OBJECT (widget),
+			   "GcmCalib::display-kind",
+			   GUINT_TO_POINTER (GCM_CALIBRATE_DEVICE_KIND_LCD_LED_WHITE));
+	g_signal_connect (widget, "toggled",
+			  G_CALLBACK (gcm_calib_display_kind_toggled_cb), priv);
+	gtk_box_pack_start (GTK_BOX (content), widget, FALSE, FALSE, 0);
+
+	list = gtk_radio_button_get_group (GTK_RADIO_BUTTON (widget));
+	widget = gtk_radio_button_new_with_label (list, _("LCD (RGB LED backlight)"));
+	g_object_set_data (G_OBJECT (widget),
+			   "GcmCalib::display-kind",
+			   GUINT_TO_POINTER (GCM_CALIBRATE_DEVICE_KIND_LCD_LED_RGB));
+	g_signal_connect (widget, "toggled",
+			  G_CALLBACK (gcm_calib_display_kind_toggled_cb), priv);
+	gtk_box_pack_start (GTK_BOX (content), widget, FALSE, FALSE, 0);
+
+	list = gtk_radio_button_get_group (GTK_RADIO_BUTTON (widget));
+	widget = gtk_radio_button_new_with_label (list, _("LCD (Wide Gamut RGB LED backlight)"));
+	g_object_set_data (G_OBJECT (widget),
+			   "GcmCalib::display-kind",
+			   GUINT_TO_POINTER (GCM_CALIBRATE_DEVICE_KIND_LCD_LED_RGB_WIDE));
+	g_signal_connect (widget, "toggled",
+			  G_CALLBACK (gcm_calib_display_kind_toggled_cb), priv);
+	gtk_box_pack_start (GTK_BOX (content), widget, FALSE, FALSE, 0);
+
+	list = gtk_radio_button_get_group (GTK_RADIO_BUTTON (widget));
+	widget = gtk_radio_button_new_with_label (list, _("LCD (Wide Gamut CCFL backlight)"));
+	g_object_set_data (G_OBJECT (widget),
+			   "GcmCalib::display-kind",
+			   GUINT_TO_POINTER (GCM_CALIBRATE_DEVICE_KIND_LCD_CCFL_WIDE));
 	g_signal_connect (widget, "toggled",
 			  G_CALLBACK (gcm_calib_display_kind_toggled_cb), priv);
 	gtk_box_pack_start (GTK_BOX (content), widget, FALSE, FALSE, 0);
@@ -1676,7 +1727,7 @@ gcm_calib_setup_page_precision (GcmCalibratePriv *priv)
 	GString *labels[3];
 	guint i;
 	guint values_printer[] = { 6, 4, 2}; /* sheets */
-	guint values_display[] = { 30, 20, 10}; /* minutes */
+	guint values_display[] = { 60, 40, 20}; /* minutes */
 	GtkAssistant *assistant = GTK_ASSISTANT (priv->main_window);
 
 	/* TRANSLATORS: this is the page title */
@@ -1750,7 +1801,6 @@ gcm_calib_setup_page_precision (GcmCalibratePriv *priv)
 	g_signal_connect (widget, "toggled",
 			  G_CALLBACK (gcm_calib_precision_toggled_cb), priv);
 	gtk_box_pack_start (GTK_BOX (content), widget, FALSE, FALSE, 0);
-	gtk_toggle_button_set_active (GTK_TOGGLE_BUTTON (widget), TRUE);
 
 	list = gtk_radio_button_get_group (GTK_RADIO_BUTTON (widget));
 	widget = gtk_radio_button_new_with_label (list, labels[2]->str);
@@ -1760,6 +1810,7 @@ gcm_calib_setup_page_precision (GcmCalibratePriv *priv)
 	g_signal_connect (widget, "toggled",
 			  G_CALLBACK (gcm_calib_precision_toggled_cb), priv);
 	gtk_box_pack_start (GTK_BOX (content), widget, FALSE, FALSE, 0);
+	gtk_toggle_button_set_active (GTK_TOGGLE_BUTTON (widget), TRUE);
 
 	/* add to assistant */
 	gtk_assistant_append_page (assistant, vbox);
@@ -2021,13 +2072,7 @@ gcm_calib_add_pages (GcmCalibratePriv *priv)
 	gcm_calib_setup_page_precision (priv);
 
 	if (priv->device_kind == CD_DEVICE_KIND_DISPLAY) {
-		if (!priv->internal_lcd) {
-			gcm_calib_setup_page_display_kind (priv);
-		} else {
-			g_object_set (priv->calibrate,
-				      "display-kind", GCM_CALIBRATE_DEVICE_KIND_LCD,
-				      NULL);
-		}
+		gcm_calib_setup_page_display_kind (priv);
 		gcm_calib_setup_page_display_temp (priv);
 	} else if (priv->device_kind == CD_DEVICE_KIND_PRINTER) {
 		gcm_calib_setup_page_print_kind (priv);
@@ -2251,13 +2296,11 @@ gcm_calib_image_changed_cb (GcmCalibrate *calibrate,
 			    const gchar *filename,
 			    GcmCalibratePriv *priv)
 {
-	gchar *path;
 	GdkPixbuf *pixbuf;
 	GError *error = NULL;
 
 	if (filename != NULL) {
-		path = g_build_filename (GCM_DATA, "icons", filename, NULL);
-		pixbuf = gdk_pixbuf_new_from_file_at_size (path, 200, 400, &error);
+		pixbuf = gdk_pixbuf_new_from_file_at_size (filename, 200, 400, &error);
 		if (pixbuf == NULL) {
 			g_warning ("failed to load image: %s", error->message);
 			g_error_free (error);
@@ -2266,7 +2309,6 @@ gcm_calib_image_changed_cb (GcmCalibrate *calibrate,
 			gtk_image_set_from_pixbuf (GTK_IMAGE (priv->action_image), pixbuf);
 			gtk_widget_show (priv->action_image);
 		}
-		g_free (path);
 	} else {
 		gtk_widget_hide (priv->action_image);
 	}

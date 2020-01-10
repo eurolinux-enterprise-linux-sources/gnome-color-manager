@@ -10,9 +10,6 @@
 /* Define to 1 if you have the `bind_textdomain_codeset' function. */
 #define HAVE_BIND_TEXTDOMAIN_CODESET 1
 
-/* has clutter support */
-#define HAVE_CLUTTER 1
-
 /* Define to 1 if you have the `dcgettext' function. */
 #define HAVE_DCGETTEXT 1
 
@@ -68,9 +65,6 @@
    */
 #define LT_OBJDIR ".libs/"
 
-/* Define to 1 if your C compiler doesn't accept -c and -o together. */
-/* #undef NO_MINUS_C_MINUS_O */
-
 /* Name of package */
 #define PACKAGE "gnome-color-manager"
 
@@ -81,7 +75,7 @@
 #define PACKAGE_NAME "gnome-color-manager"
 
 /* Define to the full name and version of this package. */
-#define PACKAGE_STRING "gnome-color-manager 3.8.2"
+#define PACKAGE_STRING "gnome-color-manager 3.14.2"
 
 /* Define to the one symbol short name of this package. */
 #define PACKAGE_TARNAME "gnome-color-manager"
@@ -90,10 +84,10 @@
 #define PACKAGE_URL ""
 
 /* Define to the version of this package. */
-#define PACKAGE_VERSION "3.8.2"
+#define PACKAGE_VERSION "3.14.2"
 
 /* Define to 1 if you have the ANSI C header files. */
 #define STDC_HEADERS 1
 
 /* Version number of package */
-#define VERSION "3.8.2"
+#define VERSION "3.14.2"

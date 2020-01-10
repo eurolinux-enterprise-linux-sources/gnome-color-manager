@@ -1,7 +1,7 @@
 # Copyright (C) 2010-2011 Richard Hughes <richard@hughsie.com>
 AC_PREREQ(2.63)
 
-AC_INIT([gnome-color-manager],[3.8.2],[http://bugzilla.gnome.org/enter_bug.cgi?product=gnome-color-manager])
+AC_INIT([gnome-color-manager],[3.14.2],[http://bugzilla.gnome.org/enter_bug.cgi?product=gnome-color-manager])
 AC_CONFIG_SRCDIR(src)
 AM_INIT_AUTOMAKE([1.11 no-dist-gzip dist-xz tar-ustar])
 AC_CONFIG_HEADERS([config.h])
@@ -18,6 +18,9 @@ LT_INIT
 AM_PROG_CC_C_O
 IT_PROG_INTLTOOL([0.35.0])
 YELP_HELP_INIT
+
+# validate AppData
+APPSTREAM_XML
 
 GNOME_COMPILE_WARNINGS(error)
 
@@ -79,38 +82,12 @@ dnl ---------------------------------------------------------------------------
 dnl - Check library dependencies
 dnl ---------------------------------------------------------------------------
 PKG_CHECK_MODULES(GLIB, glib-2.0 >= 2.31.10 gobject-2.0 gthread-2.0 gio-2.0 >= 2.25.9)
-PKG_CHECK_MODULES(XORG, xrandr)
 PKG_CHECK_MODULES(GTK, gtk+-3.0 >= 2.91.0)
 PKG_CHECK_MODULES(LCMS, lcms2 >= 2.2)
-PKG_CHECK_MODULES(X11, x11)
-PKG_CHECK_MODULES(GNOME_DESKTOP, gnome-desktop-3.0)
-PKG_CHECK_MODULES(COLORD, colord >= 0.1.28 colord-gtk >= 0.1.20)
-
-dnl **** Check for clutter ****
-AC_ARG_ENABLE(clutter, AS_HELP_STRING([--enable-clutter],[Enable clutter for 3D support]), enable_clutter=$enableval, enable_clutter=yes)
-if test x$enable_clutter != xno; then
-	# test for new mash
-	PKG_CHECK_MODULES(CLUTTER,
-			  clutter-1.0 >= 1.9.11 clutter-gtk-1.0 mash-0.2,
-			  has_clutter=yes, has_clutter=no)
-	if test x$has_clutter == xno; then
-		# test for old mash
-		PKG_CHECK_MODULES(CLUTTER,
-				  clutter-1.0 >= 1.9.11 clutter-gtk-1.0 mash-0.1,
-				  has_clutter=yes, has_clutter=no)
-	fi
-else
-	has_clutter=no
-fi
-AM_CONDITIONAL(HAVE_CLUTTER, test x$has_clutter = xyes)
-if test x$has_clutter = xyes; then
-	AC_DEFINE(HAVE_CLUTTER,1,[has clutter support])
-else
-	AC_MSG_WARN([clutter-gtk and mash not found, no 3D support])
-fi
+PKG_CHECK_MODULES(COLORD, colord >= 0.1.34 colord-gtk >= 0.1.20)
 
 dnl **** Check for VTE ****
-PKG_CHECK_MODULES(VTE, vte-2.90 >= 0.25.1, has_vte=yes, has_vte=no)
+PKG_CHECK_MODULES(VTE, vte-2.91 >= 0.25.1, has_vte=yes, has_vte=no)
 AM_CONDITIONAL(HAVE_VTE, test x$has_vte = xyes)
 if test x$has_vte = xyes; then
 	AC_DEFINE(HAVE_VTE,1,[Use VTE terminal widget])
@@ -209,6 +186,7 @@ dnl ---------------------------------------------------------------------------
 AC_CONFIG_FILES([
 Makefile
 data/Makefile
+data/appdata/Makefile
 data/icons/Makefile
 data/icons/16x16/Makefile
 data/icons/22x22/Makefile
@@ -242,7 +220,6 @@ echo "
         PackageKit integration:    ${enable_packagekit}
         RAW support:               ${enable_exiv}
         VTE support:               ${has_vte}
-        3D support:                ${has_clutter}
         building unit tests:       ${enable_tests}
 "
 

@@ -1,20 +1,1738 @@
-commit 679c5b1aa37c3f301d3e155aec2b7195d1889234
+commit 5d41872e5e61c7163e4f576c8adc6f1f7714c9e6
 Author: Richard Hughes <richard@hughsie.com>
-Date:   2013-05-13
+Date:   2014-11-10
 
-    Release version 3.8.2
+    Release version 3.14.2
 
 M	NEWS
 
-commit 1306aef308e27f1189de37e918d2c28082739a74
+commit 638f1518dd5ec3454b545ba660a08dc8d3809f76
+Author: Baurzhan Muftakhidinov <baurthefirst@gmail.com>
+Date:	2014-11-05
+
+    Updated Kazakh translation
+
+M	po/kk.po
+
+commit 5c2a1495a67a6b33432fc14af76542530e035c80
+Author: Richard Hughes <richard@hughsie.com>
+Date:	2014-10-12
+
+    trivial: Fix up the homepage address
+
+M	gnome-color-manager.doap
+
+commit 7186351d915ad1772675911603c2c5e9f386b0b2
+Author: Richard Hughes <richard@hughsie.com>
+Date:	2014-10-12
+
+    trivial: Post release version bump
+
+M	RELEASE
+M	configure.ac
+
+commit 18d192ad31f9ce77debb4236e12d4fc31a4f76b3
+Author: Richard Hughes <richard@hughsie.com>
+Date:	2014-10-12
+
+    trivial: Fix a small compile warning
+
+M	src/gcm-utils.c
+
+commit f83a0c12a83642816ec914f44c2294c4103a45e7
+Author: Richard Hughes <richard@hughsie.com>
+Date:	2014-10-12
+
+    Release version 3.14.1
+
+M	NEWS
+
+commit f9ce2a35d95d3a64d7d6c3a6899e519b7a8f9af3
+Author: Fabio Tomat <f.t.public@gmail.com>
+Date:	2014-10-11
+
+    Added Friulian translation
+
+M	po/LINGUAS
+A	po/fur.po
+
+commit a1dba885f84f3a3779e93944aca6fa66893c0d72
+Author: Arash Mousavi <mousavi.arash@gmail.com>
+Date:	2014-10-10
+
+    Updates Persian Translations
+
+M	po/fa.po
+
+commit 53bcec7250cb72e45d00383486fbbeba0ff74df8
+Author: Richard Hughes <richard@hughsie.com>
+Date:	2014-10-08
+
+    Prevent a crash when profiling a printer
+
+    Resolves: https://bugzilla.gnome.org/show_bug.cgi?id=732869
+
+M	src/gcm-print.c
+
+commit 9938cf72ca5830bae5021fd1d22bcf464992cfb2
+Author: Changwoo Ryu <cwryu@debian.org>
+Date:	2014-10-05
+
+    Updated Korean translation
+
+M	po/ko.po
+
+commit 1754afbfebbe620c22355d9cff7dd97fafb7a238
+Author: Saibal Ray <sray@redhat.com>
+Date:	2014-09-24
+
+    Updated Bengali (India) translation
+
+M	po/bn_IN.po
+
+commit c72571357088722695e0fa061d6784257bf2e831
+Author: Krishnababu Krothapalli <k.meetme@gmail.com>
+Date:	2014-09-23
+
+    Updated Telugu translation
+
+M	po/te.po
+
+commit beddd6071ff59714553f3f585345c9ce9b19195d
+Author: Richard Hughes <richard@hughsie.com>
+Date:	2014-09-23
+
+    trivial: Post release version bump
+
+M	RELEASE
+M	configure.ac
+
+commit df8185ae82d92f23bb70c605f6769d72b00ee0f2
+Author: Richard Hughes <richard@hughsie.com>
+Date:	2014-09-23
+
+    Release version 3.14.0
+
+M	NEWS
+M	RELEASE
+M	configure.ac
+
+commit 18771b62c3bf943ef5cb1fc3c7cc26e23849892e
+Author: Rajesh Ranjan <rajeshkajha@yahoo.com>
+Date:	2014-09-22
+
+    Updated Hindi translation
+
+M	po/hi.po
+
+commit aebc4009ba48670ebb5c02f6022363765889b9fb
+Author: Мирослав Николић <miroslavnikolic@rocketmail.com>
+Date:	2014-09-19
+
+    Updated Serbian translation
+
+M	po/sr.po
+M	po/sr@latin.po
+
+commit fcc132f54021efd009ab32055e263b0dd7ee90ae
+Author: Manoj Kumar Giri <mgiri@redhat.com>
+Date:	2014-09-19
+
+    Updated Oriya translation
+
+M	po/or.po
+
+commit 81cd70429a207fe3df20dd16baa38abbbdbc4e56
+Author: Pawan Chitrakar <chautari@gmail.com>
+Date:	2014-09-17
+
+    Updated Nepali translation
+
+M	po/ne.po
+
+commit d38229f6e21e5aa48ece3d9b796464748ab32d6c
+Author: Changwoo Ryu <cwryu@debian.org>
+Date:	2014-09-18
+
+    Updated Korean translation
+
+M	po/ko.po
+
+commit 70f788c46f55fc0b620e65058974dd2f6eeaff75
+Author: Saibal Ray <sray@redhat.com>
+Date:	2014-09-17
+
+    Updated Bengali (India) translation
+
+M	po/bn_IN.po
+
+commit fa5333274adf7a029c0f9c9521faf186b025186b
+Author: Shantha kumar <shantha.thamizh@gmail.com>
+Date:	2014-09-15
+
+    Updated Tamil translation
+
+M	po/ta.po
+
+commit 6841aa40ae2824901d151c3fdb555fde7f28eb03
+Author: Pawan Chitrakar <chautari@gmail.com>
+Date:	2014-09-14
+
+    Added Nepali translation
+
+M	po/LINGUAS
+A	po/ne.po
+
+commit 08d6fe546d84b1b29cc75092df856ff9ef49beab
+Author: Shankar Prasad <prasad.mvs@gmail.com>
+Date:	2014-09-13
+
+    Updated Kannada translation
+
+M	po/kn.po
+
+commit 8b79dae777bc2f1d79dbf3cf95365885b4610a31
+Author: Sandeep Sheshrao Shedmake <sshedmak@redhat.com>
+Date:	2014-09-12
+
+    Updated Marathi Translations
+
+M	po/mr.po
+
+commit ccd6f302eb3936cd6eecf217d3c3d1b4ad02f474
+Author: Ville-Pekka Vainio <vpvainio@iki.fi>
+Date:	2014-09-07
+
+    Finnish translation update by Jiri Grönroos
+
+M	po/fi.po
+
+commit 4d9dacc1edcfeec34bf1cffd6ea1c2226187b987
+Author: Changwoo Ryu <cwryu@debian.org>
+Date:	2014-09-06
+
+    Updated Korean translation
+
+M	po/ko.po
+
+commit 83df29f2ec864b90fe8b0098e9253f99dc4500c1
+Author: Sweta Kothari <swkothar@redhat.com>
+Date:	2014-09-01
+
+    Updated gujarati translations
+
+M	po/gu.po
+
+commit ac5545d6536af1207d38fbf8088b194e080ec8cc
+Author: Richard Hughes <richard@hughsie.com>
+Date:	2014-08-18
+
+    Release version 3.13.90
+
+M	NEWS
+M	RELEASE
+M	configure.ac
+
+commit 58e8f258fdd5c2dd7f040b164c7ea2fe42c9a0e2
+Author: Tom Tryfonidis <tomtryf@gmail.com>
+Date:	2014-08-13
+
+    Updated Greek translation
+
+M	po/el.po
+
+commit d176b6255c1474b3d5d057db6f4b616f71172f9b
+Author: Piotr Drąg <piotrdrag@gmail.com>
+Date:	2014-07-31
+
+    doap: add <programming-language>
+
+M	gnome-color-manager.doap
+
+commit a289053f434f958cb5199d28b08b923fd0f77285
+Author: Olav Vitters <olav@vitters.nl>
+Date:	2014-07-30
+
+    doap category apps
+
+M	gnome-color-manager.doap
+
+commit 8ffae3f0a1555e1cc31e3d1a14152bc50d222d7f
+Author: Daniel Șerbănescu <daniel [at] serbanescu [dot] dk>
+Date:	2014-07-14
+
+    Updated Romanian Translation
+
+M	po/ro.po
+
+commit a5bf95bac215c420ffce500a9b529612a7500233
+Author: Pascal de Bruijn <pmjdebruijn@pcode.nl>
+Date:	2014-06-28
+
+    Coherent display kind enum ordering
+
+    The main UI routine doesn't properly assign an enum position
+    if no radiobutton has been clicked by the user.
+
+    Resulting in CRT (instead of LCD) being passed as display type
+    by default to dispcal.
+
+    Signed-off-by: Richard Hughes <richard@hughsie.com>
+
+M	src/gcm-calibrate.h
+
+commit 6ad21a38a911802ad67ba261e738519e7c5c7829
+Author: Pascal de Bruijn <pmjdebruijn@pcode.nl>
+Date:	2014-04-27
+
+    roughly shape test window to instrument (extra clearance)
+
+    Signed-off-by: Richard Hughes <richard@hughsie.com>
+
+M	src/gcm-calibrate-argyll.c
+
+commit cf6b37545da4882d4df1d46ff9d216a0ad4c69e8
+Author: Richard Hughes <richard@hughsie.com>
+Date:	2014-06-23
+
+    Use APPSTREAM_XML to validate out AppData from libappstream-glib
+
+M	configure.ac
+M	data/appdata/Makefile.am
+
+commit 33d65f62f45d1e3a7e7352eca12ec40e1cd13df3
+Author: Muhammet Kara <muhammetk@gmail.com>
+Date:	2014-06-17
+
+    Updated Turkish translation
+
+M	po/tr.po
+
+commit 238a35b1dcac2d512a2be9a8c4a06738033cb9d3
+Author: Muhammet Kara <muhammetk@gmail.com>
+Date:	2014-06-17
+
+    Updated Turkish translation
+
+M	po/tr.po
+
+commit 1fa962785d9040e25bb639e5369aa837038dd5c9
 Author: Kjartan Maraas <kmaraas@gnome.org>
-Date:	2013-05-13
+Date:	2014-06-08
+
+    Updated Norwegian bokmål translation.
+
+M	po/nb.po
+
+commit 8265feff7f312cd6d71c96f587feb3fca59e2cc7
+Author: Balázs Úr <urbalazs@src.gnome.org>
+Date:	2014-05-22
+
+    Added hu entry
+
+M	help/Makefile.am
+
+commit 676c687b6eab0a9529f007fd33e97697ef98b05e
+Author: Balázs Úr <urbalazs@src.gnome.org>
+Date:	2014-05-22
+
+    Initial Hungarian translation
+
+A	help/hu/hu.po
+
+commit 7b282bd4757d15cb509905ed983d59a33a3f43e0
+Author: Mattias Eriksson <snaggen@gmail.com>
+Date:	2014-05-19
+
+    Updated Swedish translation
+
+M	po/sv.po
+
+commit dc28d7be370532021f61dec37c87ee058fcca741
+Author: Debarshi Ray <debarshir@gnome.org>
+Date:	2014-05-16
+
+    Port to vte-2.91 API
+
+    https://bugzilla.gnome.org/show_bug.cgi?id=730251
+
+M	configure.ac
+M	src/gcm-calibrate-argyll.c
+
+commit b1be301cc09fd92fc3332df347e9bb4b898eabe0
+Author: Richard Hughes <richard@hughsie.com>
+Date:	2014-05-14
+
+    Do not lock every time we sample in gcm-picker
+
+    Otherwise we can't use the ColorMunki to do spot measurements.
+
+M	src/gcm-picker.c
+
+commit dc1a3e2371ea9b2abc56a92c741b854520abb026
+Author: Carles Ferrando <carles.ferrando@gmail.com>
+Date:	2014-05-09
+
+    [l10n] Updated Catalan (Valencian) translation
+
+M	po/ca@valencia.po
+
+commit 7db8e1101575018c6d277daa6e40332d2b3d80e7
+Author: Richard Hughes <richard@hughsie.com>
+Date:	2014-05-02
+
+    Add <project_license> to the AppData file
+
+M	data/appdata/gcm-viewer.appdata.xml.in
+
+commit ccb33cafde30fc16694578865e83d7c7a247e561
+Author: Sami Jaktholm <sjakthol@outlook.com>
+Date:	2014-05-01
+
+    Finnish help translation
+
+M	help/Makefile.am
+A	help/fi/fi.po
+
+commit e41622fb971429aa9d87ce9df86c651c5c069902
+Author: Richard Hughes <richard@hughsie.com>
+Date:	2014-04-28
+
+    trivial: Post release version bump
+
+M	RELEASE
+M	configure.ac
+
+commit 8d1cec4b4167861947b08b69f1bb0ae4982aac9c
+Author: Richard Hughes <richard@hughsie.com>
+Date:	2014-04-28
+
+    Release version 3.13.1
+
+M	NEWS
+M	RELEASE
+
+commit 2b609341144b86c2f786b60e996a742289d50f8c
+Author: Richard Hughes <richard@hughsie.com>
+Date:	2014-04-04
+
+    Fix gcm_utils_image_convert() to not crash for large images
+
+    gdk_pixbuf_get_rowstride() returns the number of bytes,
+    cd_transform_process()
+    expects the number of pixels.
+
+M	src/gcm-utils.c
+
+commit 2753c0a2d4876e07d5d12d07020d218a95415f2a
+Author: Reinout van Schouwen <reinouts@gnome.org>
+Date:	2014-04-20
+
+    Updated Dutch translation by Erwin Poeze
+
+M	po/nl.po
+
+commit b20f6a710c0907cd8cd90ceec2587372c7b2a887
+Author: Ikuya Awashiro <ikuya@fruitsbasket.info>
+Date:	2014-04-07
+
+    l10n: Update Japanese translation
+
+M	po/ja.po
+
+commit 865a5aab6748209a272349eeb4f9f5d0718f091e
+Author: Richard Hughes <richard@hughsie.com>
+Date:	2014-04-03
+
+    trivial: Fix up two compile warnings in the self tests
+
+M	src/gcm-self-test.c
+
+commit 2b28b3c8631beb06822392a5954c9cda0924989c
+Author: Richard Hughes <richard@hughsie.com>
+Date:	2014-04-03
+
+    Use CdTransform to convert the sample image
+
+M	src/Makefile.am
+D	src/gcm-image.c
+D	src/gcm-image.h
+M	src/gcm-self-test.c
+M	src/gcm-utils.c
+M	src/gcm-utils.h
+M	src/gcm-viewer.c
+
+commit 0a5f3313f84f8284ebfd22b4260eaef44c57721c
+Author: Richard Hughes <richard@hughsie.com>
+Date:	2014-04-02
+
+    Speed up deleting profiles by an order of magnitude
+
+    Clearing a store involves refreshing each renderer. We don't need
+    this.
+
+M	src/gcm-viewer.c
+
+commit c84732d9a7a962545dd51f66caa88331d1d08fd9
+Author: Richard Hughes <richard@hughsie.com>
+Date:	2014-04-02
+
+    Fix several critical warnings when using gcm-viewer
+
+M	src/gcm-cell-renderer-color.c
+M	src/gcm-cell-renderer-profile-text.c
+M	src/gcm-trc-widget.c
+M	src/gcm-viewer.c
+
+commit 1b28c43c5d6dd2a020ec109d8846e31cc4ee67c8
+Author: Jiro Matsuzawa <jmatsuzawa@gnome.org>
+Date:	2014-03-25
+
+    l10n: Update Japanese translation
+
+M	po/ja.po
+
+commit aa8f072d3ac24a4bc71ab167bc9508fb1689a7f4
+Author: Yuri Myasoedov <ymyasoedov@yandex.ru>
+Date:	2014-03-23
+
+    Updated Russian translation
+
+M	po/ru.po
+
+commit 91988280eb6072be5aa33ca9f7e5000d84685bf3
+Author: Dušan Kazik <prescott66@gmail.com>
+Date:	2014-03-23
+
+    Updated slovak translation
+
+M	po/sk.po
+
+commit 599cce3a2b03f1fcd84f736c2e3232f2cacf3ef0
+Author: Matej Urbančič <mateju@svn.gnome.org>
+Date:	2014-03-22
+
+    Updated Slovenian translation
+
+M	po/sl.po
+
+commit 2e4be46e4ee502c4e33941f9adebdd74d4618371
+Author: Inaki Larranaga Murgoitio <dooteo@zundan.com>
+Date:	2014-03-21
+
+    Updated Basque language
+
+M	po/eu.po
+
+commit 1ea066f46f7c67c5ec4967d3e7ea57be8778ec1c
+Author: Kjartan Maraas <kmaraas@gnome.org>
+Date:	2014-03-21
 
     Updated Norwegian bokmål translation
 
 M	po/nb.po
 
-commit 645796db1014f54aab81386e661601011e97c202
+commit 06a0aed89c924ab860ae546a44b5bf15fad938c8
+Author: Richard Hughes <richard@hughsie.com>
+Date:	2014-03-21
+
+    trivial: Post branch version bump
+
+M	configure.ac
+
+commit 7b24bf2cc7ffd710649b029480dcff237e004f8e
+Author: Kenneth Nielsen <k.nielsen81@gmail.com>
+Date:	2014-03-20
+
+    Updated Danish translation
+
+M	po/da.po
+
+commit 3cf98118d990de98d00a608eade2ac6327ac855a
+Author: Ville-Pekka Vainio <vpvainio@iki.fi>
+Date:	2014-03-19
+
+    Finnish translation update by Jiri Grönroos
+
+M	po/fi.po
+
+commit 5dc313aa27721a40d6b576b0017ae3e56fa7c104
+Author: Gábor Kelemen <kelemeng@gnome.hu>
+Date:	2014-03-19
+
+    Updated Hungarian translation
+
+M	po/hu.po
+
+commit 75398c8a3dacfb2d3ebed5cb591c7e98da17ea75
+Author: A S Alam <apreet.alam@gmail.com>
+Date:	2014-03-17
+
+    update Punjabi Translation 17March2014: Alam
+
+M	po/pa.po
+
+commit 5002799158b4accb3a9056655b7473ef131af11c
+Author: Claude Paroz <claude@2xlibre.net>
+Date:	2014-03-16
+
+    Updated French translation
+
+M	po/fr.po
+
+commit 252d3dfef9eeb9aa0877cc8429b5b0b2c25fdeb9
+Author: Milan Knížek <knizek@volny.cz>
+Date:	2014-03-14
+
+    Czech translation
+
+M	po/cs.po
+
+commit e713040f6db6fcebd4e3ec06ca65c4bd8add0159
+Author: Tiagosdot <almosthumane@portugalmail.pt>
+Date:	2014-03-14
+
+    Updated Portuguese translation
+
+M	po/pt.po
+
+commit a132fd41724a44cceffdb450a287cf16db188d72
+Author: Piotr Drąg <piotrdrag@gmail.com>
+Date:	2014-03-12
+
+    Updated Polish translation
+
+M	po/pl.po
+
+commit 88d2767e846b9adcf14088af1796f6129816ca59
+Author: Andika Triwidada <andika@gmail.com>
+Date:	2014-03-12
+
+    Updated Indonesian translation
+
+M	po/id.po
+
+commit 4c5203a47018c00beba64af75623766db1af3aca
+Author: Cheng-Chia Tseng <pswo10680@gmail.com>
+Date:	2014-03-10
+
+    Updated Traditional Chinese translation(Hong Kong and Taiwan)
+
+M	help/Makefile.am
+A	help/zh_HK/zh_HK.po
+A	help/zh_TW/zh_TW.po
+
+commit 2275c676aa16e3f065ce2781137fb423fc9c4aab
+Author: Rūdolfs Mazurs <rudolfsm@src.gnome.org>
+Date:	2014-03-07
+
+    Updated Latvian translation
+
+M	po/lv.po
+
+commit 561af808b7412813e0712096f7bc5a00fdea50b5
+Author: Changwoo Ryu <cwryu@debian.org>
+Date:	2014-03-06
+
+    Updated Korean translation
+
+M	po/ko.po
+
+commit 7a8c52f5fd9a3804ca6b8d3c38100c15a2dbf4ca
+Author: Kjartan Maraas <kmaraas@gnome.org>
+Date:	2014-03-05
+
+    Updated Norwegian bokmål translation
+
+M	po/nb.po
+
+commit 71867d6ecb53027ad44dbf134713831b717e450b
+Author: Pau Iranzo <paugnu@gmail.com>
+Date:	2014-02-26
+
+    [l10n] Update Catalan translation
+
+M	po/ca.po
+
+commit 67f669b342470a2c6778d41eb4fd5284142cb3e2
+Author: Richard Hughes <richard@hughsie.com>
+Date:	2014-02-17
+
+    trivial: Post release version bump
+
+M	RELEASE
+M	configure.ac
+
+commit 02480a5ffe4ef6e779fefe2f572ac79194bca194
+Author: Richard Hughes <richard@hughsie.com>
+Date:	2014-02-17
+
+    Release version 3.11.90
+
+M	NEWS
+M	RELEASE
+M	configure.ac
+
+commit fd397e21d8d85073cc6e6ea56a39c3e5d08da53f
+Author: Daniel Korostil <ted.korostiled@gmail.com>
+Date:	2014-02-10
+
+    Updated Ukrainian translation
+
+M	po/uk.po
+
+commit 89612c5ed924ff0f6c9ae55bda2ebcb878d74686
+Author: Pascal de Bruijn <pmjdebruijn@pcode.nl>
+Date:	2014-02-04
+
+    roughly shape test window to instrument
+
+    these test window sizes were determined (as a snug fit) on a
+    roughly 120dpi display, so on more common 90-100dpi displays
+    the test window should have half an inch clearance allround
+
+    Signed-off-by: Richard Hughes <richard@hughsie.com>
+
+M	src/gcm-calibrate-argyll.c
+
+commit 9b2eb919953f79d128aa6823609d05ab84e95120
+Author: Shankar Prasad <prasad.mvs@gmail.com>
+Date:	2014-02-05
+
+    updated kn.po
+
+M	po/kn.po
+
+commit 3df2d7e9e3a51de3432939fefbe4f36100d7ebc6
+Author: Richard Hughes <richard@hughsie.com>
+Date:	2014-02-03
+
+    trivial: Post release version bump
+
+M	RELEASE
+M	configure.ac
+
+commit b1eb7eb6aac7057dd5e2f38e4aaac65b3b0b78fb
+Author: Richard Hughes <richard@hughsie.com>
+Date:	2014-02-03
+
+    Release version 3.11.5
+
+M	NEWS
+M	RELEASE
+M	configure.ac
+
+commit bd70b28828fbb7fabb0e1dbc083ccce4f6c37dee
+Author: Cheng-Chia Tseng <pswo10680@gmail.com>
+Date:	2014-01-28
+
+    Updated Traditional Chinese translation(Hong Kong and Taiwan)
+
+M	po/zh_HK.po
+M	po/zh_TW.po
+
+commit 1c4d793c040b4ff380b1b83c86b0cf3244c70823
+Author: Yosef Or Boczko <yoseforb@src.gnome.org>
+Date:	2014-01-25
+
+    Updated Hebrew translation
+
+M	po/he.po
+
+commit c36d4a68cc4ed32360b4780f34e93bc227c2585a
+Author: Nilamdyuti Goswami <ngoswami@redhat.com>
+Date:	2014-01-23
+
+    Assamese translation updated
+
+M	po/as.po
+
+commit 9d51c37d4837fb2fd9f5ad8ba18e34ad16df6c3b
+Author: Kjartan Maraas <kmaraas@gnome.org>
+Date:	2014-01-21
+
+    Updated Norwegian bokmål translation
+
+M	po/nb.po
+
+commit d9fc4c7f07a100d2342437c1cc3bca3b35579bb2
+Author: Richard Hughes <richard@hughsie.com>
+Date:	2014-01-13
+
+    Fix a potential crash if dispcal started giving unexpected data
+
+    Resolves: https://bugzilla.redhat.com/show_bug.cgi?id=958082
+
+M	src/gcm-calibrate-argyll.c
+
+commit ead5c9e83a0d947741e306394508a276c27b4ec8
+Author: Richard Hughes <richard@hughsie.com>
+Date:	2014-01-13
+
+    Prevent a crash in gcm-viewer when the ICC profile cannot be loaded
+
+    Resolves: https://bugzilla.redhat.com/show_bug.cgi?id=1045165
+
+M	src/gcm-viewer.c
+
+commit 3e6abe7850fc26c294279e35cf9ea044b70b5a69
+Author: Yosef Or Boczko <yoseforb@gmail.com>
+Date:	2014-01-13
+
+    Updated Hebrew translation
+
+M	po/he.po
+
+commit 77bcd823a621fccb30120435d44e730529d8443e
+Author: Aurimas Černius <aurisc4@gmail.com>
+Date:	2014-01-12
+
+    Updated Lithuanian translation
+
+M	po/lt.po
+
+commit 7b4b0cbea6828be6b7a617aa9197459ed0ee61b6
+Author: Dimitris Spingos <dmtrs32@gmail.com>
+Date:	2014-01-04
+
+    Updated Greek translation
+
+M	po/el.po
+
+commit a0d5c011a31bdaeaeeacb826bbee316f41ef778c
+Author: Benjamin Steinwender <b@stbe.at>
+Date:	2013-12-31
+
+    Updated German translation
+
+M	po/de.po
+
+commit 3a7fe9cb538e058c9d5889ad3469d19a3e1d33ff
+Author: Daniel Mustieles <daniel.mustieles@gmail.com>
+Date:	2013-12-30
+
+    Updated Spanish translation
+
+M	po/es.po
+
+commit 028681930a3a93d49c268d194b208d51fa5333d6
+Author: Tong Hui <tonghuix@gmmail.com>
+Date:	2013-12-27
+
+    Update Chinese simplified translation
+
+M	po/zh_CN.po
+
+commit 26b3d1559289874bcc4a5c02bc8a462a3cbac7b7
+Author: Enrico Nicoletto <liverig@gmail.com>
+Date:	2013-12-27
+
+    Updated Brazilian Portuguese translation
+
+M	po/pt_BR.po
+
+commit e337c2d2191f79a94493638722b22e82a9af569b
+Author: Milo Casagrande <milo@ubuntu.com>
+Date:	2013-12-24
+
+    [l10n] Updated Italian translation.
+
+M	po/it.po
+
+commit 3234703790b62b859801d487801389d03676fa68
+Author: Victor Ibragimov <victor.ibragimov@gmail.com>
+Date:	2013-12-19
+
+    Tajik translation updated
+
+M	po/tg.po
+
+commit e04149401f92ad9a765b5866ab42419eb3ff4b38
+Author: Fran Diéguez <fran.dieguez@mabishu.com>
+Date:	2013-12-18
+
+    Updated Galician translations
+
+M	po/gl.po
+
+commit b260fea4415bf2cb1dd76c206a4cc0d50e9af5fe
+Author: Richard Hughes <richard@hughsie.com>
+Date:	2013-12-17
+
+    trivial: Post release version bump
+
+M	RELEASE
+M	configure.ac
+
+commit 27b9f3c2846251a03dedec07327307a4fdd191b1
+Author: Richard Hughes <richard@hughsie.com>
+Date:	2013-12-17
+
+    Release version 3.11.3
+
+M	NEWS
+M	RELEASE
+M	configure.ac
+
+commit cf073b8cb596d0fc3e7652aebac2a9067115332c
+Author: Pascal de Bruijn <pmjdebruijn@pcode.nl>
+Date:	2013-12-16
+
+    Laptops can have different display types too
+
+M	src/gcm-calibrate-main.c
+
+commit e348b929ef5a74ce3353382b9be63ebe290ca2e9
+Author: Pascal de Bruijn <pmjdebruijn@pcode.nl>
+Date:	2013-12-16
+
+    Support more display types
+
+M	src/gcm-calibrate-argyll.c
+M	src/gcm-calibrate-main.c
+M	src/gcm-calibrate.h
+
+commit 0b2194b6951d4d9d138448dbcc20c51bfebfb2f5
+Author: Milo Casagrande <milo@ubuntu.com>
+Date:	2013-12-16
+
+    [l10n] Updated Italian translation.
+
+M	po/it.po
+
+commit 9f8fe6dc7d6a136b994cfa513fb54cbd4ea1a309
+Author: Richard Hughes <richard@hughsie.com>
+Date:	2013-12-12
+
+    Don't depend on software we are not using
+
+M	configure.ac
+M	contrib/gnome-color-manager.spec.in
+M	src/Makefile.am
+M	src/gcm-calibrate.c
+M	src/gcm-picker.c
+M	src/gcm-utils.c
+
+commit 6b607e8fb11f255e20cca301ab49ab077e9e5dc1
+Author: Richard Hughes <richard@hughsie.com>
+Date:	2013-12-12
+
+    Remove the 3D hull functionality
+
+    The mash project is dead upstream and the clutter-gtk hack does
+    not work
+    correctly in wayland. It isn't worth so much code for such a
+    little-used
+    power-user feature.
+
+M	configure.ac
+M	contrib/gnome-color-manager.spec.in
+M	data/gcm-viewer.ui
+M	src/Makefile.am
+D	src/gcm-hull-widget.c
+D	src/gcm-hull-widget.h
+D	src/gcm-hull.c
+D	src/gcm-hull.h
+M	src/gcm-self-test.c
+M	src/gcm-utils.c
+M	src/gcm-utils.h
+M	src/gcm-viewer.c
+
+commit f9e8770867ebba57579fdcd397fa9e287ee1c529
+Author: Pascal de Bruijn <pmjdebruijn@pcode.nl>
+Date:	2013-11-29
+
+    Correct the approximate timings in the calibration dialog
+
+    The last correction was still too conservative.
+
+    Signed-off-by: Richard Hughes <richard@hughsie.com>
+
+M	src/gcm-calibrate-main.c
+
+commit 8a752e8b372e27894eebc14c305543bdc9ff4e52
+Author: Pascal de Bruijn <pmjdebruijn@pcode.nl>
+Date:	2013-11-29
+
+    Generate display profiles with a perceptual rendering intent
+
+    Signed-off-by: Richard Hughes <richard@hughsie.com>
+
+M	src/gcm-calibrate-argyll.c
+
+commit 00b1a67eeaf2e12a74b0cb56c548902ab170dc92
+Author: Pascal de Bruijn <pmjdebruijn@pcode.nl>
+Date:	2013-11-29
+
+    Default to quick calibration, should be more than enough
+
+    Signed-off-by: Richard Hughes <richard@hughsie.com>
+
+M	src/gcm-calibrate-main.c
+
+commit 73af18cf61ac060a12450b7dab693783a0cdc6af
+Author: Patryk Zawadzki <patrys@room-303.com>
+Date:	2013-12-05
+
+    Make it work with dispcal using stderr
+
+    Signed-off-by: Richard Hughes <richard@hughsie.com>
+
+M	src/gcm-calibrate-argyll.c
+
+commit cef02bb43c8ae9f974f023566b273d33301826d2
+Author: Shantha kumar <shkumar@redhat.com>
+Date:	2013-11-21
+
+    Tamil Translations Updated
+
+M	po/ta.po
+
+commit 3540d0cbec15f2ebe13fed18d567efc745959ddd
+Author: Daniel Mustieles <daniel.mustieles@gmail.com>
+Date:	2013-11-16
+
+    Updated Spanish translation
+
+M	po/es.po
+
+commit 7de180f68ad4d56dd3233c6a02f21a1158e617cf
+Author: Victor Ibragimov <victor.ibragimov@gmail.com>
+Date:	2013-11-14
+
+    Tajik translation updated
+
+M	po/tg.po
+
+commit f5b9c767c9423810415473e2aad2f29866d137f4
+Author: Wouter Bolsterlee <uws@xs4all.nl>
+Date:	2013-11-10
+
+    Updated Dutch translation
+
+M	po/nl.po
+
+commit b87cfe72974a1241c9672494ed3845337c5ab5d7
+Author: Julia Dronova <juliette.tux@gmail.com>
+Date:	2013-11-07
+
+    Updated Russian translation
+
+M	po/ru.po
+
+commit adf0a4ee1abb4d21b94c93949b6ba564b0322e48
+Author: Dimitris Spingos <dmtrs32@gmail.com>
+Date:	2013-11-07
+
+    Updated Greek translation
+
+M	po/el.po
+
+commit 43075ef4bf7144a15d1fb048af9ecd728793c602
+Author: Ekaterina Gerasimova <kittykat3756@gmail.com>
+Date:	2013-11-06
+
+    ColorChecker is one word
+
+M	src/gcm-calibrate-main.c
+
+commit 926b2fca1c1fb0eb84eaff6ae8affef42ae7a5c2
+Author: Efstathios Iosifidis <iosifidis@opensuse.org>
+Date:	2013-11-05
+
+    Updated Greek translation
+
+M	po/el.po
+
+commit a68f1caaa941829ad49396f3ead4c51ca23f485c
+Author: Fran Diéguez <fran.dieguez@mabishu.com>
+Date:	2013-11-01
+
+    Updated Galician translations
+
+M	po/gl.po
+
+commit 6707e81306ff872629239fa25a63d2920ceb5631
+Author: Daniel Mustieles <daniel.mustieles@gmail.com>
+Date:	2013-10-31
+
+    Updated Spanish translation
+
+M	po/es.po
+
+commit 94265aebd20292107caea2848d36958148908b48
+Author: Victor Ibragimov <victor.ibragimov@gmail.com>
+Date:	2013-10-31
+
+    Tajik translation updated
+
+M	po/tg.po
+
+commit fbaff6213666336bf39b1ce2ec8789e1f2a26a59
+Author: Matej Urbančič <mateju@svn.gnome.org>
+Date:	2013-10-24
+
+    Updated Slovenian translation
+
+M	po/sl.po
+
+commit b0251923a7cd2c07f521f461a6251d0ae6c9abfb
+Author: Richard Hughes <richard@hughsie.com>
+Date:	2013-10-08
+
+    Use the new 16:9 screenshots in the AppData file
+
+M	data/appdata/gcm-viewer.appdata.xml.in
+
+commit c2ed090f8db3ce8f513006e019f1d1f43b8ac798
+Author: Richard Hughes <richard@hughsie.com>
+Date:	2013-10-08
+
+    Add some new 16:9 screenshots
+
+A	data/appdata/ss-calibrate.png
+A	data/appdata/ss-cie1931.png
+A	data/appdata/ss-info.png
+A	data/appdata/ss-picker.png
+
+commit 0efe08756716a29119b9bde2480c626ebd09e1bf
+Author: Richard Hughes <richard@hughsie.com>
+Date:	2013-10-08
+
+    Make gcm-picker look like a GNOME 3 application
+
+M	data/gcm-picker.ui
+M	src/gcm-picker.c
+
+commit e6e61b5e6de57a9ff62ca3377c9c3ab7c26b8aae
+Author: Richard Hughes <richard@hughsie.com>
+Date:	2013-10-08
+
+    Use git.mk to autogenerate the .gitignore files
+
+D	.gitignore
+M	Makefile.am
+D	data/.gitignore
+M	data/Makefile.am
+M	data/appdata/Makefile.am
+M	data/figures/Makefile.am
+M	data/icons/16x16/Makefile.am
+M	data/icons/22x22/Makefile.am
+M	data/icons/24x24/Makefile.am
+M	data/icons/256x256/Makefile.am
+M	data/icons/32x32/Makefile.am
+M	data/icons/48x48/Makefile.am
+M	data/icons/64x64/Makefile.am
+M	data/icons/Makefile.am
+M	data/icons/scalable/Makefile.am
+M	data/targets/Makefile.am
+M	data/tests/Makefile.am
+M	data/ti1/Makefile.am
+A	git.mk
+M	help/Makefile.am
+D	man/.gitignore
+M	man/Makefile.am
+D	src/.gitignore
+M	src/Makefile.am
+
+commit ae0396b005d6e3b75481222a765e3a811b849bde
+Author: Richard Hughes <richard@hughsie.com>
+Date:	2013-10-08
+
+    Move the AppData file into it's own directory
+
+    The screenshots will also live here soon.
+
+M	configure.ac
+M	data/Makefile.am
+A	data/appdata/Makefile.am
+R100	data/gcm-viewer.appdata.xml.in
+data/appdata/gcm-viewer.appdata.xml.in
+D	data/gcm-viewer.appdata.xml
+M	po/POTFILES.in
+
+commit cc3f0e56cbcaf052e88ca0a90f8ea602af5cf58a
+Author: Arash Mousavi <mousavi.arash@gmail.com>
+Date:	2013-10-07
+
+    L10N: Updated Persian translations
+
+M	po/fa.po
+
+commit e69dc708e55e280af173f5383615499f67c797b6
+Author: Richard Hughes <richard@hughsie.com>
+Date:	2013-10-07
+
+    trivial: Do not dist both the appdata.xml and the appdata.xml.in
+
+M	data/Makefile.am
+M	data/gcm-viewer.appdata.xml
+
+commit 38e0f8d8b1b485e7dbc997fa11f5adab76014beb
+Author: Carles Ferrando <carles.ferrando@gmail.com>
+Date:	2013-10-06
+
+    [l10n] Updated Catalan (Valencian) translation
+
+M	po/ca@valencia.po
+
+commit d47b0dd55308bea9ef6a01b6b61f977219012393
+Author: Richard Hughes <richard@hughsie.com>
+Date:	2013-10-01
+
+    trivial: Add copyright information to the AppData file
+
+M	data/gcm-viewer.appdata.xml.in
+
+commit 9a25d6543fc4c4103b86e08dbc301c5e4acb1f18
+Author: Cheng-Chia Tseng <pswo10680@gmail.com>
+Date:	2013-09-30
+
+    Updated Traditional Chinese translation(Hong Kong and Taiwan)
+
+M	po/zh_HK.po
+M	po/zh_TW.po
+
+commit 12ab0575b191d2a0c856270035e875ab40868c8f
+Author: Piotr Drąg <piotrdrag@gmail.com>
+Date:	2013-09-26
+
+    Fix grammar in the AppData description
+
+M	data/gcm-viewer.appdata.xml
+M	data/gcm-viewer.appdata.xml.in
+
+commit c45ecc9143c9a2849c0b7d1cb277e45e166df5a6
+Author: Richard Hughes <richard@hughsie.com>
+Date:	2013-09-25
+
+    Actually merge the translations into the AppData file
+
+M	data/Makefile.am
+
+commit ef7e852da777cf3b2893487aef6af362657a93be
+Author: Richard Hughes <richard@hughsie.com>
+Date:	2013-09-24
+
+    Translate the AppData file
+
+M	data/Makefile.am
+M	data/gcm-viewer.appdata.xml
+C085	data/gcm-viewer.appdata.xml	data/gcm-viewer.appdata.xml.in
+M	po/POTFILES.in
+
+commit 0491addf64d23e0ec4f863f03377feafd85b453e
+Author: Richard Hughes <richard@hughsie.com>
+Date:	2013-09-24
+
+    trivial: Post branch version bump
+
+M	RELEASE
+M	configure.ac
+
+commit f167c78e148a7753cf0e1e323f1b89d86f66e015
+Author: Richard Hughes <richard@hughsie.com>
+Date:	2013-09-24
+
+    trivial: Post release version bump
+
+M	RELEASE
+M	configure.ac
+
+commit 12670d7d033631dfa7572ed9d5c201a15671ff98
+Author: Richard Hughes <richard@hughsie.com>
+Date:	2013-09-24
+
+    Release version 3.10.0
+
+M	NEWS
+M	RELEASE
+M	configure.ac
+
+commit 7732b51adff7ba109f64bad07f327c4c321c7259
+Author: victory <victory.deb@gmail.com>
+Date:	2013-09-22
+
+    l10n: Update Japanese translation
+
+M	po/ja.po
+
+commit 6a1856d9444e97fc0e638cc21b6f6b0f77147029
+Author: Baurzhan Muftakhidinov <baurthefirst@gmail.com>
+Date:	2013-09-21
+
+    Add Kazakh translation
+
+M	po/LINGUAS
+A	po/kk.po
+
+commit 4a28bcc78f8d87324334d619b8d17f3ec608545c
+Author: Daniel Korostil <ted.korostiled@gmail.com>
+Date:	2013-09-21
+
+    Updated Ukrainian
+
+M	po/uk.po
+
+commit 6ca1edeeed45ba0bb3e29f0dd1827fcae3bd6d38
+Author: António Lima <amrlima@gmail.com>
+Date:	2013-09-18
+
+    Updated Portuguese translation
+
+M	po/pt.po
+
+commit d5004b51519c472ac2beba8bf90b4cc729e0cad8
+Author: A S Alam <apreet.alam@gmail.com>
+Date:	2013-09-18
+
+    Punjabi Translation updated by Aman
+
+M	po/pa.po
+
+commit b36876dff47b830813214b77490e3bd56cd25903
+Author: Kenneth Nielsen <k.nielsen81@gmail.com>
+Date:	2013-09-16
+
+    Updated Danish translation
+
+M	po/da.po
+
+commit a9b42f191cf4cd122cfb8fa03e16e8a5797e3f83
+Author: Inaki Larranaga Murgoitio <dooteo@zundan.com>
+Date:	2013-09-16
+
+    Updated Basque language
+
+M	po/eu.po
+
+commit 320683a99ac56ff0e43dac3a8e09a1357ad819b3
+Author: Piotr Drąg <piotrdrag@gmail.com>
+Date:	2013-09-16
+
+    Fix broken tags in Chinese Simplified help translation
+
+M	help/zh_CN/zh_CN.po
+
+commit e8eb51d6352acef5ca9b6d925fd5f2c02d94fb99
+Author: Changwoo Ryu <cwryu@debian.org>
+Date:	2013-09-14
+
+    Updated Korean translation
+
+M	po/ko.po
+
+commit 51a3b2ac3204e1291210336d759ef8b5fdd2b9bd
+Author: Dušan Kazik <prescott66@gmail.com>
+Date:	2013-09-13
+
+    Updated slovak translation
+
+M	po/sk.po
+
+commit e99723758a01cdbf0900efd2dbfbb994274a1b46
+Author: Richard Hughes <richard@hughsie.com>
+Date:	2013-09-13
+
+    Release version 3.9.92
+
+M	NEWS
+M	RELEASE
+M	configure.ac
+
+commit 378a90598bbe88907934bbca6593f05b79a61551
+Author: Mattias Põldaru <mahfiaz@gmail.com>
+Date:	2013-09-12
+
+    [l10n] Updated Estonian translation
+
+M	po/et.po
+
+commit 90840b24f0417122c9c86d050cefa2e4efc87c41
+Author: Rūdolfs Mazurs <rudolfsm@src.gnome.org>
+Date:	2013-09-11
+
+    Updated Latvian translation
+
+M	po/lv.po
+
+commit 823af221e6ce2f9597f5ce11b6e34b84cf0bd3e9
+Author: Nilamdyuti Goswami <ngoswami@redhat.com>
+Date:	2013-09-11
+
+    Assamese Translation Updated
+
+M	po/as.po
+
+commit cf01d35df95fae605430ceac18fe5ef7d637bddd
+Author: Richard Hughes <richard@hughsie.com>
+Date:	2013-09-11
+
+    Actually install the AppData file
+
+M	data/Makefile.am
+
+commit 5ffc37ba9db0417175ccc0b572b9d5078d4786b6
+Author: Dušan Kazik <prescott66@gmail.com>
+Date:	2013-09-10
+
+    Updated slovak translation
+
+M	po/sk.po
+
+commit 55c6cb9c45afa1c2be39e115f5978b17192af5ae
+Author: Chao-Hsiung Liao <j_h_liau@yahoo.com.tw>
+Date:	2013-09-08
+
+    Updated Traditional Chinese translation(Hong Kong and Taiwan)
+
+M	po/zh_HK.po
+M	po/zh_TW.po
+
+commit 4f168dccabc1739d15f75d75c25ce7f2f5aad3da
+Author: Kjartan Maraas <kmaraas@gnome.org>
+Date:	2013-09-08
+
+    Updated Norwegian bokmål translation
+
+M	po/nb.po
+
+commit 2bae9e7f0ac03bc1c5f3fe93d7dfcd9aa7c51840
+Author: Ville-Pekka Vainio <vpvainio@iki.fi>
+Date:	2013-09-07
+
+    Finnish translation update by Jiri Grönroos
+
+M	po/fi.po
+
+commit 3edf413065ca082b2d5e61693fd20fa326f3435e
+Author: Marek Černocký <marek@manet.cz>
+Date:	2013-09-06
+
+    Updated Czech translation
+
+M	po/cs.po
+
+commit 3b280770a50024a8d7a93594d9633bdc2528dcce
+Author: Мирослав Николић <miroslavnikolic@rocketmail.com>
+Date:	2013-09-05
+
+    Updated Serbian translation
+
+M	po/sr.po
+M	po/sr@latin.po
+
+commit ae8a611fd586d74eeb73aa20895519d58f3f5115
+Author: Stas Solovey <whats_up@tut.by>
+Date:	2013-09-05
+
+    Updated Russian translation
+
+M	po/ru.po
+
+commit 4926bffd348c2662f1bfe05efcfc140e8b964dca
+Author: Alexandre Franke <alexandre.franke@gmail.com>
+Date:	2013-09-04
+
+    Update French translation
+
+M	po/fr.po
+
+commit e02495ed0c581be21cae9db9914e152f9ec990c6
+Author: Fran Diéguez <fran.dieguez@mabishu.com>
+Date:	2013-09-02
+
+    Added Galician translations for docs
+
+M	help/Makefile.am
+A	help/gl/gl.po
+
+commit 6c6fec80bb8789a9fa67f821adea417fe4ad5238
+Author: Andika Triwidada <andika@gmail.com>
+Date:	2013-08-31
+
+    Updated Indonesian translation
+
+M	po/id.po
+
+commit 31a22d62802c8342cff626740b975eccc417b224
+Author: Richard Hughes <richard@hughsie.com>
+Date:	2013-08-29
+
+    Add an AppData description for gcm-viewer
+
+    See http://people.freedesktop.org/~hughsient/appdata/ for more
+    details.
+
+M	data/Makefile.am
+A	data/gcm-viewer.appdata.xml
+
+commit 3776f47d370c2fe14d79e89b2a930300537b427d
+Author: Balázs Úr <urbalazs@src.gnome.org>
+Date:	2013-08-25
+
+    Updated Hungarian translation
+
+M	po/hu.po
+
+commit b635b2eed9fbb49b795cd56b928be6487fd23b4f
+Author: Piotr Drąg <piotrdrag@gmail.com>
+Date:	2013-08-24
+
+    Updated Polish translation
+
+M	po/pl.po
+
+commit 85116cd008091d6a5aaff71ae324b2bdf88e7598
+Author: Pascal de Bruijn <pmjdebruijn@pcode.nl>
+Date:	2013-08-20
+
+    configure: we need at least clutter 1.12 to properly build with mash
+
+    Signed-off-by: Richard Hughes <richard@hughsie.com>
+
+M	configure.ac
+
+commit c014f4acc9f7e3e54d62ecb8fdd71f3a2b7ac24a
+Author: Pascal de Bruijn <pmjdebruijn@pcode.nl>
+Date:	2013-08-16
+
+    Disable GCM_DATA path prefixing for colord provided image paths
+
+    Signed-off-by: Richard Hughes <richard@hughsie.com>
+
+M	src/gcm-calibrate-main.c
+
+commit 4e64b94626dc3c18850a4e97ece9a512e16d2a7c
+Author: Gil Forcada <gforcada@gnome.org>
+Date:	2013-08-18
+
+    [l10n] Update Catalan translation
+
+M	po/ca.po
+
+commit 85b399565f78d504db82153f5de7f272cb1fc53a
+Author: Matej Urbančič <mateju@svn.gnome.org>
+Date:	2013-08-17
+
+    Updated Slovenian translation
+
+M	po/sl.po
+
+commit 0fc6861428011e4673a4e2f7ed8a3fbfcf87b850
+Author: Reinout van Schouwen <reinouts@gnome.org>
+Date:	2013-08-11
+
+    Add nl to LINGUAS
+
+M	po/LINGUAS
+
+commit 2e066066fed1ebf8b7b974f99635ddec62ad8aa5
+Author: Reinout van Schouwen <reinouts@gnome.org>
+Date:	2013-08-11
+
+    Added new Dutch translation, started by Cumulus007, finished by
+    Reinout
+    van Schouwen
+
+A	po/nl.po
+
+commit c24e82b0a5d522bdf7659ba4d04b408b9ebb0d31
+Author: Aurimas Černius <aurisc4@gmail.com>
+Date:	2013-08-08
+
+    Updated Lithuanian translation
+
+M	po/lt.po
+
+commit 54970c0db385507af94d0eb824eb95d35488ef38
+Author: Rafael Ferreira <rafael.f.f1@gmail.com>
+Date:	2013-08-05
+
+    Updated Brazilian Portuguese translation
+
+M	po/pt_BR.po
+
+commit d6516f4179178805e079499a0341a0d1ac72dae6
+Author: Fran Diéguez <fran.dieguez@mabishu.com>
+Date:	2013-08-02
+
+    Updated Galician translations
+
+M	po/gl.po
+
+commit a39d78514d0e850a03ce34121f8ac8afe0856ac2
+Author: Yaron Shahrabani <sh.yaron@gmail.com>
+Date:	2013-07-31
+
+    Updated Hebrew translation.
+
+M	po/he.po
+
+commit 1d07d3fe9b03308b39e747f2fcacd6644ead37f0
+Author: Milo Casagrande <milo@ubuntu.com>
+Date:	2013-07-30
+
+    [l10n] Updated Italian translation.
+
+M	po/it.po
+
+commit 92d98014219331317210bc8addd7d5c5c0fea769
+Author: Kjartan Maraas <kmaraas@gnome.org>
+Date:	2013-07-30
+
+    Updated Norwegian bokmål translation
+
+M	po/nb.po
+
+commit a8ee35723d20f966981b07454968109f1dd8455b
+Author: Richard Hughes <richard@hughsie.com>
+Date:	2013-07-30
+
+    Do not use g_spawn_command_line_sync() when spawning executables
+
+    Resolves: https://bugzilla.redhat.com/show_bug.cgi?id=958093
+
+M	src/gcm-calibrate-argyll.c
+M	src/gcm-calibrate-main.c
+M	src/gcm-exif.c
+
+commit 42ae05a8914f8f1adc52e5296b281f0bc5080718
+Author: Richard Hughes <richard@hughsie.com>
+Date:	2013-07-30
+
+    Do not use a predictable name when saving the PLY temp file
+
+    Resolves: https://bugzilla.redhat.com/show_bug.cgi?id=958088
+
+M	src/gcm-hull-widget.c
+
+commit 2851e15d06a112e968087cabfddf46eb6de46589
+Author: Benjamin Steinwender <b@stbe.at>
+Date:	2013-07-24
+
+    Updated German translation
+
+M	po/de.po
+
+commit 75e04900d62ba7490d5db482b0665a82449be8c1
+Author: Daniel Mustieles <daniel.mustieles@gmail.com>
+Date:	2013-07-24
+
+    Updated Spanish translation
+
+M	po/es.po
+
+commit 0b821ab38143f117be56e69bcf5ab52958527b92
+Author: Victor Ibragimov <victor.ibragimov@gmail.com>
+Date:	2013-07-23
+
+    Tajik translation updated
+
+M	po/tg.po
+
+commit 2e48edfcbdd77f504abc2e5927107a92782b5538
+Author: Victor Ibragimov <victor.ibragimov@gmail.com>
+Date:	2013-07-23
+
+    Tajik translation updated
+
+M	po/tg.po
+
+commit 7c85a9c2e5374842a59caa86a0fb23898ea12e69
+Author: Anish A <aneesh.nl@gmail.com>
+Date:	2013-07-17
+
+    Updated Malayalam Translation
+
+M	po/ml.po
+
+commit c35954c82b883b1707dd8de53780b414a85f53cc
+Author: Richard Hughes <richard@hughsie.com>
+Date:	2013-07-16
+
+    GtkStock is deprecated
+
+M	src/gcm-calibrate.c
+M	src/gcm-viewer.c
+
+commit d56acb0d25f4b59b4dddb7f3ab5f071557c35263
+Author: 甘露(Gan  Lu) <rhythm.gan@gmail.com>
+Date:	2013-07-13
+
+    Update Chinese simplified translation
+
+M	po/zh_CN.po
+
+commit f917558d18a02a891bd9ff7b2db613112887528b
+Author: Benjamin Steinwender <b@stbe.at>
+Date:	2013-07-09
+
+    Updated German translation
+
+M	po/de.po
+
+commit aa11252ec0cf6a6e3426e34eeb6add83198d5c79
+Author: Richard Hughes <richard@hughsie.com>
+Date:	2013-06-29
+
+    Kelvin is not a graded scale
+
+    Resolves: https://bugzilla.redhat.com/show_bug.cgi?id=979520
+
+M	src/gcm-viewer.c
+
+commit 2945e69c9bde5515ea582363f08555b47cc1429b
+Author: Milo Casagrande <milo@ubuntu.com>
+Date:	2013-06-19
+
+    [l10n] Updated Italian translation.
+
+M	po/it.po
+
+commit c03780e82b032922deaa3fabd875f1f55c1c57f6
+Author: Cheng-Chia Tseng <pswo10680@gmail.com>
+Date:	2013-06-05
+
+    Updated Traditional Chinese translation(Hong Kong and Taiwan)
+
+M	po/zh_HK.po
+M	po/zh_TW.po
+
+commit 7f86c03ca94d9266335201f11d3a44350479a18c
+Author: Cheng-Chia Tseng <pswo10680@gmail.com>
+Date:	2013-06-04
+
+    Updated Traditional Chinese translation(Hong Kong and Taiwan)
+
+M	po/zh_HK.po
+M	po/zh_TW.po
+
+commit d1dad6274bf9f417be90ee1859619bd41b121060
+Author: Fran Diéguez <fran.dieguez@mabishu.com>
+Date:	2013-06-01
+
+    Updated Galician translations
+
+M	po/gl.po
+
+commit 1f97f18ecfb4d2e0baa830357281199d243c8fc9
+Author: Kjartan Maraas <kmaraas@gnome.org>
+Date:	2013-05-20
+
+    Updated Norwegian bokmål translation
+
+M	po/nb.po
+
+commit c45e5c5a19714d05e864260c8832f16ae756bf0d
+Author: Fran Diéguez <fran.dieguez@mabishu.com>
+Date:	2013-05-16
+
+    Updated Galician translations
+
+M	po/gl.po
+
+commit 1b717dbc9b947d9dffc9caf804b9de9d2e2ad030
 Author: Yuri Myasoedov <omerta13@yandex.ru>
 Date:	2013-05-13
 
@@ -22,7 +1740,7 @@ Date:	2013-05-13
 
 M	po/ru.po
 
-commit 90cf9c5c0ea487204ea218faef38e91880b00cb0
+commit bcc6edc63f53d1332fd5b75ec4eedbe1841492ac
 Author: Antoine Jacoutot <ajacoutot@gnome.org>
 Date:	2013-05-08
 
@@ -35,7 +1753,95 @@ Date:	2013-05-08
 
 M	src/gcm-calibrate-main.c
 
-commit 146ffcf789477fd17414a91b2e56b7e7ce26d682
+commit 7bb264beb87eb3d620f3b3d8d1ec3942501dd78b
+Author: Matej Urbančič <mateju@svn.gnome.org>
+Date:	2013-05-01
+
+    Updated Slovenian translation
+
+M	po/sl.po
+
+commit a221c09f6ea5e326a56bd69324d78118c216fd45
+Author: Richard Hughes <richard@hughsie.com>
+Date:	2013-04-30
+
+    Remove cd_icc_has_colorspace_description() as we can use the profile
+    MD now
+
+M	src/gcm-picker.c
+M	src/gcm-utils.c
+M	src/gcm-utils.h
+
+commit 6a54cbef89b71f5aed62a60635c139c80b579b37
+Author: Richard Hughes <richard@hughsie.com>
+Date:	2013-04-30
+
+    Use the new cd_icc_get_response() provided in colord 0.1.34
+
+M	src/gcm-utils.c
+M	src/gcm-utils.h
+M	src/gcm-viewer.c
+
+commit cc22cb5fe0e278030887d0ff70f990e32e4dd0d0
+Author: Richard Hughes <richard@hughsie.com>
+Date:	2013-04-30
+
+    Remove GcmClut, it's now not required
+
+M	src/Makefile.am
+D	src/gcm-clut.c
+D	src/gcm-clut.h
+M	src/gcm-self-test.c
+M	src/gcm-trc-widget.c
+M	src/gcm-utils.c
+M	src/gcm-utils.h
+M	src/gcm-viewer.c
+
+commit 3fa8af918f97f6a34d86803de43165067445a987
+Author: Richard Hughes <richard@hughsie.com>
+Date:	2013-04-30
+
+    Use the new cd_icc_get_vcgt() in colord 0.1.34
+
+M	src/gcm-self-test.c
+M	src/gcm-utils.c
+M	src/gcm-utils.h
+M	src/gcm-viewer.c
+
+commit 708a8067583ff2aef056c0de229447eeaf2d842f
+Author: Daniel Mustieles <daniel.mustieles@gmail.com>
+Date:	2013-04-28
+
+    Updated Spanish translation
+
+M	po/es.po
+
+commit f22823ad15bcbd794d7b5ebf9bbe920a70d27c49
+Author: Richard Hughes <richard@hughsie.com>
+Date:	2013-04-25
+
+    Add another translation for a profile warning
+
+M	configure.ac
+M	src/gcm-viewer.c
+
+commit 0d4b17fb6f1153410f3a0a64e81d395f3d05ab91
+Author: Dimitris Spingos <dmtrs32@gmail.com>
+Date:	2013-04-25
+
+    Updated Greek translation
+
+M	po/el.po
+
+commit 488861c684afd10f24f8244f8ef1ef61e053a853
+Author: Daniel Mustieles <daniel.mustieles@gmail.com>
+Date:	2013-04-22
+
+    Updated Spanish translation
+
+M	po/es.po
+
+commit 0af7f4ae7a0058863d50be2e7197bdd9cff22c9b
 Author: Richard Hughes <richard@hughsie.com>
 Date:	2013-04-18
 
@@ -43,25 +1849,79 @@ Date:	2013-04-18
     PLY files
 
 M	src/gcm-hull.c
+M	src/gcm-viewer.c
 
-commit f9357a65e21c59501eaa555a3d21ea9fad767a72
+commit 52a709bf9ef6275b1dcd9346d61acdf9e7430b67
+Author: Balázs Úr <urbalazs@src.gnome.org>
+Date:	2013-04-10
+
+    Updated Hungarian translation
+
+M	po/hu.po
+
+commit 80393b36ebeeb03332cf2c0b2a400b4a5976e736
+Author: Bruce Cowan <bruce@bcowan.me.uk>
+Date:	2013-04-06
+
+    Updated British English translation
+
+M	po/en_GB.po
+
+commit fcdf97c0da3095eb819b9a52d92d519c382e6b06
+Author: Enrico Nicoletto <liverig@gmail.com>
+Date:	2013-04-05
+
+    Updated Brazilian Portuguese translation
+
+M	po/pt_BR.po
+
+commit 39edecc5e3922d0d463843f68c8188693e14e403
+Author: Yaron Shahrabani <sh.yaron@gmail.com>
+Date:	2013-03-28
+
+    Updated Hebrew translation.
+
+M	po/he.po
+
+commit f852c24bbdf5482591f2357d3ae2aee853ff93ae
 Author: Richard Hughes <richard@hughsie.com>
-Date:	2013-04-15
+Date:	2013-03-26
 
-    trivial: Post release version bump
+    Use CdIcc to load and save ICC profiles
 
-M	RELEASE
 M	configure.ac
+M	po/POTFILES.in
+M	src/Makefile.am
+M	src/gcm-cell-renderer-color.c
+M	src/gcm-cell-renderer-color.h
+M	src/gcm-cie-widget.c
+M	src/gcm-cie-widget.h
+M	src/gcm-hull-widget.c
+M	src/gcm-hull-widget.h
+M	src/gcm-image.c
+M	src/gcm-image.h
+M	src/gcm-import.c
+M	src/gcm-inspect.c
+D	src/gcm-named-color.c
+D	src/gcm-named-color.h
+M	src/gcm-picker.c
+D	src/gcm-profile.c
+D	src/gcm-profile.h
+M	src/gcm-self-test.c
+M	src/gcm-trc-widget.c
+M	src/gcm-utils.c
+M	src/gcm-utils.h
+M	src/gcm-viewer.c
 
-commit 17d904f2532fecff844d72354a5b8c98d0b4e192
+commit d6a3c1cbec66848bd3d9b4a3e814f19a7543560b
 Author: Richard Hughes <richard@hughsie.com>
-Date:	2013-04-15
+Date:	2013-03-26
 
-    Release version 3.8.1
+    Tweak a few of the descriptions to reflect reality
 
-M	NEWS
+M	data/gcm-viewer.ui
 
-commit 6a7239c9f8e49a3ddf8dd51f21a720b3a653383f
+commit ed0ba376cf35d8bd090feff89cc57bc61a46dc98
 Author: Richard Hughes <richard@hughsie.com>
 Date:	2013-03-26
 
@@ -72,45 +1932,11 @@ Date:	2013-03-26
 M	data/gcm-viewer.ui
 M	src/gcm-viewer.c
 
-commit 9d2a5955a0e62e6b431f20fd349dc762f05acc34
-Author: Bruce Cowan <bruce@bcowan.me.uk>
-Date:	2013-04-06
-
-    Updated British English translation
-
-M	po/en_GB.po
-
-commit 29296028c6036941b20ad01d7c4da6e09e19773d
-Author: Gheyret Kenji <gheyret@gmail.com>
-Date:	2013-04-06
-
-    Updated Uyghur translation
-
-    Signed-off-by: Gheyret Kenji <gheyret@gmail.com>
-
-M	po/ug.po
-
-commit 67747085d3b83b55cafcdbaeb09908c13ff30f79
-Author: Kjartan Maraas <kmaraas@gnome.org>
-Date:	2013-04-03
-
-    Updated Norwegian bokmål translation
-
-M	po/nb.po
-
-commit 654f5ec123881a176588435f22942e7039f3e23e
-Author: Daniel Korostil <ted.korostiled@gmail.com>
-Date:	2013-03-26
-
-    Update uk translation
-
-M	po/uk.po
-
-commit bd70eaeb0cfbbd17570efc171bb9cf0ca299d37a
+commit 29ad39b9eb67b1a6f97707718c9a2e09a0db1aa8
 Author: Richard Hughes <richard@hughsie.com>
 Date:	2013-03-26
 
-    trivial: Post release version bump
+    trivial: Post branch version bump
 
 M	RELEASE
 M	configure.ac

@@ -1,16 +1,12 @@
 AM_CPPFLAGS =						\
 	$(GLIB_CFLAGS)					\
-	$(X11_CFLAGS)					\
 	$(GTK_CFLAGS)					\
 	$(VTE_CFLAGS)					\
-	$(XORG_CFLAGS)					\
 	$(TIFF_CFLAGS)					\
 	$(EXIF_CFLAGS)					\
 	$(EXIV_CFLAGS)					\
-	$(GNOME_DESKTOP_CFLAGS)				\
 	$(COLORD_CFLAGS)				\
 	$(CANBERRA_CFLAGS)				\
-	$(CLUTTER_CFLAGS)				\
 	-DG_LOG_DOMAIN=\"Gcm\"				\
 	-DBINDIR=\"$(bindir)\"				\
 	-DLIBEXECDIR=\"$(libexecdir)\"			\
@@ -26,34 +22,18 @@ AM_CPPFLAGS =						\
 
 noinst_LIBRARIES = libgcmshared.a
 libgcmshared_a_SOURCES =				\
-	gcm-hull.c					\
-	gcm-hull.h					\
 	gcm-cie-widget.c				\
 	gcm-cie-widget.h				\
-	gcm-clut.c					\
-	gcm-clut.h					\
 	gcm-debug.c					\
 	gcm-debug.h					\
 	gcm-exif.c					\
 	gcm-exif.h					\
-	gcm-image.c					\
-	gcm-image.h					\
 	gcm-print.c					\
 	gcm-print.h					\
-	gcm-profile.c					\
-	gcm-profile.h					\
-	gcm-named-color.c				\
-	gcm-named-color.h				\
 	gcm-trc-widget.c				\
 	gcm-trc-widget.h				\
 	gcm-utils.c					\
 	gcm-utils.h
-
-if HAVE_CLUTTER
-libgcmshared_a_SOURCES +=				\
-	gcm-hull-widget.c				\
-	gcm-hull-widget.h
-endif
 
 libgcmshared_a_CFLAGS =					\
 	$(WARNINGFLAGS_C)
@@ -97,7 +77,6 @@ gcm_calibrate_LDADD =					\
 	$(VTE_LIBS)					\
 	$(X11_LIBS)					\
 	$(XORG_LIBS)					\
-	$(GNOME_DESKTOP_LIBS)				\
 	-lm
 
 gcm_calibrate_CFLAGS =					\
@@ -155,7 +134,6 @@ gcm_viewer_LDADD =					\
 	$(LCMS_LIBS)					\
 	$(EXIF_LIBS)					\
 	$(COLORD_LIBS)					\
-	$(CLUTTER_LIBS)					\
 	-lm
 
 gcm_viewer_CFLAGS =					\
@@ -169,7 +147,6 @@ gcm_picker_SOURCES =					\
 gcm_picker_LDADD =					\
 	libgcmshared.a					\
 	$(GLIB_LIBS)					\
-	$(X11_LIBS)					\
 	$(VTE_LIBS)					\
 	$(XORG_LIBS)					\
 	$(GTK_LIBS)					\
@@ -197,14 +174,11 @@ gcm_self_test_SOURCES =					\
 	gcm-calibrate.h					\
 	gcm-gamma-widget.c				\
 	gcm-gamma-widget.h				\
-	gcm-named-color.c				\
-	gcm-named-color.h				\
 	gcm-self-test.c
 
 gcm_self_test_LDADD =					\
 	libgcmshared.a					\
 	$(GLIB_LIBS)					\
-	$(X11_LIBS)					\
 	$(LCMS_LIBS)					\
 	$(XORG_LIBS)					\
 	$(GTK_LIBS)					\
@@ -213,7 +187,6 @@ gcm_self_test_LDADD =					\
 	$(EXIF_LIBS)					\
 	$(VTE_LIBS)					\
 	$(CANBERRA_LIBS)				\
-	$(GNOME_DESKTOP_LIBS)				\
 	-lm
 
 gcm_self_test_CFLAGS = $(AM_CFLAGS) $(WARNINGFLAGS_C)
@@ -246,9 +219,10 @@ EXTRA_DIST =						\
 clean-local:
 	rm -f *~
 
-CLEANFILES = $(BUILT_SOURCES)
+CLEANFILES = $(BUILT_SOURCES) *.a
 
 MAINTAINERCLEANFILES =					\
 	*~						\
 	Makefile.in
 
+-include $(top_srcdir)/git.mk

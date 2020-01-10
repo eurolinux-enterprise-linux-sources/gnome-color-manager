@@ -1,37 +1,21 @@
 Summary:   Color management tools for GNOME
 Name:      gnome-color-manager
-Version:   3.8.2
-Release:   6%{?dist}
+Version:   3.14.2
+Release:   1%{?dist}
 License:   GPLv2+
 Group:     Applications/System
-URL:       http://projects.gnome.org/gnome-color-manager/
-Source0:   http://download.gnome.org/sources/gnome-color-manager/3.8/%{name}-%{version}.tar.xz
+URL:       http://mail.gnome.org/mailman/listinfo/gnome-color-manager-list
+Source0:   http://download.gnome.org/sources/gnome-color-manager/3.14/%{name}-%{version}.tar.xz
 
-Patch0: translations.patch
+# translation updates
+Patch0: gnome-color-manager-translations-3.14.patch
 
-Requires:  color-filesystem >= 1-7
-Requires:  gnome-icon-theme
 Requires:  shared-mime-info
-Requires:  shared-color-profiles
-Requires:  dconf
-
-# Not actually a hard requirement; it just sucks to have to install the
-# package using PackageKit before the user can calibrate
-%if 0%{?rhel} == 0
-Requires:  argyllcms
-%endif
 
 BuildRequires: gtk3-devel >= 3.0.0
-BuildRequires: scrollkeeper
-BuildRequires: gnome-doc-utils >= 0.3.2
 BuildRequires: desktop-file-utils
 BuildRequires: gettext
-BuildRequires: libtool
-BuildRequires: vte3-devel
-BuildRequires: gnome-doc-utils
 BuildRequires: intltool
-BuildRequires: libgudev1-devel
-BuildRequires: libXrandr-devel
 BuildRequires: lcms2-devel
 BuildRequires: libtiff-devel
 BuildRequires: libexif-devel
@@ -40,12 +24,9 @@ BuildRequires: libcanberra-devel
 BuildRequires: glib2-devel >= 2.25.9-2
 BuildRequires: docbook-utils
 BuildRequires: colord-devel >= 0.1.12
-BuildRequires: gnome-desktop3-devel
+BuildRequires: colord-gtk-devel >= 0.1.22
 BuildRequires: itstool
-BuildRequires: colord-gtk-devel
-
-Requires(post):   /usr/bin/gtk-update-icon-cache
-Requires(postun): /usr/bin/gtk-update-icon-cache
+BuildRequires: vte291-devel
 
 # obsolete sub-package
 Obsoletes: gnome-color-manager-devel <= 3.1.1
@@ -57,27 +38,20 @@ and generate color profiles in the GNOME desktop.
 
 %prep
 %setup -q
-%patch0 -p2
+%patch0 -p1
 
 %build
-%configure --disable-scrollkeeper --disable-schemas-install --disable-clutter
+%configure
 make %{?_smp_mflags}
 
 %install
 make install DESTDIR=$RPM_BUILD_ROOT
-
-for i in gcm-calibrate gcm-import ; do
-  desktop-file-install --delete-original                                \
-    --dir=$RPM_BUILD_ROOT%{_datadir}/applications/                      \
-    $RPM_BUILD_ROOT%{_datadir}/applications/$i.desktop
-done
 
 %find_lang %name --with-gnome
 
 %post
 touch --no-create %{_datadir}/icons/hicolor &>/dev/null || :
 update-desktop-database %{_datadir}/applications &> /dev/null || :
-update-mime-database %{_datadir}/mime &> /dev/null || :
 
 %postun
 if [ $1 -eq 0 ]; then
@@ -86,7 +60,6 @@ if [ $1 -eq 0 ]; then
     glib-compile-schemas %{_datadir}/glib-2.0/schemas &> /dev/null || :
 fi
 update-desktop-database %{_datadir}/applications &> /dev/null || :
-update-mime-database %{_datadir}/mime &> /dev/null || :
 
 %posttrans
 gtk-update-icon-cache %{_datadir}/icons/hicolor &> /dev/null || :
@@ -97,30 +70,25 @@ glib-compile-schemas %{_datadir}/glib-2.0/schemas &> /dev/null || :
 %doc AUTHORS COPYING NEWS README
 %{_bindir}/gcm-*
 %{_libexecdir}/gcm-*
+%{_datadir}/appdata/*.appdata.xml
 %dir %{_datadir}/gnome-color-manager
 %dir %{_datadir}/gnome-color-manager/targets
 %dir %{_datadir}/gnome-color-manager/icons
 %dir %{_datadir}/gnome-color-manager/figures
 %dir %{_datadir}/gnome-color-manager/ti1
-%{_datadir}/gnome-color-manager/targets
-%{_datadir}/gnome-color-manager/icons
-%{_datadir}/gnome-color-manager/figures
-%{_datadir}/gnome-color-manager/ti1
+%{_datadir}/gnome-color-manager/targets/*
+%{_datadir}/gnome-color-manager/icons/*
+%{_datadir}/gnome-color-manager/figures/*
+%{_datadir}/gnome-color-manager/ti1/*
 %{_datadir}/man/man1/*.1.gz
 %{_datadir}/icons/hicolor/*/*/*.png
 %{_datadir}/icons/hicolor/scalable/*/*.svg*
 %{_datadir}/applications/gcm-*.desktop
 
 %changelog
-* Fri Jan 24 2014 Daniel Mach <dmach@redhat.com> - 3.8.2-6
-- Mass rebuild 2014-01-24
-
-* Fri Dec 27 2013 Daniel Mach <dmach@redhat.com> - 3.8.2-5
-- Mass rebuild 2013-12-27
-
-* Thu Dec 12 2013 Matthias Clasen <mclasen@redhat.com> - 3.8.2-4
-- Update translations
-- Resolves: #1030338
+* Mon Mar 23 2015 Richard Hughes <rhughes@redhat.com> - 3.14.2-1
+- Update to 3.14.2
+- Resolves: #1174571
 
 * Thu Oct 31 2013 Richard Hughes <rhughes@redhat.com> - 3.8.2-3
 - Do not build the clutter support to allow us to drop two deps

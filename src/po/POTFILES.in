@@ -2,6 +2,7 @@ data/gcm-calibrate.desktop.in
 data/gcm-import.desktop.in
 data/gcm-picker.desktop.in
 [type: gettext/glade]data/gcm-picker.ui
+data/appdata/gcm-viewer.appdata.xml.in
 data/gcm-viewer.desktop.in
 [type: gettext/glade]data/gcm-viewer.ui
 src/gcm-calibrate-argyll.c
@@ -12,6 +13,5 @@ src/gcm-debug.c
 src/gcm-import.c
 src/gcm-inspect.c
 src/gcm-picker.c
-src/gcm-profile.c
 src/gcm-utils.c
 src/gcm-viewer.c
